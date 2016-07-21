@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="5dp"
+    tools:context="com.accordhk.SnapNEat.fragments.SearchResultsByHashTagsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FFFF"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:id="@+id/profile_pic"
+            android:clickable="true"
+            android:layout_marginLeft="@dimen/fab_margin" />
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/username"
+            android:textSize="@dimen/font_32"
+            android:textColor="#595757"
+            android:text="test"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/profile_pic"
+            android:layout_marginStart="@dimen/fab_margin" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/s7_btn_add_user"
+            android:background="#0000"
+            android:id="@+id/btn_add_user"
+            android:visibility="invisible"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:background="#eee"
+        android:id="@+id/gv_search_results_user_row">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <!--<GridView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:stretchMode="columnWidth"-->
+        <!--android:verticalSpacing="5dp"-->
+        <!--android:horizontalSpacing="5dp"-->
+        <!--android:numColumns="3"-->
+        <!--android:background="@color/bgGreyCD"-->
+        <!--android:id="@+id/gv_search_results_user_row"/>-->
+
+</LinearLayout>

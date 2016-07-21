@@ -1,0 +1,17 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.accordhk.SnapNEat.fragments.SearchResultsByHashTagsFragment">
+
+    <com.accordhk.SnapNEat.utils.RoundedNetworkImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:id="@+id/iv_result_image"
+        android:scaleType="centerCrop"
+        android:background="@drawable/rounded_corner_image_view_bg"
+        android:layout_centerInParent="true"
+        />
+
+</RelativeLayout>

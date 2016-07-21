@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>-->
+    <color name="colorPrimary">#FEBF2D</color>
+    <color name="colorPrimaryDark">#FEBF2D</color>
+    <!--<color name="colorAccent">#FFF</color>-->
+    <color name="colorAccent">#595757</color>
+
+    <color name="colorText">#9FA0A0</color>
+    <color name="colorGrey">#595757</color>
+
+    <color name="loginRegisterTabText">#413d3c</color>
+    <color name="hotSearchMoreText">#9fa0a0</color>
+
+    <color name="commonLabel">#9fa0a0</color>
+
+    <color name="bgGrey">#e2e2e2</color>
+
+    <color name="bgGreyCD">#cdcdcd</color>
+
+    <color name="colorTextBlue">#3fadfa</color>
+
+    <color name="colorF9EAB7">#f9eab7</color>
+
+    <color name="colorF8F7EB">#f9eab7</color>
+</resources>

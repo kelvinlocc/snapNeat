@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rl_share"
+    android:padding="@dimen/fab_margin"
+    android:visibility="gone"
+    android:clickable="true"
+    android:background="#A666">
+
+    <com.accordhk.SnapNEat.utils.CustomFontButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/common_cancel"
+        android:textColor="@color/colorGrey"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_bg_white"
+        android:textSize="@dimen/font_32"
+        android:textAllCaps="false"
+        android:id="@+id/btn_cancel"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/fab_margin"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/btn_cancel"
+        android:weightSum="4"
+        android:background="@drawable/s10_share_background_shape">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/rl_share_fb"
+            android:gravity="center">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/s10a_facebook_btn"
+                android:id="@+id/btn_facebook"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/rl_share_instagram"
+            android:gravity="center">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/s10a_instagram_btn"
+                android:id="@+id/btn_instagram"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/rl_share_wechat"
+            android:gravity="center">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/s10a_wechat_btn"
+                android:id="@+id/btn_wechat"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/s10a_others_btn"
+                android:id="@+id/btn_others"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

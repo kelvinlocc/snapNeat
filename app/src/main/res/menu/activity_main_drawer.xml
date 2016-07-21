@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/nav_homepage"
+            android:title="@string/side_menu_home_page"/>
+        <item
+            android:id="@+id/nav_profile_followings"
+            android:title="@string/side_menu_profile" />
+        <item
+            android:id="@+id/nav_settings"
+            android:title="@string/side_menu_settings" />
+        <item
+            android:id="@+id/nav_starting"
+            android:title="@string/side_menu_login_and_register" />
+    </group>
+
+    <!--<item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>-->
+
+</menu>

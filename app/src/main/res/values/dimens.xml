@@ -1,0 +1,64 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
+    <dimen name="nav_header_height">160dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- button width -->
+    <dimen name="com_btn_width">320dp</dimen>
+
+    <!-- edittext width -->
+    <dimen name="com_et_width">320dp</dimen>
+
+    <!-- common top margin -->
+    <dimen name="com_margin_s">10dp</dimen>
+    <dimen name="com_margin_m">20dp</dimen>
+    <dimen name="com_margin_l">30dp</dimen>
+    <dimen name="com_margin_xl">60dp</dimen>
+
+    <dimen name="menu_btn_padding_right">25dp</dimen>
+
+    <!-- xxxhdpi -->
+    <dimen name="font_17">9sp</dimen>
+    <dimen name="font_20">11sp</dimen>
+    <dimen name="font_22">12sp</dimen>
+    <dimen name="font_24">13sp</dimen>
+    <dimen name="font_28">16sp</dimen>
+    <dimen name="font_32">18sp</dimen>
+    <dimen name="font_38">21sp</dimen>
+    <dimen name="font_40">22sp</dimen>
+    <dimen name="font_45">25sp</dimen>
+    <dimen name="font_60">33sp</dimen>
+
+    <!-- xxhdpi -->
+    <!--<dimen name="font_17">13sp</dimen>
+    <dimen name="font_20">15sp</dimen>
+    <dimen name="font_22">16sp</dimen>
+    <dimen name="font_24">18sp</dimen>
+    <dimen name="font_28">21sp</dimen>
+    <dimen name="font_32">24sp</dimen>
+    <dimen name="font_38">28sp</dimen>
+    <dimen name="font_40">30sp</dimen>
+    <dimen name="font_45">33sp</dimen>
+    <dimen name="font_60">44sp</dimen>-->
+
+    <dimen name="tv_search_padding">8dp</dimen>
+
+    <dimen name="iv_profile_card_stack_width">50dp</dimen>
+    <dimen name="iv_snap_card_stack_width">300dp</dimen>
+    <dimen name="iv_snap_card_stack_height">333dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="search_by_hash_snap">175dp</dimen>
+    <dimen name="search_by_user_snap">133dp</dimen>
+
+    <dimen name="iv_profile_pic_width">100dp</dimen>
+    <dimen name="icon_margin_left">5dp</dimen>
+    <dimen name="icon_margin_right">5dp</dimen>
+
+    <dimen name="margin_bottom_50">50dp</dimen>
+
+</resources>

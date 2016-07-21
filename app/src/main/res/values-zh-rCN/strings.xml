@@ -1,0 +1,233 @@
+<resources>
+    <string name="app_name">相機先食_DEV</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_splash">SplashActivity</string>
+
+    <string name="common_ok">确定</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_loading">载入中...</string>
+    <string name="common_error">錯誤</string>
+    <string name="common_success">已成功！</string>
+    <string name="common_permission_denied">Permission Denied</string>
+
+    <string name="common_male">男</string>
+    <string name="common_female">女</string>
+    <string name="common_unspecified">不明</string>
+
+    <string name="a1_other_ways_to_login">其他方式登錄</string>
+    <string name="a1_login">登錄</string>
+    <string name="a1_register">註冊</string>
+    <string name="a1_guest_mode">遊客登錄</string>
+
+    <string name="a2_your_email_to_login">請輸入郵箱</string>
+    <string name="a2_your_display_name">請輸入昵稱</string>
+    <string name="a2_your_password">請輸入密碼</string>
+    <string name="a2_confirm_your_password">再次输入新密码</string>
+    <string name="a2_register">註冊</string>
+    <string name="a2_login">登錄</string>
+
+    <string name="a3_login">登錄</string>
+    <string name="a3_your_email_to_login">請輸入郵箱</string>
+    <string name="a3_your_password">請輸入密碼</string>
+    <string name="a3_forgot_password">忘記密碼</string>
+    <string name="a3_register">註冊</string>
+
+    <string name="a5_your_registered_email">請輸入您的註冊電郵</string>
+    <string name="a5_reset_password">重設密碼</string>
+
+    <string name="s2_map_view">地铁</string>
+
+    <string name="s1_like">喜歡</string>
+    <string name="s1_navigate">啟程</string>
+
+    <string name="side_menu_home_page">主页</string>
+    <string name="side_menu_profile">个人资料</string>
+    <string name="side_menu_settings">设定</string>
+    <string name="side_menu_login_and_register">登入和註册</string>
+
+    <string name="s2_filter">筛选</string>
+    <string name="s2_district">地区</string>
+    <string name="s2_dish">菜系</string>
+    <string name="s2_spendings">价格</string>
+    <string name="s2_hot_hashtags">热门标籤</string>
+    <string name="s2_search">開始</string>
+    <string name="s2_more_filters">更多 ></string>
+    <string name="s2_error_specify">必须输入搜索字符串</string>
+
+    <string name="s3_search_district">搜尋地区</string>
+    <string name="s3_all">全选</string>
+
+    <string name="s4_spendings">價格</string>
+    <string name="s4_all">全选</string>
+
+    <string name="s5_search_dish">價格</string>
+
+    <string name="p1_posts">帖子</string>
+    <string name="p1_followings">關注</string>
+    <string name="p1_followers">被關注</string>
+    <string name="p1_gallery">相冊</string>
+    <string name="p1_favourites">收藏</string>
+
+    <string name="p5_followings">關注</string>
+    <string name="p5_followers">被關注</string>
+
+    <string name="p1a_take_a_new_photo">拍照</string>
+    <string name="p1a_choose_from_album">从相簿中选择</string>
+    <string name="p1a_cancel">取消</string>
+
+    <string name="s12_post">發帖</string>
+    <string name="s12_title_food_name">標題 (食物名稱)</string>
+    <string name="s12_restaurant_name">餐厅的名字</string>
+    <string name="s12_restaurant_address">餐厅地址</string>
+    <string name="s12_spendings">价格</string>
+    <string name="s12_dish">菜系</string>
+    <string name="s12_comments">注释</string>
+    <string name="s12_hashtags">标籤</string>
+
+    <string name="s12_add_photo">新增圖片</string>
+    <string name="s12_submit">提交</string>
+    <string name="s12_take_a_new_photo">拍照</string>
+    <string name="s12_choose_from_album">从相簿中选择</string>
+
+    <string name="s13a_address">地點</string>
+    <string name="s13a_add">加入 %1$s 為新餐廳</string>
+    <string name="s13a_add_text1">加入</string>
+    <string name="s13a_add_text2">為新餐廳</string>
+
+    <string name="p1b_gallery">相冊</string>
+    <string name="p1b_footprints">足硛</string>
+
+    <string name="p1c_turn_on_notifications">启用通知</string>
+    <string name="p1c_turn_off_notifications">关闭通知</string>
+    <string name="p1c_cancel">取消</string>
+
+    <string name="p6_report_inappropriate">舉報不良信息</string>
+    <string name="p6_specify_the_reason">選擇常見舉報原因</string>
+    <string name="p6_input_other_reason">輸入其他</string>
+    <string name="p6_submit">提交</string>
+
+    <string name="notification_shared_a_snap_post">寫了一篇 Snap 食評:</string>
+
+    <string name="s10_share">分享</string>
+    <string name="s10_food_of_this_restaurant">同店美食</string>
+    <string name="s10_report">舉報</string>
+
+    <string name="s11_food_of_this_restaurant">同店美食</string>
+
+    <string name="g1_enable_gps_location_service">開啟GPS設定</string>
+    <string name="g1_cancel">取消</string>
+    <string name="g1_enable">開啟</string>
+
+    <string name="s10a_cancel">取消</string>
+    <string name="s10a_your_friend">你的朋友</string>
+    <string name="s10a_shared_a_snap_post">寫了一篇Snap食評</string>
+
+    <string name="a6_settings">設置</string>
+    <string name="a6_my_account">我的帐号</string>
+    <string name="a6_connected_services">已连接伺服</string>
+    <string name="a6_language">语言</string>
+    <string name="a6_about">关于</string>
+    <string name="a6_change_password">修改密码</string>
+    <string name="a6_logout">登出</string>
+    <string name="a6_login">登入</string>
+
+    <string name="a7_my_account">我的帐号</string>
+    <string name="a7_username">呢称</string>
+    <string name="a7_gender">性别</string>
+    <string name="a7_phone">电话</string>
+    <string name="a7_email">电子邮箱</string>
+    <string name="a7_hashtags">标籤</string>
+    <string name="a7_introduction">簡介</string>
+    <string name="a7_change_avatar">編輯頭像</string>
+    <string name="a7_done">完成</string>
+
+    <string name="a7a_take_a_new_photo">拍照</string>
+    <string name="a7a_choose_from_album">从相簿中选择</string>
+    <string name="a7a_cancel">取消</string>
+
+    <string name="settings_social_connected_services">關聯帳戶</string>
+
+    <string name="a10_version_number">版本</string>
+    <string name="a10_disclaimer">条款及细则</string>
+
+    <string name="a11_disclaimer">条款及细则</string>
+    <string name="a11_disclaimer_txt">哈根达斯原为美国冰激凌品牌1921年由鲁本·马特斯（鲁本马特斯）研製成功，并于1962年在美国纽约布朗克斯命名并上市。1983年年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下3年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用。哈根达斯原为美国冰激凌品牌，1921年年由鲁本·马特斯（鲁本马特斯）研製成功，并于1962年在美国纽约布朗克斯命名并上市。1983年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下3年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用。哈根达斯原为美国冰激凌品牌，1921年年由鲁本·马特斯（鲁本马特斯）研製成功，并于1962年在美国纽约布朗克斯命名并上市。1983年年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下3年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用。哈根达斯原为美国冰激凌品牌，1921年年由鲁本·马特斯（鲁本马特斯）研製成功，并于1962年在美国纽约布朗克斯命名并上市。1983年年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下3年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用。哈根达斯原为美国冰激凌品牌，1921年年由鲁本·马特斯（鲁本马特斯）研製成功，并于1962年在美国纽约布朗克斯命名并上市。1983年年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下3年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用。哈根达斯原为美国冰激凌品牌，1921年年由鲁本·马特斯（鲁本马特斯）研製成功，并于1962年在美国纽约布朗克斯命名并上市。1983年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下3年，哈根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用磨坊公司（General Mills公司公司）旗下根达斯出售给品斯乐公司（本Pillsbury公司）之后，品斯乐公司纳入通用</string>
+
+    <string name="a12_change_password">更改密碼</string>
+    <string name="a12_old_password">旧密码</string>
+    <string name="a12_new_password">新密码</string>
+    <string name="a12_enter_new_password_again">再次输入新密码</string>
+    <string name="a12_save">保存</string>
+
+    <string name="a13_language">语言</string>
+    <string name="a13_english">English</string>
+    <string name="a13_traditional_chinese">繁體中文</string>
+    <string name="a13_simplified_chinese">简体中文</string>
+
+    <!-- TO BE TRANSLATED -->
+    <string name="error_empty">%1$s must not be empty</string>
+    <string name="error_invalid">%1$s is invalid</string>
+    <string name="error_max_length">%1$s length must be %2$s - %3$s</string>
+    <string name="error_max_length_hashtag">Hashtag maximum length is %1$d</string>
+
+    <string name="error_empty_username">Username must not be empty</string>
+    <string name="error_invalid_username">Invalid username</string>
+    <string name="error_empty_email">Email must not be empty</string>
+    <string name="error_invalid_email">Invalid email</string>
+    <string name="error_minimum_password">Password minimum length is %1$d</string>
+    <string name="error_empty_password">Password must not be empty</string>
+    <string name="error_empty_conf_password">Confirm Password must not be empty</string>
+    <string name="error_passwords_not_equal">密码和验证密码是不一样的。</string>
+
+    <string name="error_empty_snap_title">Title must not be empty</string>
+    <string name="error_invalid_snap_title">Title must not be empty</string>
+    <string name="error_empty_snap_hashtags">Hashtags must not be empty</string>
+    <string name="error_empty_snap_comments">密码和验证密码是不一样的。</string>
+
+    <string name="error_minimum_no_images">需上传照片。</string>
+    <string name="error_maximum_no_images">可上传最多5张照片</string>
+
+    <string name="error_gps_unavailable">GPS Unavailable</string>
+
+    <string name="error_status_101">Error. Invalid request parameters.</string>
+    <string name="error_status_102">Error. Invalid parameter values.</string>
+    <string name="error_status_103">Error. Server error.</string>
+    <string name="error_status_104">Error. Duplicate Email.</string>
+    <string name="error_status_105">Error. Invalid request parameters.</string>
+    <string name="error_status_106">Error. Duplicate Username</string>
+    <string name="error_status_107">Error. User deactivated.</string>
+    <string name="error_status_200">Error. Duplicate User.</string>
+
+    <string name="error_status_400">Error. Invalid username/password</string>
+    <string name="error_status_401">Error. User blocked</string>
+
+    <string name="error_status_500">Error. Invalid username/password</string>
+    <string name="error_status_501">Error. User blocked</string>
+
+    <string name="error_no_data">No results</string>
+
+    <string name="error_no_image_to_share">No image to share</string>
+
+    <string name="error_not_allowed_search_by_user_hash">Error. Cannot search both Hashtag and User at the same time.</string>
+
+    <string name="error_cannot_process_request">Cannot process your request right now. Please try again.</string>
+    <string name="error_no_more_snap">No more snaps..</string>
+    <string name="leave_page">你确定要离开这个页面？</string>
+    <string name="error_file_setting_size">Image should not exceed %1$dMB</string>
+    <string name="error_file_setting_type">Invalid image format</string>
+    <string name="disconnect_fb">确定不再连接FB？</string>
+    <string name="disconnect_login_normal">确定登出已登录的帐号和登录，并不连接FB？</string>
+
+    <string name="distance">距离</string>
+
+    <string name="choose_gender">选择性别</string>
+
+    <string name="fb_share_title">你的朋友%1$s寫了一篇Snap食評:</string>
+</resources>

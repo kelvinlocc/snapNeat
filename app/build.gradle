@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'android_sne_release'
+            keyPassword 'Se20151.0'
+            storeFile file('/Users/jm/Documents/Work/Kilid2/Documents/SnapNEat/cert/android_sne_release.jks')
+            storePassword 'Se20151.0'
+        }
+    }
+    compileSdkVersion 23
+    buildToolsVersion "23.0.0"
+//    useLibrary 'org.apache.http.legacy'
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES' // will not include DEPENDENCIES file
+    }
+    defaultConfig {
+        applicationId "com.accordhk.SnapNEat"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+
+        // Add the following two lines
+        renderscriptTargetApi 18
+        renderscriptSupportModeEnabled true
+        multiDexEnabled true
+    }
+    buildTypes {
+        debug {
+            resValue "string", "google_maps_api_key", "AIzaSyBN7gWQ7PtuSgb32Sr82_7-b1UcxglgabI"
+            resValue "string", "facebook_app_id", "219894398359729"
+            resValue "string", "gcm_defaultSenderId", "978144899932"
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "google_maps_api_key", "AIzaSyBN7gWQ7PtuSgb32Sr82_7-b1UcxglgabI"
+            resValue "string", "facebook_app_id", "1692076544366088"
+            resValue "string", "gcm_defaultSenderId", "978144899932"
+            signingConfig signingConfigs.config
+        }
+    }
+}
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+    }
+}
+
+configurations {
+    compile.exclude module: 'support-annotations'
+}
+
+dependencies {
+    //compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.0'
+    compile files('libs/gson-2.5.jar')
+    compile files('libs/httpcore-4.3.2.jar')
+    //    compile files('libs/httpmime-4.5.2.jar')
+    compile 'org.apache.httpcomponents:httpmime:4.3.6'
+    compile project(':volley')
+    compile project(':CardStack')
+    compile files('libs/libammsdk.jar')
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:recyclerview-v7:23.3.0'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    //    compile 'com.google.android.gms:play-services:8.4.0'
+    //    compile 'com.google.android.gms:play-services-maps:8.4.0'
+    compile 'com.google.android.gms:play-services:7.8.0'
+    compile 'com.google.android.gms:play-services-maps:7.8.0'
+    compile 'com.android.support:support-v4:23.3.0'
+    //    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    //    compile 'com.google.android.gms:play-services-identity:8.4.0'
+    compile 'com.facebook.android:facebook-android-sdk:4.13.1'
+    //    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+    compile 'com.google.android.gms:play-services-ads:7.8.0'
+    compile 'com.google.android.gms:play-services-identity:7.8.0'
+    compile 'com.google.android.gms:play-services-gcm:7.8.0'
+    compile 'com.android.support:cardview-v7:23.3.0'
+}

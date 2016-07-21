@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group>
+        <item
+            android:id="@+id/settings_account_avatar_change_take_new_photo"
+            android:title="@string/a7a_take_a_new_photo" />
+        <item
+            android:id="@+id/settings_account_avatar_change_choose_from_album"
+            android:title="@string/a7a_choose_from_album" />
+    </group>
+
+    <group>
+        <item
+            android:id="@+id/settings_account_avatar_change_cancel"
+            android:title="@string/a7a_cancel" />
+    </group>
+
+    <!--<item android:title="Communicate">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="Share" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_send"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="Send" />-->
+        <!--</menu>-->
+    <!--</item>-->
+
+</menu>

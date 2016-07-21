@@ -1,0 +1,25 @@
+package com.accordhk.SnapNEat.models;
+
+/**
+ * Created by jm on 21/1/16.
+ */
+public class BaseResponse {
+    private int status;
+    private String message;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}

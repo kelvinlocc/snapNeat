@@ -1,0 +1,90 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:clickable="true"
+    tools:context="com.accordhk.SnapNEat.fragments.ReportInappropriateFragment">
+
+    <include layout="@layout/actionbar_back_title_submit" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ll_report_details"
+                android:orientation="vertical"
+                android:divider="@drawable/lv_horizontal_divider"
+                android:showDividers="middle"
+                >
+
+                <com.accordhk.SnapNEat.utils.CustomFontTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_specify_label"
+                    android:textSize="@dimen/font_28"
+                    android:textColor="@android:color/black"
+                    android:padding="@dimen/fab_margin"
+                    android:text="@string/p6_report_inappropriate"
+                    />
+
+                <com.accordhk.SnapNEat.utils.NonScrollListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ll_reasons"
+                    >
+
+                </com.accordhk.SnapNEat.utils.NonScrollListView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--<com.accordhkdev.snapneat.utils.CustomFontTextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:textColor="@color/commonLabel"-->
+                    <!--android:padding="@dimen/fab_margin"-->
+                    <!--android:textSize="@dimen/font_28"-->
+                    <!--android:text="@string/p6_input_other_reason"-->
+                    <!--android:id="@+id/tv_others_label"/>-->
+
+                    <com.accordhk.SnapNEat.utils.CustomFontEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
+                        android:minHeight="200dp"
+                        android:gravity="top"
+                        android:ems="10"
+                        android:textSize="@dimen/font_32"
+                        android:textColor="@color/commonLabel"
+                        android:id="@+id/ed_reason_others"
+                        android:textCursorDrawable="@null"
+                        android:background="@drawable/border_grey"
+                        android:layout_margin="10dp"
+                        android:padding="5dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:background="@android:color/transparent">
+
+                    </LinearLayout>
+
+                </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

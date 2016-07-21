@@ -1,0 +1,21 @@
+<com.accordhk.SnapNEat.utils.MapWrapperLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map_relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgGrey"
+    android:clickable="true"
+    tools:context=".fragments.GMapFragment">
+
+    <include android:id="@+id/customActionBar"
+        layout="@layout/actionbar_back_title" />
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/customActionBar"/>
+
+</com.accordhk.SnapNEat.utils.MapWrapperLayout>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/fab_margin">
+
+    <!-- District -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_hot_search_header"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_hot_search_icon"
+            android:src="@drawable/s2_icon_district" />
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_hot_search_label"
+            android:textColor="@color/colorGrey"
+            android:textSize="@dimen/font_28" />
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/hotSearchMoreText"
+            android:textSize="@dimen/font_28"
+            android:gravity="right"
+            android:layout_weight="2"
+            android:id="@+id/btn_hot_search_more"
+            android:text="@string/s2_more_filters" />
+
+    </LinearLayout>
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2"
+        android:id="@+id/gv_hotsearch"
+        android:verticalSpacing="5dp"
+        android:horizontalSpacing="15dp"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin" />
+
+</LinearLayout>

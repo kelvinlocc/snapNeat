@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context="com.accordhk.SnapNEat.fragments.SearchResultsByHashTagsFragment">
+
+    <include layout="@layout/actionbar_hot_search_more_list" android:id="@+id/inc_action_bar" />
+
+    <com.accordhk.SnapNEat.utils.CustomFontTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/message"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:layout_below="@id/inc_action_bar"
+        android:visibility="invisible"
+        android:textSize="@dimen/font_38" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/inc_action_bar"
+        android:id="@+id/ll_result_users"
+        android:divider="@drawable/lv_horizontal_divider"
+        android:dividerPadding="1dp"
+        android:showDividers="middle"
+        ></ListView>
+
+</RelativeLayout>

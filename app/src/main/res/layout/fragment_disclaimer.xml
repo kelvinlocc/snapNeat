@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgGrey"
+    android:clickable="true"
+    tools:context="com.accordhk.SnapNEat.fragments.DisclaimerFragment">
+
+    <include layout="@layout/actionbar_back_title"
+        android:id="@+id/inc_action_bar" />
+
+    <com.accordhk.SnapNEat.utils.CustomFontTextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tv_disclaimer"
+        android:textColor="@color/commonLabel"
+        android:textSize="@dimen/font_20"
+        android:text="@string/a11_disclaimer_txt"
+        android:layout_below="@id/inc_action_bar"
+        android:padding="@dimen/fab_margin"
+        />
+
+</RelativeLayout>

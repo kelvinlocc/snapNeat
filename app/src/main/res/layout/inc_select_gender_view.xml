@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rl_choose_gender"
+    android:padding="@dimen/fab_margin"
+    android:background="#A666"
+    android:clickable="true"
+    android:visibility="gone">
+
+    <com.accordhk.SnapNEat.utils.CustomFontButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="@string/common_cancel"
+        android:textColor="@color/colorGrey"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_bg_white"
+        android:textSize="@dimen/font_32"
+        android:textAllCaps="false"
+        android:id="@+id/btn_gender_cancel"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:divider="@drawable/lv_horizontal_divider"
+        android:showDividers="middle"
+        android:padding="@dimen/fab_margin"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/btn_gender_cancel"
+        android:background="@drawable/s12_share_background_shape">
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_gender"
+            android:gravity="center"
+            android:textColor="@color/colorGrey"
+            android:paddingTop="0dp"
+            android:paddingBottom="15dp"
+            android:textSize="@dimen/font_24"
+
+            />
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/common_unspecified"
+            android:gravity="center"
+            android:textColor="@color/colorTextBlue"
+            android:paddingTop="10dp"
+            android:paddingBottom="15dp"
+            android:textSize="@dimen/font_32"
+            android:id="@+id/tv_gender_unspecified"
+
+            />
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/common_male"
+            android:id="@+id/tv_gender_male"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="15dp"
+            android:textSize="@dimen/font_32"
+            android:textColor="@color/colorTextBlue"
+            />
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/common_female"
+            android:id="@+id/tv_gender_female"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="0dp"
+            android:textSize="@dimen/font_32"
+            android:textColor="@color/colorTextBlue"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

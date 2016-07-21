@@ -1,0 +1,112 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    tools:context="com.accordhk.SnapNEat.fragments.StartingFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_starting"
+        android:layout_gravity="center">
+
+        <com.accordhk.SnapNEat.utils.CustomFontButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/a1_guest_mode"
+            android:textAllCaps="false"
+            android:id="@+id/btn_guest_mode"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:padding="5dp"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/font_32"
+            android:background="@drawable/btn_bg_grey"
+            android:layout_alignParentLeft="false"
+            android:textAlignment="center"
+            android:gravity="center" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/logo"
+            android:layout_below="@+id/btn_guest_mode"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="75dp"
+            android:src="@drawable/logo" />
+
+        <com.accordhk.SnapNEat.utils.CustomFontButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/a1_login"
+            android:id="@+id/btn_login"
+            android:width="@dimen/com_btn_width"
+            android:textSize="@dimen/font_32"
+            android:layout_below="@+id/logo"
+            android:layout_marginTop="108dp"
+            android:background="@drawable/btn_bg_white"
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:layout_centerHorizontal="true" />
+
+        <com.accordhk.SnapNEat.utils.CustomFontButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/a1_register"
+            android:id="@+id/btn_register"
+            android:width="@dimen/com_btn_width"
+            android:textSize="@dimen/font_32"
+            android:layout_below="@+id/btn_login"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/btn_bg_yellow"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="10dp" />
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/a1_other_ways_to_login"
+            android:id="@+id/textView2"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/btn_register"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_facebook"
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/btn_facebook"
+            android:background="#00FFFFFF" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:id="@+id/hr1"
+            android:src="@drawable/icon_hr"
+            android:layout_below="@+id/textView2"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_toLeftOf="@id/textView2"
+            android:layout_marginRight="5dp" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:id="@+id/hr2"
+            android:src="@drawable/icon_hr"
+            android:layout_below="@+id/textView2"
+            android:layout_alignTop="@+id/textView2"
+            android:layout_toRightOf="@+id/textView2"
+            android:layout_marginLeft="5dp" />
+    </RelativeLayout>
+</FrameLayout>

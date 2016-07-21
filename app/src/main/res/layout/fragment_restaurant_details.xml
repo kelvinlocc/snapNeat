@@ -1,0 +1,259 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="@android:color/white"
+    tools:context="com.accordhk.SnapNEat.fragments.RestaurantDetailsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/iv_restaurant_image">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/details_image_gradient" />
+
+            <include layout="@layout/actionbar_snap_resto_details"
+                android:id="@+id/inc_action_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!--<com.android.volley.toolbox.NetworkImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/iv_restaurant_image"-->
+            <!--android:scaleType="fitXY"-->
+            <!--/>-->
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/rating"
+                android:layout_below="@id/inc_action_bar"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="@dimen/fab_margin"
+                        android:layout_marginLeft="@dimen/fab_margin">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/s11_address"
+                            android:layout_marginRight="@dimen/icon_margin_right"/>
+
+                        <com.accordhk.SnapNEat.utils.CustomFontTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_address"
+                            android:textColor="@color/commonLabel"
+                            android:textSize="@dimen/font_28"
+                            android:layout_weight="1"
+                            />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/s11_navigate"
+                            android:id="@+id/iv_navigate"
+                            android:clickable="true"
+                            android:layout_marginLeft="@dimen/icon_margin_left"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="@dimen/fab_margin"
+                        android:layout_marginLeft="@dimen/fab_margin">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/s11_phone"
+                            android:layout_marginRight="@dimen/icon_margin_right"/>
+
+                        <com.accordhk.SnapNEat.utils.CustomFontTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_phone"
+                            android:textColor="@color/commonLabel"
+                            android:textSize="@dimen/font_28"
+                            android:layout_weight="1"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="@dimen/fab_margin"
+                        android:layout_marginLeft="@dimen/fab_margin">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/s11_dish"
+                            android:layout_marginRight="@dimen/icon_margin_right"/>
+
+                        <com.accordhk.SnapNEat.utils.CustomFontTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_dish"
+                            android:textColor="@color/commonLabel"
+                            android:textSize="@dimen/font_28"
+                            android:layout_weight="1"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="@dimen/fab_margin"
+                        android:layout_marginLeft="@dimen/fab_margin">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/s11_spending"
+                            android:layout_marginRight="@dimen/icon_margin_right"/>
+
+                        <com.accordhk.SnapNEat.utils.CustomFontTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_spending"
+                            android:textColor="@color/commonLabel"
+                            android:textSize="@dimen/font_28"
+                            android:layout_weight="1"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="@dimen/fab_margin"
+                        android:layout_marginLeft="@dimen/fab_margin">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/s11_hours"
+                            android:layout_marginRight="@dimen/icon_margin_right"/>
+
+                        <com.accordhk.SnapNEat.utils.CustomFontTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_hours"
+                            android:singleLine="false"
+                            android:textColor="@color/commonLabel"
+                            android:textSize="@dimen/font_28"
+                            android:layout_weight="1"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="@dimen/fab_margin"
+                        android:layout_marginLeft="@dimen/fab_margin">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/s11_website"
+                            android:layout_marginRight="@dimen/icon_margin_right"/>
+
+                        <com.accordhk.SnapNEat.utils.CustomFontTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_website"
+                            android:textColor="@color/commonLabel"
+                            android:textSize="@dimen/font_28"
+                            android:layout_weight="1"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.accordhk.SnapNEat.utils.CustomFontTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tv_food_in_resto_label"
+                            android:textColor="@color/colorGrey"
+                            android:textSize="@dimen/font_28"
+                            android:text="@string/s11_food_of_this_restaurant"
+                            android:layout_marginRight="@dimen/fab_margin"
+                            android:layout_marginLeft="@dimen/fab_margin" />
+
+                        <android.support.v7.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="140dp"
+                            android:id="@+id/rv_food_photos"
+                            ></android.support.v7.widget.RecyclerView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/inc_share_view" />
+
+</RelativeLayout>

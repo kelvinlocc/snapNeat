@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_temptext1"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/font_28"
+            android:layout_marginRight="3dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/font_28"
+            android:layout_toRightOf="@id/tv_temptext1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_temptext2"
+            android:layout_toRightOf="@id/content"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/font_28"
+            android:layout_marginLeft="3dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_address"
+            android:layout_toRightOf="@id/content"
+            android:textAppearance="?attr/textAppearanceListItem"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/font_24"
+            android:layout_marginLeft="3dp"
+            android:maxLines="2"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/content"/>
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/text_margin"
+        android:src="@drawable/s3_check"
+        android:visibility="invisible"
+        android:id="@+id/iv_check"
+        android:layout_gravity="center_vertical" />
+</LinearLayout>

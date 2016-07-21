@@ -1,0 +1,374 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    tools:context="com.accordhk.SnapNEat.fragments.PostSnapFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+
+        <include layout="@layout/actionbar_back_title_submit" android:id="@+id/inc_action_bar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/inc_action_bar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/ll_snap_details"
+                android:orientation="vertical"
+                android:divider="@drawable/lv_horizontal_divider"
+                android:showDividers="middle"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:padding="5dp"
+                    android:background="@drawable/s1_rating_bg"
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/rating">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ib_rating1"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/s1_rating_star_sel"
+                        />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ib_rating2"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/s1_rating_star_sel"
+                        />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ib_rating3"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/s1_rating_star_sel"
+                        />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ib_rating4"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/s1_rating_star_sel"
+                        />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ib_rating5"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/s1_rating_star_sel"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:id="@+id/rl_title"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/s12_iv_snap_title"
+                        android:background="#0000"
+                        />
+
+                    <com.accordhk.SnapNEat.utils.CustomFontEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_28"
+                        android:id="@+id/tv_snap_title"
+                        android:maxLength="20"
+                        android:textColor="#9fa0a0"
+                        android:background="@android:color/transparent"
+                        android:textCursorDrawable="@null"
+                        android:hint="@string/s12_title_food_name" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:id="@+id/rl_resto"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/s12_iv_snap_resto"
+                        android:background="#0000"
+                        />
+
+                    <com.accordhk.SnapNEat.utils.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_28"
+                        android:id="@+id/tv_snap_resto"
+                        android:textColor="#9fa0a0"
+                        android:layout_weight="1"
+                        android:hint="@string/s12_restaurant_name" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ib_resto"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/s12_btn_show_more"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:id="@+id/rl_location"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/s12_iv_snap_location"
+                        android:background="#0000"
+                        />
+
+                    <com.accordhk.SnapNEat.utils.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_28"
+                        android:id="@+id/tv_snap_location"
+                        android:textColor="#9fa0a0"
+                        android:hint="@string/s12_restaurant_address" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:id="@+id/rl_spending"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/s12_iv_snap_spending"
+                        android:background="#0000"
+                        />
+
+                    <com.accordhk.SnapNEat.utils.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_28"
+                        android:id="@+id/tv_snap_spending"
+                        android:textColor="#9fa0a0"
+                        android:layout_weight="1"
+                        android:hint="@string/s12_spendings" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ib_spending"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/s12_btn_show_more"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:id="@+id/rl_dish"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/s12_iv_snap_dish"
+                        android:background="#0000"
+                        />
+
+                    <com.accordhk.SnapNEat.utils.CustomFontTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_28"
+                        android:id="@+id/tv_snap_dish"
+                        android:textColor="#9fa0a0"
+                        android:layout_weight="1"
+                        android:hint="@string/s12_dish" />
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ib_dish"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/s12_btn_show_more"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:id="@+id/rl_comments"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/s12_iv_snap_comments"
+                        android:background="#0000"
+                        />
+
+                    <com.accordhk.SnapNEat.utils.CustomFontEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_28"
+                        android:id="@+id/tv_snap_comments"
+                        android:textColor="#9fa0a0"
+                        android:background="@android:color/transparent"
+                        android:textCursorDrawable="@null"
+                        android:hint="@string/s12_comments" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:id="@+id/rl_hashtags"
+                    android:layout_marginLeft="@dimen/fab_margin"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/s12_iv_snap_hashtags"
+                        android:background="#0000"
+                        />
+
+                    <com.accordhk.SnapNEat.utils.CustomFontEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/font_28"
+                        android:id="@+id/tv_snap_hashtags"
+                        android:maxLength="255"
+                        android:textColor="#64c0f4"
+                        android:background="@android:color/transparent"
+                        android:textCursorDrawable="@null"
+                        android:textColorHint="#64c0f4"
+                        android:hint="@string/s12_hashtags" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rl_hashtags">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/fab_margin"
+                        android:id="@+id/ll_btn_cam"
+                        android:clickable="true"
+                        android:background="@drawable/btn_bg_yellow"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:id="@+id/iv_btn_cam"
+                            android:src="@drawable/s12_camera"/>
+
+                        <com.accordhk.SnapNEat.utils.CustomFontTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/font_28"
+                            android:textColor="@android:color/white"
+                            android:layout_toRightOf="@id/iv_btn_cam"
+                            android:id="@+id/tv_btn_camera"
+                            android:textAllCaps="false"
+                            android:text="@string/s12_add_photo" />
+
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_below="@id/ll_btn_cam"
+                        android:id="@+id/rv_snap_photos"></android.support.v7.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp"
+                        android:background="@android:color/transparent"
+                        android:layout_below="@id/rv_snap_photos">
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <include layout="@layout/inc_select_photo_view" />
+
+    </RelativeLayout>
+</FrameLayout>

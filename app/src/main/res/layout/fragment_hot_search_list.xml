@@ -1,0 +1,57 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    tools:context="com.accordhk.SnapNEat.fragments.HotSearchListFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/actionbar_back_title_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/customActionBar"
+            android:layout_alignParentTop="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.accordhk.SnapNEat.utils.CustomFontEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:id="@+id/tv_hot_search_string"
+                android:padding="@dimen/tv_search_padding"
+                android:drawableLeft="@drawable/icon_search"
+                android:background="@drawable/bg_tv_search"
+                android:layout_margin="@dimen/fab_margin"
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/font_24"
+                android:hint="@string/s2_filter" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tv_hot_search_string"
+                android:divider="@drawable/lv_horizontal_divider"
+                android:dividerPadding="1dp"
+                android:showDividers="middle"
+                android:layout_alignParentEnd="true"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/margin_bottom_50"
+                android:id="@+id/lv_hot_search">
+
+            </ListView>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

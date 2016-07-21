@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.accordhk.SnapNEat">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Include required permissions for Google Maps API to run. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <!-- GCM -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="com.accordhk.SnapNEat.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.accordhk.snapneat.permission.C2D_MESSAGE" />
+
+    <!-- Creating Permission to receive Google Maps -->
+    <permission
+        android:name="com.accordhk.SnapNEat.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <!-- Permission to receive Google Maps -->
+    <uses-permission android:name="com.accordhk.snapneat.permission.MAPS_RECEIVE" />
+
+    <!--
+     The following two permissions are not required to use
+     Google Maps Android API v2, but are recommended.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <!-- start: wechat -->
+    <!--<permission-->
+        <!--android:name="com.accordhk.SnapNEat.permission.MMOAUTH_CALLBACK"-->
+        <!--android:protectedLevel="normal" />-->
+    <!--<permission-->
+        <!--android:name="com.accordhk.SnapNEat.permission.MM_MESSAGE"-->
+        <!--android:protectedLevel="normal" />-->
+
+    <!--<uses-permission android:name="com.accordhk.SnapNEat.permission.MMOAUTH_CALLBACK" />-->
+    <!--<uses-permission android:name="com.accordhk.SnapNEat.permission.MM_MESSAGE" />-->
+    <!-- end: wechat -->
+
+    <!-- Maps API needs OpenGL ES 2.0. -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true"
+        android:name="android.support.multidex.MultiDexApplication">
+
+        <!--android:windowSoftInputMode="stateVisible|adjustResize"-->
+        <activity
+            android:name="com.accordhk.SnapNEat.MainActivity"
+            android:label="@string/app_name"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
+                <data android:scheme="http"
+                    android:host="snapneatdev.accordhkcloud.com"
+                    android:pathPrefix="/service/deeplink" />
+                <!-- note that the leading "/" is required for pathPrefix-->
+            </intent-filter>
+
+            <intent-filter android:label="@string/app_name">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "example://gizmos” -->
+                <data android:scheme="sneapp" />
+
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.accordhk.SnapNEat.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+        
+        <provider
+            android:authorities="com.facebook.app.FacebookContentProvider219894398359729"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_api_key"/>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <!--START support pre-4.4 KitKat devices-->
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <!--END support pre-4.4 KitKat devices-->
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.accordhk.SnapNEat" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.accordhk.SnapNEat.services.GCMReceiveListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.accordhk.SnapNEat.services.GCMRegistrationIntentService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="com.accordhk.SnapNEat.services.GCMInstanceIDListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <!-- start: wechat -->
+        <!--<receiver-->
+            <!--android:name="com.tencent.mm.sdk.plugin.MMPluginOAuth$Receiver"-->
+            <!--android:permission="com.tencent.mm.oauth.permission.SEND" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.tencent.mm.sdk.plugin.Intent.ACTION_RESPONSE" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <!--<receiver-->
+            <!--android:name="com.tencent.mm.sdk.channel.MMessage$Receiver"-->
+            <!--android:permission="com.tencent.mm.plugin.permission.SEND" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.tencent.mm.sdk.channel.Intent.ACTION_MESSAGE" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
+
+        <receiver
+            android:name=".services.WeChatReceiver"
+            android:permission="com.tencent.mm.plugin.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
+
+        <!-- end: wechat -->
+
+    </application>
+
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+</manifest>

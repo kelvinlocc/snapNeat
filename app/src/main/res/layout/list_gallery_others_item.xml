@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.accordhk.SnapNEat.fragments.SearchResultsByHashTagsFragment">
+
+    <com.accordhk.SnapNEat.utils.RoundedNetworkImageView
+        android:layout_width="@dimen/search_by_hash_snap"
+        android:layout_height="@dimen/search_by_hash_snap"
+        android:id="@+id/iv_result_image"
+        android:scaleType="centerCrop"
+        android:background="@drawable/rounded_corner_image_view_bg"
+        android:layout_centerInParent="true"
+        />
+
+    <com.accordhk.SnapNEat.utils.CustomFontTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_40"
+        android:layout_centerInParent="true"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:paddingRight="@dimen/fab_margin"
+        android:paddingLeft="@dimen/fab_margin"
+        android:id="@+id/tv_snap_title"
+        android:text="Title" />
+
+    <!--
+    android:layout_width="@dimen/iv_profile_card_stack_width"
+        android:layout_height="@dimen/iv_profile_card_stack_width"-->
+
+    <com.accordhk.SnapNEat.utils.CustomFontTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_district"
+        android:textSize="@dimen/font_24"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textColor="@android:color/white"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignBottom="@id/iv_result_image"
+        android:layout_alignStart="@id/iv_result_image"/>
+
+</RelativeLayout>

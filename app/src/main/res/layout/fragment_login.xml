@@ -1,0 +1,117 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    tools:context="com.accordhk.SnapNEat.fragments.LoginFragment">
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView3"
+                android:src="@drawable/icon_sel_tab"
+                android:layout_weight="1"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#0000"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary">
+
+            <com.accordhk.SnapNEat.utils.CustomFontEditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/et_email"
+                android:layout_gravity="center_horizontal"
+                android:singleLine="true"
+                android:hint="@string/a3_your_email_to_login"
+                android:textAlignment="center"
+                app:theme="@style/CustomEditTextWhite"
+                android:paddingTop="@dimen/com_margin_l"
+                android:width="@dimen/com_et_width"
+                android:textSize="@dimen/font_24"
+                android:textColor="@android:color/white"
+                android:textCursorDrawable="@null" />
+
+            <com.accordhk.SnapNEat.utils.CustomFontEditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/et_password"
+                android:layout_gravity="center_horizontal"
+                android:hint="@string/a3_your_password"
+                android:singleLine="true"
+                android:textAlignment="center"
+                app:theme="@style/CustomEditTextWhite"
+                android:textSize="@dimen/font_24"
+                android:width="@dimen/com_et_width"
+                android:layout_marginTop="@dimen/fab_margin"
+                android:textColor="@android:color/white"
+                android:textCursorDrawable="@null" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/a3_login"
+                android:id="@+id/btn_login"
+                android:textAllCaps="false"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/com_margin_xl"
+                android:width="@dimen/com_btn_width"
+                android:background="@drawable/btn_bg_white"
+                android:textSize="@dimen/font_32"
+                android:textColor="@color/colorPrimary" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/a3_forgot_password"
+                android:textAllCaps="false"
+                android:id="@+id/btn_forgot_password"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/font_22"
+                android:background="#00000000"
+                android:textColor="#ffffff" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:background="@android:color/transparent">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+</FrameLayout>

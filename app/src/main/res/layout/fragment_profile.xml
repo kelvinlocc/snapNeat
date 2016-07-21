@@ -1,0 +1,292 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/s1_bg_homepage"
+    android:clickable="true"
+    tools:context="com.accordhk.SnapNEat.fragments.ProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.accordhk.SnapNEat.utils.BlurredNetworkImageView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/iv_profile_bg"
+            android:scaleType="centerCrop"
+            android:layout_weight="1"
+            android:layout_alignParentTop="true"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"></View>
+
+    </LinearLayout>
+
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="15dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/btn_back"
+            android:background="#0000"
+            android:scaleType="fitStart"
+            android:layout_alignParentStart="true"
+            android:id="@+id/btn_back"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp" />
+
+        <ImageButton
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/p1b_btn_menu"
+            android:scaleType="fitEnd"
+            android:background="#0000"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/btn_profile_menu"
+            android:visibility="invisible" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            app:civ_border_width="1dp"
+            app:civ_border_color="#FFFF"
+            android:layout_width="@dimen/iv_profile_pic_width"
+            android:layout_height="@dimen/iv_profile_pic_width"
+            android:id="@+id/iv_profile_pic"
+            android:layout_below="@id/btn_back"
+            android:layout_centerHorizontal="true" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="32dp"
+            android:background="#0000"
+            android:id="@+id/btn_profile_action"
+            android:layout_alignBottom="@id/iv_profile_pic"
+            android:layout_toRightOf="@id/iv_profile_pic"
+            />
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_32"
+            android:id="@+id/tv_username"
+            android:layout_margin="@dimen/fab_margin"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/iv_profile_pic"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/tv_username"
+            android:background="@android:color/white"
+            android:id="@+id/rule1"
+            android:layout_marginLeft="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/rule1"
+            android:background="#0000"
+            android:id="@+id/ll_profile_cnt"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp">
+
+            <!-- Posts cnt -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <com.accordhk.SnapNEat.utils.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/tv_no_posts"
+                    android:layout_centerInParent="true" />
+
+                <com.accordhk.SnapNEat.utils.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_24"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/tv_no_posts"
+                    android:text="@string/p1_posts"
+                    android:id="@+id/tv_no_posts_label"
+                    android:layout_centerInParent="true" />
+
+            </LinearLayout>
+
+            <!-- Followings cnt -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <com.accordhk.SnapNEat.utils.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/tv_no_followings"
+                    android:layout_centerInParent="true"
+                    />
+
+                <com.accordhk.SnapNEat.utils.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_24"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/tv_no_followings"
+                    android:text="@string/p1_followings"
+                    android:id="@+id/tv_no_followings_label"
+                    android:layout_centerInParent="true" />
+
+            </LinearLayout>
+
+            <!-- Followers cnt -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_weight="1">
+
+                <com.accordhk.SnapNEat.utils.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_22"
+                    android:textColor="@android:color/white"
+                    android:id="@+id/tv_no_followers"
+                    android:layout_centerInParent="true"
+                    />
+
+                <com.accordhk.SnapNEat.utils.CustomFontTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_24"
+                    android:textColor="@android:color/white"
+                    android:layout_below="@id/tv_no_followers"
+                    android:text="@string/p1_followers"
+                    android:id="@+id/tv_no_followers_label"
+                    android:layout_centerInParent="true" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/white"
+            android:layout_below="@id/ll_profile_cnt"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            android:layout_marginLeft="@dimen/fab_margin" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#e2e2e2">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#fdbf48">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/p1_followings"
+                android:id="@+id/btn_tab1"
+                android:background="#0000"
+                android:textSize="@dimen/font_24"
+                android:textColor="@android:color/white"
+                android:padding="@dimen/fab_margin"
+                android:lines="1"
+                android:textAllCaps="false"
+                android:singleLine="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/p1_favourites"
+                android:id="@+id/btn_tab2"
+                android:background="#0000"
+                android:textSize="@dimen/font_24"
+                android:textColor="@android:color/white"
+                android:padding="@dimen/fab_margin"
+                android:lines="1"
+                android:textAllCaps="false"
+                android:singleLine="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/p1b_footprints"
+                android:id="@+id/btn_tab4"
+                android:background="#0000"
+                android:textSize="@dimen/font_24"
+                android:textColor="@android:color/white"
+                android:padding="@dimen/fab_margin"
+                android:lines="1"
+                android:textAllCaps="false"
+                android:singleLine="true" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/p1_gallery"
+                android:id="@+id/btn_tab3"
+                android:background="#0000"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_24"
+                android:padding="@dimen/fab_margin"
+                android:lines="1"
+                android:textAllCaps="false"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/profile_frame_content"
+            android:background="#0000"></FrameLayout>
+
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/inc_select_photo_view" />
+
+    <include layout="@layout/inc_select_follower_notif_view" />
+
+</RelativeLayout>

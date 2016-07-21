@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/s1_bg_card_item"
+    android:padding="15dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_snap_header">
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/food_name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/font_40"
+            android:layout_marginBottom="10dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_marginRight="@dimen/menu_btn_padding_right"
+            android:maxLength="20" />
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/district"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/font_24"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@id/food_name"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_alignBaseline="@id/food_name"/>
+
+
+
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/ll_like_nav"
+        android:divider="@drawable/lv_vertical_divider"
+        android:layout_alignParentBottom="true"
+        android:dividerPadding="2dp"
+        android:focusableInTouchMode="true"
+        android:showDividers="middle"
+        android:layout_marginTop="14dp"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/rl_like"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="2dp"
+                android:id="@+id/centerholder"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_like"
+                android:background="#0000"
+                android:layout_below="@id/centerholder"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/s1_btn_like_default"/>
+
+            <com.accordhk.SnapNEat.utils.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/font_17"
+                android:textColor="@android:color/white"
+                android:layout_toRightOf="@id/centerholder"
+                android:gravity="center"
+                android:background="@drawable/s1_bg_like_count"
+                android:id="@+id/like_count"
+                android:layout_marginLeft="10dp" />
+
+            <com.accordhk.SnapNEat.utils.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_like"
+                android:layout_centerHorizontal="true"
+                android:text="@string/s1_like"
+                android:textSize="@dimen/font_22"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/rl_location"
+            android:layout_marginLeft="@dimen/fab_margin">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="2dp"
+                android:id="@+id/centerholder2"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_navigate"
+                android:background="#0000"
+                android:layout_below="@id/centerholder2"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/s1_btn_navigate"/>
+
+            <com.accordhk.SnapNEat.utils.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_navigate"
+                android:layout_centerHorizontal="true"
+                android:text="@string/s1_navigate"
+                android:textSize="@dimen/font_22" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.accordhk.SnapNEat.utils.RoundedNetworkImageView
+        android:id="@+id/snap_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_above="@id/ll_like_nav"
+        android:scaleType="centerCrop"
+        android:src="@color/bgGreyCD"
+        android:layout_below="@+id/ll_snap_header">
+
+    </com.accordhk.SnapNEat.utils.RoundedNetworkImageView>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_share"
+        android:src="@drawable/s1_btn_share"
+        android:background="#0000"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_alignBottom="@id/snap_photo" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="@dimen/iv_profile_card_stack_width"
+        android:layout_height="@dimen/iv_profile_card_stack_width"
+        android:id="@+id/profile_pic"
+        android:clickable="true"
+        app:civ_border_width="1dp"
+        app:civ_border_color="#FFFF"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/ll_like_nav" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/rating"
+        android:layout_alignTop="@+id/snap_photo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/fab_margin" />
+
+    <com.accordhk.SnapNEat.utils.CustomFontTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/username"
+        android:textSize="@dimen/font_28"
+        android:textColor="@android:color/white"
+        android:layout_above="@+id/ll_like_nav"
+        android:layout_toRightOf="@id/profile_pic"
+        android:layout_alignTop="@id/profile_pic"
+        android:text="test" />
+
+</RelativeLayout>

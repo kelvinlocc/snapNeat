@@ -1,0 +1,16 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="2dp"
+    tools:context="com.accordhk.SnapNEat.fragments.SearchResultsByHashTagsFragment">
+
+    <com.accordhk.SnapNEat.utils.RoundedNetworkImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:background="@drawable/rounded_corner_image_view_bg"
+        android:id="@+id/snap_photo"/>
+
+</LinearLayout>

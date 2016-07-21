@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bgGrey"
+    android:clickable="true"
+    tools:context="com.accordhk.SnapNEat.fragments.SettingsConServicesFragment">
+
+    <include layout="@layout/actionbar_back_title"
+        android:id="@id/inc_action_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_below="@id/inc_action_bar"
+        android:padding="@dimen/fab_margin"
+        android:id="@+id/ll_connected_services"
+        android:layout_marginTop="@dimen/fab_margin"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/a7_icon_fb"
+            android:layout_marginRight="@dimen/icon_margin_right"/>
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorGrey"
+            android:textSize="@dimen/font_28"
+            android:id="@+id/tv_fb_lbl"
+            android:text="Facebook"
+            android:layout_weight="1"
+            />
+
+        <com.accordhk.SnapNEat.utils.CustomFontTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/commonLabel"
+            android:textSize="@dimen/font_24"
+            android:id="@+id/tv_username"
+            />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_con_fb"
+            android:src="@drawable/s12_btn_show_more"
+            android:layout_marginLeft="@dimen/icon_margin_left"
+            android:background="@android:color/transparent"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
