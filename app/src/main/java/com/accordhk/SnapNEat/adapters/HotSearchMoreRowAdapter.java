@@ -157,6 +157,7 @@ public class HotSearchMoreRowAdapter extends ArrayAdapter<HotSearch> implements 
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 filteredData = (List<HotSearch>) results.values;
                 notifyDataSetChanged();

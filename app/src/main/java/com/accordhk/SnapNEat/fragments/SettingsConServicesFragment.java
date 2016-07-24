@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -356,6 +355,7 @@ public class SettingsConServicesFragment extends BaseFragment {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -379,6 +379,7 @@ public class SettingsConServicesFragment extends BaseFragment {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onPause() {
         super.onPause();
 

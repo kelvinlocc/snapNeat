@@ -286,6 +286,7 @@ public class BaseFragment extends Fragment {
         return req;
     }
 
+    @SuppressWarnings("deprecation")
     public void showPermitSaveExternal(Intent si, String strUrl){
         final Intent shareIntent = si;
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {

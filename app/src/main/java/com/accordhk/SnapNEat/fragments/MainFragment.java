@@ -628,6 +628,7 @@ public class MainFragment extends BaseFragment {
 //        }
 //    }
 
+    @SuppressWarnings("deprecation")
     private void getSnapsByLocation() {
 
         String provider = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);

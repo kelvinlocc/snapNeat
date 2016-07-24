@@ -329,6 +329,7 @@ public class StartingFragment extends BaseFragment {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -352,6 +353,7 @@ public class StartingFragment extends BaseFragment {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onPause() {
         super.onPause();
         VolleySingleton.getInstance(getContext()).getRequestQueue().cancelAll(new RequestQueue.RequestFilter() {

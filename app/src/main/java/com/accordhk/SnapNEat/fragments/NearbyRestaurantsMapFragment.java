@@ -257,6 +257,7 @@ public class NearbyRestaurantsMapFragment extends BaseFragment {
         return view;
     }
 
+    @SuppressWarnings("deprecation")
     public void getRestaurantsByLocation() {
 
         String provider = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);

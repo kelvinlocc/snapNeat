@@ -132,6 +132,7 @@ public class ProfileFootprintsFragment extends BaseSearchFragment {
         return view;
     }
 
+    @SuppressWarnings("deprecation")
     private void doGoogleConnect() {
         if (mGoogleApiClient == null) {
 

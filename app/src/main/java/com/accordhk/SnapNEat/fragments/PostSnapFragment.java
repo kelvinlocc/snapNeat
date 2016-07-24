@@ -651,6 +651,7 @@ public class PostSnapFragment extends BaseFragment {
         sharedPref.setSelectedPostPhotos(bitmaps);
     }
 
+    @SuppressWarnings("unchecked")
     public void customResumeFromBack(int type, Object object){
         //if(object instanceof Restaurant) {
         if(type == HotSearch.Category.DISTRICT.getKey()) {

@@ -101,6 +101,7 @@ public class RestaurantListFragment extends BaseFragment {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {

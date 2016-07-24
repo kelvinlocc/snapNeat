@@ -2,6 +2,7 @@ package com.accordhk.SnapNEat.adapters;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import java.util.List;
 /**
  * Created by jm on 3/2/16.
  */
+
 public class RestaurantsMoreRowAdapter extends ArrayAdapter<Restaurant> implements Filterable {
 
     private static String LOGGER_TAG = "HotSearchMoreRowAdapter";
@@ -90,7 +92,7 @@ public class RestaurantsMoreRowAdapter extends ArrayAdapter<Restaurant> implemen
         }
 
         if(restaurant.getId() == -1) {
-            holder.iv_check.setImageDrawable(getContext().getResources().getDrawable(R.drawable.s13a_btn_plus));
+            holder.iv_check.setImageDrawable(ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.s13a_btn_plus, null));
             holder.iv_check.setVisibility(View.VISIBLE);
             holder.content.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
             holder.tv_temptext1.setText((new Utils(getContext())).getStringResource(R.string.s13a_add_text1));
@@ -166,6 +168,7 @@ public class RestaurantsMoreRowAdapter extends ArrayAdapter<Restaurant> implemen
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 filteredData = (List<Restaurant>) results.values;
 

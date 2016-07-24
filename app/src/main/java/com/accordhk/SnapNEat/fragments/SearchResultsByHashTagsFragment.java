@@ -19,18 +19,14 @@ import com.accordhk.SnapNEat.adapters.SnapListAdapter;
 import com.accordhk.SnapNEat.models.HotSearch;
 import com.accordhk.SnapNEat.models.ResponseListSnaps;
 import com.accordhk.SnapNEat.models.Snap;
-import com.accordhk.SnapNEat.models.User;
 import com.accordhk.SnapNEat.services.ApiWebServices;
 import com.accordhk.SnapNEat.utils.Constants;
-import com.accordhk.SnapNEat.utils.CustomFontEditText;
 import com.accordhk.SnapNEat.utils.CustomFontTextView;
-import com.accordhk.SnapNEat.utils.SharedPref;
 import com.accordhk.SnapNEat.utils.VolleySingleton;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +82,7 @@ public class SearchResultsByHashTagsFragment extends BaseSearchFragment {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

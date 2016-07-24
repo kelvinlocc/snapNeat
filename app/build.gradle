@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'android_sne_release'
             keyPassword 'Se20151.0'
-            storeFile file('/Users/jm/Documents/Work/Kilid2/Documents/SnapNEat/cert/android_sne_release.jks')
+            storeFile file('/Users/jm/Documents/Work/Kilid2/Projects/Mobile/SnapNEat/android_sne_release.jks')
             storePassword 'Se20151.0'
         }
     }
@@ -48,8 +48,10 @@ android {
 }
 
 allprojects {
-    tasks.withType(JavaCompile) {
-        options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:deprecation" << "-Xlint:unchecked"
+        }
     }
 }
 
@@ -63,8 +65,8 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile files('libs/gson-2.5.jar')
     compile files('libs/httpcore-4.3.2.jar')
-    //    compile files('libs/httpmime-4.5.2.jar')
     compile 'org.apache.httpcomponents:httpmime:4.3.6'
+//    compile "org.apache.httpcomponents:httpclient-android:4.3.5.1"
     compile project(':volley')
     compile project(':CardStack')
     compile files('libs/libammsdk.jar')
@@ -72,15 +74,10 @@ dependencies {
     compile 'com.android.support:design:23.3.0'
     compile 'com.android.support:recyclerview-v7:23.3.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
-    //    compile 'com.google.android.gms:play-services:8.4.0'
-    //    compile 'com.google.android.gms:play-services-maps:8.4.0'
     compile 'com.google.android.gms:play-services:7.8.0'
     compile 'com.google.android.gms:play-services-maps:7.8.0'
     compile 'com.android.support:support-v4:23.3.0'
-    //    compile 'com.google.android.gms:play-services-ads:8.4.0'
-    //    compile 'com.google.android.gms:play-services-identity:8.4.0'
     compile 'com.facebook.android:facebook-android-sdk:4.13.1'
-    //    compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.google.android.gms:play-services-ads:7.8.0'
     compile 'com.google.android.gms:play-services-identity:7.8.0'
     compile 'com.google.android.gms:play-services-gcm:7.8.0'
