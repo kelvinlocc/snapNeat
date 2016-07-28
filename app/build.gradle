@@ -5,7 +5,8 @@ android {
         config {
             keyAlias 'android_sne_release'
             keyPassword 'Se20151.0'
-            storeFile file('/Users/jm/Documents/Work/Kilid2/Projects/Mobile/SnapNEat/android_sne_release.jks')
+//            storeFile file('/Users/jm/Documents/Work/Kilid2/Projects/Mobile/SnapNEat/android_sne_release.jks')
+            storeFile file('C:/Accord/snapeat_4_jks/snapeat/android_sne_release.jks')
             storePassword 'Se20151.0'
         }
     }
