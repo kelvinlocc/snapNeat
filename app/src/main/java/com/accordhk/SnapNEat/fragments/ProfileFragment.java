@@ -175,9 +175,9 @@ public class ProfileFragment extends BaseFragment {
                         ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                        Log.i(TAG, "onClick: startActivityForResult from capture");
+                        Log.i(TAG, "startActivityForResult from capture @update");
 
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                        getActivity().startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
                     }
                 } else
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, REQUEST_WRITE_EXTERNAL_STORAGE);
