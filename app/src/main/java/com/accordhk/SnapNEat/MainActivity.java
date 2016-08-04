@@ -138,12 +138,14 @@ public class MainActivity extends AppCompatActivity
     private FragmentManager mManager;
 
     private User mCurrentUser;
+    private String TAG = this.getClass().getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toast.makeText(MainActivity.this, "updated...123", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onCreate: git update");
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
