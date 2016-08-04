@@ -279,13 +279,16 @@ public class SettingsAccountFragment extends BaseFragment {
                                                                 if(responseUserProfile.getStatus() == Constants.RES_UNAUTHORIZED) {
                                                                     if (mListener != null) {
                                                                         mListener.showStartingFragmentFromLogout();
+
                                                                     }
                                                                 } else if (responseUserProfile.getStatus() != Constants.RES_SUCCESS) {
                                                                     mUtils.getErrorDialog(responseUserProfile.getMessage()).show();
                                                                 } else {
                                                                     new SharedPref(getContext()).setLoggedInUser(responseUserProfile.getUserInfo());
                                                                     if (mListener != null) {
-                                                                        mListener.showSettingsFragment();
+//                                                                        mListener.showSettingsFragment();
+                                                                        // // TODO:   <My Account>
+                                                                        mListener.goBack();
                                                                     }
                                                                 }
                                                             }

@@ -58,8 +58,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends BaseFragment {
 
     private static String LOGGER_TAG = "ProfileFragment";
-
-    public static final int REQUEST_IMAGE_CAPTURE = 22888;
+    private String TAG = this.getClass().getName();
+    public static final int REQUEST_IMAGE_CAPTURE = 3;
     public static final int PICK_IMAGE_REQUEST = 22;
 
     public static final String USER_ID = "userId";
@@ -92,7 +92,7 @@ public class ProfileFragment extends BaseFragment {
      * @param u -> int userId
      * @return A new instance of fragment ProfileFragment.
      */
-    // TODO: Rename and change types and number of parameters
+
     public static ProfileFragment newInstance(int u) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -162,7 +162,9 @@ public class ProfileFragment extends BaseFragment {
         });
 
         final CustomFontTextView btn_turn_notif = (CustomFontTextView) view.findViewById(R.id.btn_turn_notif);
-
+        //// TODO: 8/4/2016  
+        //from capture fail
+        //TODO:         startActivityForResult
         CustomFontTextView settings_account_avatar_change_take_new_photo = (CustomFontTextView) view.findViewById(R.id.settings_account_avatar_change_take_new_photo);
         settings_account_avatar_change_take_new_photo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,6 +175,8 @@ public class ProfileFragment extends BaseFragment {
                         ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                        Log.i(TAG, "onClick: startActivityForResult from capture");
+
                         startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
                     }
                 } else
@@ -180,6 +184,7 @@ public class ProfileFragment extends BaseFragment {
             }
         });
 
+        // from album is success!
         CustomFontTextView settings_account_avatar_change_choose_from_album = (CustomFontTextView) view.findViewById(R.id.settings_account_avatar_change_choose_from_album);
         settings_account_avatar_change_choose_from_album.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,9 +197,10 @@ public class ProfileFragment extends BaseFragment {
                     selIntent.setType("image/*");
                     selIntent.setAction(Intent.ACTION_GET_CONTENT);
                     // Always show the chooser (if there are multiple options available)
+                    Log.i(TAG, "onClick: startActivityForResult from album");
                     startActivityForResult(Intent.createChooser(selIntent, "Select Picture"), PICK_IMAGE_REQUEST);
                 } else
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
             }
         });
 
@@ -202,10 +208,10 @@ public class ProfileFragment extends BaseFragment {
         final Button btn_tab2 = (Button) view.findViewById(R.id.btn_tab2);
         final Button btn_tab3 = (Button) view.findViewById(R.id.btn_tab3);
         final Button btn_tab4 = (Button) view.findViewById(R.id.btn_tab4); //Footprints
-        btn_tab1.setWidth(metrics.widthPixels/4);
-        btn_tab2.setWidth(metrics.widthPixels/4);
-        btn_tab3.setWidth(metrics.widthPixels/4);
-        btn_tab4.setWidth(metrics.widthPixels/4);
+        btn_tab1.setWidth(metrics.widthPixels / 4);
+        btn_tab2.setWidth(metrics.widthPixels / 4);
+        btn_tab3.setWidth(metrics.widthPixels / 4);
+        btn_tab4.setWidth(metrics.widthPixels / 4);
 
         final Map<String, String> params = mUtils.getBaseRequestMap();
         params.put(User.USER_ID, String.valueOf(userId));
@@ -226,7 +232,8 @@ public class ProfileFragment extends BaseFragment {
                                 if (mListener != null) {
                                     mListener.showStartingFragmentFromLogout();
                                 }
-                            } else */if (responseUserProfile.getStatus() != Constants.RES_SUCCESS) {
+                            } else */
+                            if (responseUserProfile.getStatus() != Constants.RES_SUCCESS) {
                                 mUtils.getErrorDialog(responseUserProfile.getMessage()).show();
                                 new SharedPref(getContext()).setLoggedInUser(null);
                                 if (mListener != null)
@@ -294,12 +301,13 @@ public class ProfileFragment extends BaseFragment {
                                         isOtherUser = false;
                                         btn_profile_menu.setVisibility(View.INVISIBLE);
 
+                                        //circle profile icon, click to change icon by capture or album
                                         profile_pic.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
 
                                                 SharedPref sharedPref = new SharedPref(getContext());
-                                                if(sharedPref.getFileUploadSettingTypes().isEmpty()) {
+                                                if (sharedPref.getFileUploadSettingTypes().isEmpty()) {
                                                     try {
                                                         mApi.getFileUploadSetting(mUtils.getBaseRequestMap(), mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                                                             @Override
@@ -307,11 +315,11 @@ public class ProfileFragment extends BaseFragment {
                                                                 try {
                                                                     ResponseFileUploadSettings fileUploadSettings = (ResponseFileUploadSettings) object;
 
-                                                                    if(fileUploadSettings.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                                    if (fileUploadSettings.getStatus() == Constants.RES_UNAUTHORIZED) {
                                                                         if (mListener != null) {
                                                                             mListener.showStartingFragmentFromLogout();
                                                                         }
-                                                                    } else if(fileUploadSettings.getStatus() == Constants.RES_SUCCESS) {
+                                                                    } else if (fileUploadSettings.getStatus() == Constants.RES_SUCCESS) {
                                                                         (new SharedPref(getContext())).setFileUploadSettings(fileUploadSettings);
                                                                         slideUp(rl_choose_photo);
                                                                     }
@@ -341,7 +349,7 @@ public class ProfileFragment extends BaseFragment {
                                             @Override
                                             public void onClick(View v) {
                                                 SharedPref sharedPref = new SharedPref(getContext());
-                                                if(sharedPref.getFileUploadSettingTypes().isEmpty()) {
+                                                if (sharedPref.getFileUploadSettingTypes().isEmpty()) {
                                                     try {
                                                         mApi.getFileUploadSetting(mUtils.getBaseRequestMap(), mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                                                             @Override
@@ -349,11 +357,11 @@ public class ProfileFragment extends BaseFragment {
                                                                 try {
                                                                     ResponseFileUploadSettings fileUploadSettings = (ResponseFileUploadSettings) object;
 
-                                                                    if(fileUploadSettings.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                                    if (fileUploadSettings.getStatus() == Constants.RES_UNAUTHORIZED) {
                                                                         if (mListener != null) {
                                                                             mListener.showStartingFragmentFromLogout();
                                                                         }
-                                                                    } else if(fileUploadSettings.getStatus() == Constants.RES_SUCCESS) {
+                                                                    } else if (fileUploadSettings.getStatus() == Constants.RES_SUCCESS) {
                                                                         (new SharedPref(getContext())).setFileUploadSettings(fileUploadSettings);
                                                                         if (mListener != null) {
                                                                             mListener.addSnapPost();
@@ -500,14 +508,14 @@ public class ProfileFragment extends BaseFragment {
                                                                 mUtils.dismissDialog(mProgressDialog);
                                                                 BaseResponse response = (BaseResponse) object;
 
-                                                                if(response.getStatus() == Constants.RES_UNAUTHORIZED) {
-                                                                    if(mListener != null) {
+                                                                if (response.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                                    if (mListener != null) {
                                                                         mListener.showStartingFragmentFromLogout();
                                                                     }
                                                                 } else if (response.getStatus() != Constants.RES_SUCCESS) {
                                                                     mUtils.getErrorDialog(response.getMessage()).show();
                                                                 } else {
-                                                                    if(user.getNotificationFlag() == Constants.FLAG_TRUE)
+                                                                    if (user.getNotificationFlag() == Constants.FLAG_TRUE)
                                                                         user.setNotificationFlag(Constants.FLAG_FALSE);
                                                                     else
                                                                         user.setNotificationFlag(Constants.FLAG_TRUE);
@@ -583,6 +591,7 @@ public class ProfileFragment extends BaseFragment {
 //                                            });
                                         }
 
+                                        //circle icon
                                         btn_profile_action.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -598,14 +607,14 @@ public class ProfileFragment extends BaseFragment {
                                                                 ResponseFollowUser response = (ResponseFollowUser) object;
                                                                 mUtils.dismissDialog(mProgressDialog);
 
-                                                                if(response.getStatus() == Constants.RES_UNAUTHORIZED) {
-                                                                    if(mListener != null) {
+                                                                if (response.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                                    if (mListener != null) {
                                                                         mListener.showStartingFragmentFromLogout();
                                                                     }
                                                                 } else if (response.getStatus() != Constants.RES_SUCCESS) {
                                                                     mUtils.getErrorDialog(response.getMessage()).show();
                                                                 } else {
-                                                                    if(response.getFollowFlag() == Constants.FLAG_TRUE) {
+                                                                    if (response.getFollowFlag() == Constants.FLAG_TRUE) {
                                                                         btn_profile_action.setImageResource(R.drawable.s7_btn_add_user_sel);
                                                                         btn_profile_menu.setVisibility(View.INVISIBLE);
                                                                     } else {
@@ -734,22 +743,23 @@ public class ProfileFragment extends BaseFragment {
         mUtils.dismissDialog(mProgressDialog);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
 
+    //TODO:                     onActivityResult
     @Override
     public void onActivityResult(final int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        Log.d(LOGGER_TAG, "requestCode: "+requestCode+"==resultCode: "+resultCode);
+        Log.i(TAG, "onActivityResult: ");
+        Log.d(LOGGER_TAG, "requestCode: " + requestCode + "==resultCode: " + resultCode);
 
         if (requestCode == ProfileFootprintsFragment.REQUEST_CHECK_SETTINGS && resultCode == PackageManager.PERMISSION_GRANTED) {
             Fragment fragment = getChildFragmentManager().findFragmentById(R.id.profile_frame_content);
-            if(fragment instanceof ProfileFootprintsFragment) {
+            Log.i(TAG, "onActivityResult: requestCode==ProfileFootprintsFragment.REQUEST_CHECK_SETTINGS");
+            if (fragment instanceof ProfileFootprintsFragment) {
                 Log.d(LOGGER_TAG, "Showing ProfileFootprintsFragment");
                 fragment.onActivityResult(requestCode, resultCode, data);
             }
@@ -761,11 +771,13 @@ public class ProfileFragment extends BaseFragment {
             Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), (Bitmap) extras.get("data"), glMaxTextureSize);
             String error = mUtils.validateUploadImage(bitmapResult);
 
-            if(error.isEmpty())
+            if (error.isEmpty()) {
+                Log.i(TAG, "onActivityResult: error.isEmpty  error: " + error + ".");
 //                uploadToServer((Bitmap) bitmapResult.get(Constants.PHOTO_BITMAP));
                 uploadToServer(bitmapResult.get(Constants.PHOTO_PATH).toString());
-            else
+            } else
                 mUtils.getErrorDialog(error).show();
+            Log.i(TAG, "onActivityResult: requestCode == REQUEST_IMAGE_CAPTURE");
         }
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
@@ -777,7 +789,7 @@ public class ProfileFragment extends BaseFragment {
                 Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri), glMaxTextureSize);
                 String error = mUtils.validateUploadImage(bitmapResult);
 
-                if(error.isEmpty())
+                if (error.isEmpty())
 //                    uploadToServer((Bitmap) bitmapResult.get(Constants.PHOTO_BITMAP));
                     uploadToServer(bitmapResult.get(Constants.PHOTO_PATH).toString());
                 else
@@ -787,10 +799,11 @@ public class ProfileFragment extends BaseFragment {
                 e.printStackTrace();
             }
         }
+
     }
 
     private void uploadToServer(String imageFilePath) {
-        if(user != null) {
+        if (user != null) {
             try {
                 Map<String, String> params = mUtils.getBaseRequestMap();
                 params.put(User.FILE_TYPE, Constants.FILE_TYPE_JPG);
@@ -806,8 +819,8 @@ public class ProfileFragment extends BaseFragment {
                         try {
                             BaseResponse response = (BaseResponse) object;
 
-                            if(response.getStatus() == Constants.RES_UNAUTHORIZED) {
-                                if(mListener != null) {
+                            if (response.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                if (mListener != null) {
                                     mUtils.dismissDialog(mProgressDialog);
                                     mListener.showStartingFragmentFromLogout();
                                 }
@@ -830,8 +843,8 @@ public class ProfileFragment extends BaseFragment {
                                                 mUtils.dismissDialog(mProgressDialog);
 
                                                 if (responseUserProfile != null) {
-                                                    if(responseUserProfile.getStatus() == Constants.RES_UNAUTHORIZED) {
-                                                        if(mListener != null) {
+                                                    if (responseUserProfile.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                        if (mListener != null) {
                                                             mListener.showStartingFragmentFromLogout();
                                                         }
                                                     } else if (responseUserProfile.getStatus() != Constants.RES_SUCCESS) {
@@ -1084,13 +1097,19 @@ public class ProfileFragment extends BaseFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void onFragmentInteraction(Uri uri);
+
         void addSnapPost();
+
         void showUserFollowings(int userId);
+
         void showUserFollowers(int userId);
+
         void showHomeFragment();
+
         void goBack();
+
         void showStartingFragmentFromLogout();
     }
 }

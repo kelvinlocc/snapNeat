@@ -116,7 +116,7 @@ public class SettingsChangePasswordFragment extends BaseFragment {
 //                }
 
                 String errorMessage = mUtils.validatePasswordAndConfPassword(newPassword, confNewPassword);
-                if(!errorMessage.isEmpty()) {
+                if (!errorMessage.isEmpty()) {
                     mUtils.getErrorDialog(errorMessage).show();
                 } else {
 
@@ -137,16 +137,18 @@ public class SettingsChangePasswordFragment extends BaseFragment {
                                         BaseResponse res = (BaseResponse) object;
                                         mUtils.dismissDialog(mProgressDialog);
 
-                                        if(res != null) {
+                                        if (res != null) {
 
-                                            if(res.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                            if (res.getStatus() == Constants.RES_UNAUTHORIZED) {
                                                 if (mListener != null) {
                                                     mListener.showStartingFragmentFromLogout();
                                                 }
-                                            } else if(res.getStatus() == Constants.RES_SUCCESS) {
+                                            } else if (res.getStatus() == Constants.RES_SUCCESS) {
                                                 mUtils.getDialog(res.getMessage()).show();
-                                                if(mListener != null)
-                                                    mListener.showSettingsFragment();
+                                                if (mListener != null) {
+//                                                    mListener.showSettingsFragment();//kl
+                                                    mListener.goBack(); //kl
+                                                }
                                             } else {
                                                 mUtils.getErrorDialog(res.getMessage()).show();
                                             }
@@ -166,7 +168,7 @@ public class SettingsChangePasswordFragment extends BaseFragment {
                                     mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_cannot_process_request)).show();
                                 }
                             });
-                        } catch (Exception e){
+                        } catch (Exception e) {
                             mUtils.dismissDialog(mProgressDialog);
                             e.printStackTrace();
                         }
@@ -222,7 +224,7 @@ public class SettingsChangePasswordFragment extends BaseFragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p/>
+     * <p>
      * See the Android Training lesson <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
@@ -230,8 +232,11 @@ public class SettingsChangePasswordFragment extends BaseFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
         void showSettingsFragment();
+
         void goBack();
+
         void showStartingFragmentFromLogout();
     }
 }

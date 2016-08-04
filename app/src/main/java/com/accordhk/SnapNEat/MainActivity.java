@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.accordhk.SnapNEat.fragments.AboutFragment;
 import com.accordhk.SnapNEat.fragments.DisclaimerFragment;
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Toast.makeText(MainActivity.this, "updated...123", Toast.LENGTH_SHORT).show();
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -908,6 +909,7 @@ public class MainActivity extends AppCompatActivity
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+        Toast.makeText(MainActivity.this, "back!", Toast.LENGTH_SHORT).show();
         this.onBackPressed();
 
     }
