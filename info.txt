@@ -3,3 +3,4 @@ git link:
 https://accordhk.git.beanstalkapp.com/snapneat_android_git.git
 
 workable
+android_studio

@@ -48,6 +48,7 @@ public class Snap {
     private int totalLikes;
     @SerializedName("district_info")
     private District district;
+
     @SerializedName("user_info")
     private User user;
 

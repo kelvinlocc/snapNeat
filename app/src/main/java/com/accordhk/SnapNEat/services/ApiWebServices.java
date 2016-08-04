@@ -481,7 +481,7 @@ public class ApiWebServices implements IApi {
                 new Response.Listener<ResponseListSnaps>() {
                     @Override
                     public void onResponse(ResponseListSnaps response) {
-                        String jsonOutput = GSON.toJson(response);
+                        String jsonOutput = GSON.toJson(response); // Serializable
                         Log.d(LOGGER_TAG, "getMyFavourites: "+jsonOutput);
                         mListener.onResponse(response);
                     }

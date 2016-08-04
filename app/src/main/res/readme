@@ -1,0 +1,19 @@
+29-07(Friday): bug found,
+
+guest mode > enter a photo > like > press back button > crashed
+keep asking location if not granted
+post, ask 2 time for leaving
+Food of this restaurant of the uploader mismatch
+show multiple dish fail
+show shop in distance not completed,
+fragment:
+
+ if (mCurrentUser == null) { // No logged in user; show login page
+                mFragment = new StartingFragment();
+            } else { // User still logged in; show homepage
+                mFragment = new MainFragment();
+            }
+
+MainFragment:
+
+card_stack

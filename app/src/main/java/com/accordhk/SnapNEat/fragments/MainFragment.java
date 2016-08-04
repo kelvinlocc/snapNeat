@@ -590,7 +590,9 @@ public class MainFragment extends BaseFragment {
     }
 
 
-//    private void showPermitSaveExternal(String strUrl){
+//    }
+
+    //    private void showPermitSaveExternal(String strUrl){
 //        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
 //            ImageRequest ir = new ImageRequest(strUrl, new Response.Listener<Bitmap>() {
 //
@@ -626,7 +628,41 @@ public class MainFragment extends BaseFragment {
 //        } else {
 //            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
 //        }
-//    }
+    private void getSnapsByDistance(final int dist) {
+        Log.d(LOGGER_TAG, "mGoogleApiClient is null? " + (mGoogleApiClient == null));
+
+        if (mGoogleApiClient == null) {
+
+            mGoogleApiClient = new GoogleApiClient.Builder(getContext(), new ConnectionCallbacks() {
+                @Override
+                public void onConnected(Bundle bundle) {
+                    Log.d(LOGGER_TAG, "mGoogleApiClient connected!!!");
+                    distance = dist;
+                    mPopupBackStack.pop();
+                    slideDown(rl_choose_distance);
+                    getSnapsByLocation();
+                }
+
+                @Override
+                public void onConnectionSuspended(int i) {
+
+                }
+            }, new OnConnectionFailedListener() {
+                @Override
+                public void onConnectionFailed(ConnectionResult connectionResult) {
+
+                }
+            }).addApi(LocationServices.API).build();
+            mGoogleApiClient.connect();
+
+        } else {
+            distance = dist;
+            mPopupBackStack.pop();
+            slideDown(rl_choose_distance);
+            getSnapsByLocation();
+        }
+    }
+
 
     @SuppressWarnings("deprecation")
     private void getSnapsByLocation() {
@@ -685,7 +721,6 @@ public class MainFragment extends BaseFragment {
 
         }
     }
-
 
     /**
      * Generates new adapter
@@ -774,41 +809,6 @@ public class MainFragment extends BaseFragment {
 
     }
 
-    private void getSnapsByDistance(final int dist) {
-        Log.d(LOGGER_TAG, "mGoogleApiClient is null? " + (mGoogleApiClient == null));
-
-        if (mGoogleApiClient == null) {
-
-            mGoogleApiClient = new GoogleApiClient.Builder(getContext(), new ConnectionCallbacks() {
-                @Override
-                public void onConnected(Bundle bundle) {
-                    Log.d(LOGGER_TAG, "mGoogleApiClient connected!!!");
-                    distance = dist;
-                    mPopupBackStack.pop();
-                    slideDown(rl_choose_distance);
-                    getSnapsByLocation();
-                }
-
-                @Override
-                public void onConnectionSuspended(int i) {
-
-                }
-            }, new OnConnectionFailedListener() {
-                @Override
-                public void onConnectionFailed(ConnectionResult connectionResult) {
-
-                }
-            }).addApi(LocationServices.API).build();
-            mGoogleApiClient.connect();
-
-        } else {
-            distance = dist;
-            mPopupBackStack.pop();
-            slideDown(rl_choose_distance);
-            getSnapsByLocation();
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -855,22 +855,6 @@ public class MainFragment extends BaseFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-
-            if(mGoogleApiClient != null) {
-                mGoogleApiClient.connect();
-            }
-
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
@@ -901,6 +885,22 @@ public class MainFragment extends BaseFragment {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+
+            if(mGoogleApiClient != null) {
+                mGoogleApiClient.connect();
+            }
+
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     /**

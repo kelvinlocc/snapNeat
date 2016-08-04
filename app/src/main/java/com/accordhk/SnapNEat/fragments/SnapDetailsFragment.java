@@ -155,7 +155,7 @@ public class SnapDetailsFragment extends BaseFragment {
         Point size = new Point();
         display.getSize(size);
         final int width = size.x;
-        final int height = (size.y/2)+50;
+        final int height = (size.y / 2) + 50;
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_snap_details, container, false);
@@ -170,15 +170,15 @@ public class SnapDetailsFragment extends BaseFragment {
 //        if(disableBack) {
 //            btn_back.setVisibility(View.INVISIBLE);
 //        } else {
-            btn_back.setVisibility(View.VISIBLE);
-            btn_back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        mListener.goBack();
-                    }
+        btn_back.setVisibility(View.VISIBLE);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.goBack();
                 }
-            });
+            }
+        });
 //        }
 
         CustomFontTextView tv_resto_lbl = (CustomFontTextView) view.findViewById(R.id.textView);
@@ -207,7 +207,7 @@ public class SnapDetailsFragment extends BaseFragment {
 
         final CustomFontTextView btn_share = (CustomFontTextView) view.findViewById(R.id.btn_share);
         final ImageButton btn_facebook = (ImageButton) view.findViewById(R.id.btn_facebook);
-        if(isPackageInstalled(Constants.FACEBOOK_PACKAGE))
+        if (isPackageInstalled(Constants.FACEBOOK_PACKAGE))
             rl_share_fb.setVisibility(View.VISIBLE);
         else
             rl_share_fb.setVisibility(View.GONE);
@@ -219,7 +219,7 @@ public class SnapDetailsFragment extends BaseFragment {
             rl_share_wechat.setVisibility(View.GONE);
 
         final ImageButton btn_instagram = (ImageButton) view.findViewById(R.id.btn_instagram);
-        if(isPackageInstalled(Constants.INSTAGRAM_PACKAGE))
+        if (isPackageInstalled(Constants.INSTAGRAM_PACKAGE))
             rl_share_instagram.setVisibility(View.VISIBLE);
         else
             rl_share_instagram.setVisibility(View.GONE);
@@ -235,7 +235,7 @@ public class SnapDetailsFragment extends BaseFragment {
             params.put(Snap.SNAP_ID, String.valueOf(snapId));
 
             User user = new SharedPref(mContext).getLoggedInUser();
-            if(user != null) {
+            if (user != null) {
                 params.put(Snap.USER_ID, String.valueOf(user.getId()));
             }
 
@@ -252,6 +252,7 @@ public class SnapDetailsFragment extends BaseFragment {
                                 mUtils.getErrorDialog(response.getMessage()).show();
                             } else {
 
+                                //snap obj to fetch the data from server
                                 final Snap snap = response.getResults();
 
                                 btn_share.setText(mUtils.getStringResource(R.string.s10_share));
@@ -298,11 +299,11 @@ public class SnapDetailsFragment extends BaseFragment {
                                         // Set the MIME type
                                         share.setType("image/*");
 
-                                        if(snap.getRelatedSnaps().isEmpty() == false) {
+                                        if (snap.getRelatedSnaps().isEmpty() == false) {
                                             try {
 
-                                                if(snap.getRelatedSnaps().size() > 0) {
-                                                    if(snap.getRelatedSnaps().get(0).getImageThumbnail() != null && snap.getRelatedSnaps().get(0).getImageThumbnail().trim().isEmpty() == false) {
+                                                if (snap.getRelatedSnaps().size() > 0) {
+                                                    if (snap.getRelatedSnaps().get(0).getImageThumbnail() != null && snap.getRelatedSnaps().get(0).getImageThumbnail().trim().isEmpty() == false) {
                                                         showPermitSaveExternal(share, snap.getRelatedSnaps().get(0).getImageThumbnail().trim());
                                                     } else {
                                                         mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_no_image_to_share)).show();
@@ -332,11 +333,11 @@ public class SnapDetailsFragment extends BaseFragment {
                                         // Set the MIME type
                                         share.setType("image/*");
 
-                                        if(snap.getRelatedSnaps().isEmpty() == false) {
+                                        if (snap.getRelatedSnaps().isEmpty() == false) {
                                             try {
 
-                                                if(snap.getRelatedSnaps().size() > 0) {
-                                                    if(snap.getRelatedSnaps().get(0).getImageThumbnail() != null && snap.getRelatedSnaps().get(0).getImageThumbnail().trim().isEmpty() == false) {
+                                                if (snap.getRelatedSnaps().size() > 0) {
+                                                    if (snap.getRelatedSnaps().get(0).getImageThumbnail() != null && snap.getRelatedSnaps().get(0).getImageThumbnail().trim().isEmpty() == false) {
                                                         showPermitSaveExternal(share, snap.getRelatedSnaps().get(0).getImageThumbnail().trim());
                                                     } else {
                                                         mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_no_image_to_share)).show();
@@ -365,7 +366,7 @@ public class SnapDetailsFragment extends BaseFragment {
                                 int id = getContext().getResources().getIdentifier("s1_rating_" + snap.getRating(), "drawable", getContext().getPackageName());
                                 rating.setImageResource(id);
 
-    //                            snap_photo.setImageUrl(snap.getImage(), mImageLoader);
+                                //                            snap_photo.setImageUrl(snap.getImage(), mImageLoader);
                                 SnapListImageRecyclerViewAdapter snapAdapter = new SnapListImageRecyclerViewAdapter(getContext(), snap.getPhotos(), R.layout.list_snap_details_snap_photo,
                                         width, height,
                                         new SnapListImageRecyclerViewAdapter.SnapListImageRecyclerViewAdapterListener() {
@@ -385,8 +386,8 @@ public class SnapDetailsFragment extends BaseFragment {
 
                                 spending.setText(snap.getSpending().getValue());
 
-                                if(snap.getDishes().size() > 0)
-                                    dish.setText(snap.getDishes().get(0).getName());
+                                if (snap.getDishes().size() > 0)
+                                    dish.setText(snap.getDishes().get(0).getName()); // ignoring other dishes
 
                                 tv_num_likes.setText(String.valueOf(snap.getTotalLikes()));
 
@@ -401,7 +402,7 @@ public class SnapDetailsFragment extends BaseFragment {
                                     }
                                 });
 
-                                if(snap.getFavouriteFlag() == Constants.FLAG_TRUE) {
+                                if (snap.getFavouriteFlag() == Constants.FLAG_TRUE) {
                                     btn_favourite.setImageResource(R.drawable.s10_favourite);
                                 } else {
                                     btn_favourite.setOnClickListener(new View.OnClickListener() {
@@ -420,7 +421,7 @@ public class SnapDetailsFragment extends BaseFragment {
 
                                                             mUtils.dismissDialog(mProgressDialog);
                                                             if (faveRes != null) {
-                                                                if(faveRes.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                                if (faveRes.getStatus() == Constants.RES_UNAUTHORIZED) {
                                                                     if (mListener != null) {
                                                                         mListener.showStartingFragmentFromLogout();
                                                                     }
@@ -452,7 +453,7 @@ public class SnapDetailsFragment extends BaseFragment {
                                     });
                                 }
 
-                                if(snap.getLikeFlag() == Constants.FLAG_TRUE) {
+                                if (snap.getLikeFlag() == Constants.FLAG_TRUE) {
                                     btn_like.setImageResource(R.drawable.s10_like);
                                 }
                                 btn_like.setOnClickListener(new View.OnClickListener() {
@@ -462,24 +463,24 @@ public class SnapDetailsFragment extends BaseFragment {
                                             Map<String, String> params = mUtils.getBaseRequestMap();
                                             params.put(Snap.SNAP_ID, String.valueOf(snapId));
 
-    //                                        mProgressDialog.show();
+                                            //                                        mProgressDialog.show();
                                             mApi.postSnapLike(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                                                 @Override
                                                 public void onResponse(Object object) {
                                                     try {
                                                         ResponsePostLike faveRes = (ResponsePostLike) object;
-    //                                                mUtils.dismissDialog(mProgressDialog);
+                                                        //                                                mUtils.dismissDialog(mProgressDialog);
 
                                                         if (faveRes != null) {
 
-                                                            if(faveRes.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                            if (faveRes.getStatus() == Constants.RES_UNAUTHORIZED) {
                                                                 if (mListener != null) {
                                                                     mListener.showStartingFragmentFromLogout();
                                                                 }
-                                                            } else if(faveRes.getStatus() != Constants.RES_SUCCESS) {
+                                                            } else if (faveRes.getStatus() != Constants.RES_SUCCESS) {
                                                                 mUtils.getErrorDialog(faveRes.getMessage()).show();
                                                             } else {
-                                                                if(faveRes.getLikeStatus() == Constants.FLAG_TRUE)
+                                                                if (faveRes.getLikeStatus() == Constants.FLAG_TRUE)
                                                                     btn_like.setImageResource(R.drawable.s10_like);
                                                                 else
                                                                     btn_like.setImageResource(R.drawable.s10_like_def);
@@ -494,18 +495,18 @@ public class SnapDetailsFragment extends BaseFragment {
 
                                                 @Override
                                                 public void onErrorResponse(VolleyError error) {
-    //                                                mUtils.dismissDialog(mProgressDialog);
+                                                    //                                                mUtils.dismissDialog(mProgressDialog);
                                                     mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_cannot_process_request)).show();
                                                 }
                                             });
                                         } catch (Exception e) {
                                             e.printStackTrace();
-    //                                        mUtils.dismissDialog(mProgressDialog);
+                                            //                                        mUtils.dismissDialog(mProgressDialog);
                                         }
                                     }
                                 });
 
-                                if(snap.getInappropriateFlag() != Constants.FLAG_TRUE) {
+                                if (snap.getInappropriateFlag() != Constants.FLAG_TRUE) {
                                     tv_report_inappropriate.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -533,7 +534,7 @@ public class SnapDetailsFragment extends BaseFragment {
                                 profile_pic.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        if(mListener != null) {
+                                        if (mListener != null) {
                                             mListener.showUserProfile(snap.getUser().getId());
                                         }
                                     }
@@ -632,7 +633,8 @@ public class SnapDetailsFragment extends BaseFragment {
 
             case 0x101: {
 
-            } default:
+            }
+            default:
                 callbackManager.onActivityResult(requestCode, resultCode, data);
                 Log.d(LOGGER_TAG, "result " + ShareDialog.canShow(ShareLinkContent.class));
         }
@@ -649,13 +651,20 @@ public class SnapDetailsFragment extends BaseFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
+
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
         void goBack();
+
         void showReportInappropriate(int userId, int snapId);
+
         void showSnapDetails(int id);
+
         void showRestaurantDetails(int restaurantId);
+
         void showUserProfile(int userid);
+
         void showStartingFragmentFromLogout();
     }
 }

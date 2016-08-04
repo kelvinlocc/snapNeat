@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
         SnapDetailsFragment.OnFragmentInteractionListener,
         StartingFragment.OnFragmentInteractionListener,
         NavigationView.OnNavigationItemSelectedListener,
-        NearbyRestaurantsMapFragment.OnFragmentInteractionListener{
+        NearbyRestaurantsMapFragment.OnFragmentInteractionListener {
 
     Fragment mFragment;
     FragmentTransaction mTransaction;
@@ -190,11 +190,11 @@ public class MainActivity extends AppCompatActivity
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d(LOGGER_TAG, "YOU ARE HERE: "+intent.getAction());
+                Log.d(LOGGER_TAG, "YOU ARE HERE: " + intent.getAction());
             }
         };
 
-        if(mCurrentUser != null) {
+        if (mCurrentUser != null) {
             // Registering BroadcastReceiver
             registerReceiver();
         }
@@ -225,20 +225,20 @@ public class MainActivity extends AppCompatActivity
 
             mTransaction = getSupportFragmentManager().beginTransaction();
 
-            if(mCurrentUser == null) { // No logged in user; show login page
-                mFragment = new StartingFragment();
-            } else { // User still logged in; show homepage
-                mFragment = new MainFragment();
-            }
+                if (mCurrentUser == null) { // No logged in user; show login page
+                    mFragment = new StartingFragment();
+                } else { // User still logged in; show homepage
+                    mFragment = new MainFragment();
+                }
 
             updateNavigationDrawerItems();
 
-            if(intentData != null) {
+            if (intentData != null) {
                 String intentPath = intentData.toString();
 
-                Log.d(LOGGER_TAG, "intentPath: "+intentPath);
+                Log.d(LOGGER_TAG, "intentPath: " + intentPath);
 
-                if(intentPath.contains("sneapp://?snapId=")) {
+                if (intentPath.contains("sneapp://?snapId=")) {
                     try {
                         int snapId = Integer.parseInt(intentPath.substring(intentPath.lastIndexOf("=") + 1));
                         Log.d("snapId: ", String.valueOf(snapId));
@@ -271,18 +271,18 @@ public class MainActivity extends AppCompatActivity
 
                 Log.d("showProfileFromPush ?: ", "" + (showProfileFromPush == true));
 
-                if(showProfileFromPush == true) { // from push notif
+                if (showProfileFromPush == true) { // from push notif
                     // Check if user is currently logged in
 //                    User user = new SharedPref(getApplicationContext()).getLoggedInUser();
 
-                    if(mCurrentUser == null) { // No logged in user; show login page
+                    if (mCurrentUser == null) { // No logged in user; show login page
                         mFragment = new StartingFragment();
                     } else { // User still logged in; show homepage
 
-                        Log.d("USER ID: ", mCurrentUser.getId()+"");
-                        Log.d("USER nID: ", mCurrentUser.getnId()+"");
+                        Log.d("USER ID: ", mCurrentUser.getId() + "");
+                        Log.d("USER nID: ", mCurrentUser.getnId() + "");
 
-                        if(mCurrentUser.getId() < 1) { // No logged in user
+                        if (mCurrentUser.getId() < 1) { // No logged in user
                             mFragment = new StartingFragment();
                         } else {
                             Bundle args = new Bundle();
@@ -313,29 +313,29 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            if(fragment != null) {
+            if (fragment != null) {
                 if (fragment instanceof MainFragment) {
-                    if((((MainFragment) fragment).getmPopupBackStack()).size() > 0) {
+                    if ((((MainFragment) fragment).getmPopupBackStack()).size() > 0) {
                         ((MainFragment) fragment).slideDown(((MainFragment) fragment).getmPopupBackStack().pop());
                     } else
                         super.onBackPressed();
                 } else if (fragment instanceof NearbyRestaurantsMapFragment) {
-                    if((((NearbyRestaurantsMapFragment) fragment).getmPopupBackStack()).size() > 0) {
+                    if ((((NearbyRestaurantsMapFragment) fragment).getmPopupBackStack()).size() > 0) {
                         ((NearbyRestaurantsMapFragment) fragment).slideDown(((NearbyRestaurantsMapFragment) fragment).getmPopupBackStack().pop());
                     } else
                         super.onBackPressed();
                 } else if (fragment instanceof SnapDetailsFragment) {
-                    if((((SnapDetailsFragment) fragment).getmPopupBackStack()).size() > 0) {
+                    if ((((SnapDetailsFragment) fragment).getmPopupBackStack()).size() > 0) {
                         ((SnapDetailsFragment) fragment).slideDown(((SnapDetailsFragment) fragment).getmPopupBackStack().pop());
                     } else
                         super.onBackPressed();
                 } else if (fragment instanceof SettingsAccountFragment) {
-                    if((((SettingsAccountFragment) fragment).getmPopupBackStack()).size() > 0) {
+                    if ((((SettingsAccountFragment) fragment).getmPopupBackStack()).size() > 0) {
                         ((SettingsAccountFragment) fragment).slideDown(((SettingsAccountFragment) fragment).getmPopupBackStack().pop());
                     } else
                         super.onBackPressed();
                 } else if (fragment instanceof RestaurantsMapFragment) {
-                    if((((RestaurantsMapFragment) fragment).getmPopupBackStack()).size() > 0) {
+                    if ((((RestaurantsMapFragment) fragment).getmPopupBackStack()).size() > 0) {
                         ((RestaurantsMapFragment) fragment).slideDown(((RestaurantsMapFragment) fragment).getmPopupBackStack().pop());
                     } else {
                         super.onBackPressed();
@@ -355,12 +355,12 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
                 } else if (fragment instanceof RestaurantDetailsFragment) {
-                    if((((RestaurantDetailsFragment) fragment).getmPopupBackStack()).size() > 0) {
+                    if ((((RestaurantDetailsFragment) fragment).getmPopupBackStack()).size() > 0) {
                         ((RestaurantDetailsFragment) fragment).slideDown(((RestaurantDetailsFragment) fragment).getmPopupBackStack().pop());
                     } else
                         super.onBackPressed();
                 } else if (fragment instanceof ProfileFragment) {
-                    if((((ProfileFragment) fragment).getmPopupBackStack()).size() > 0) {
+                    if ((((ProfileFragment) fragment).getmPopupBackStack()).size() > 0) {
                         ((ProfileFragment) fragment).slideDown(((ProfileFragment) fragment).getmPopupBackStack().pop());
                     } else {
                         super.onBackPressed();
@@ -369,7 +369,7 @@ public class MainActivity extends AppCompatActivity
                             Log.d(LOGGER_TAG, "trying to call onResume");
 
                             fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                            if(fragment instanceof ProfileFragment) {
+                            if (fragment instanceof ProfileFragment) {
                                 Log.d(LOGGER_TAG, "instance of ProfileFragment");
                                 ((ProfileFragment) fragment).generateView();
                             }
@@ -378,8 +378,8 @@ public class MainActivity extends AppCompatActivity
                             e.printStackTrace();
                         }
                     }
-                } else if(fragment instanceof PostSnapFragment) {
-                    if((((PostSnapFragment) fragment).getmPopupBackStack()).size() > 0) {
+                } else if (fragment instanceof PostSnapFragment) {
+                    if ((((PostSnapFragment) fragment).getmPopupBackStack()).size() > 0) {
                         ((PostSnapFragment) fragment).slideDown(((PostSnapFragment) fragment).getmPopupBackStack().pop());
                     } else {
                         final Utils mUtils = new Utils(getApplicationContext());
@@ -423,7 +423,7 @@ public class MainActivity extends AppCompatActivity
 
                         fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
-                        if(fragment instanceof ProfileFragment) { // refresh ProfileFragment
+                        if (fragment instanceof ProfileFragment) { // refresh ProfileFragment
                             Log.d(LOGGER_TAG, "instance of ProfileFragment");
                             ((ProfileFragment) fragment).generateView();
                         }
@@ -464,10 +464,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
+
+    // left navigation boor
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-
         FragmentManager manager = this.getSupportFragmentManager();
         manager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         mTransaction = manager.beginTransaction();
@@ -489,8 +490,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_profile_followings) {
 
             User user = new SharedPref(getApplicationContext()).getLoggedInUser();
-            if(user != null) {
-                Log.d(LOGGER_TAG, "Login USER ID: "+String.valueOf(user.getId()));
+            if (user != null) {
+                Log.d(LOGGER_TAG, "Login USER ID: " + String.valueOf(user.getId()));
 
                 Bundle args = new Bundle();
                 args.putInt(ProfileFragment.USER_ID, user.getId());
@@ -526,7 +527,7 @@ public class MainActivity extends AppCompatActivity
             currentLocale = newConfig.locale;
 
             this.setContentView(R.layout.activity_main);
-            navigationView = (NavigationView)  this.findViewById(R.id.nav_view);
+            navigationView = (NavigationView) this.findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(MainActivity.this);
 
             updateNavigationDrawerItems();
@@ -546,7 +547,7 @@ public class MainActivity extends AppCompatActivity
     public void updateNavigationDrawerItems() {
         // Check if user is currently logged in
         User user = new SharedPref(getApplicationContext()).getLoggedInUser();
-        if(user != null) {
+        if (user != null) {
             navigationView.getMenu().findItem(R.id.nav_starting).setVisible(false);
             navigationView.getMenu().findItem(R.id.nav_profile_followings).setVisible(true);
 
@@ -791,7 +792,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void selectLoginRegisterFragment(boolean showLoginFlag) {
         mTransaction = getSupportFragmentManager().beginTransaction();
-        if(showLoginFlag) {
+        if (showLoginFlag) {
             mFragment = new LoginFragment();
         } else {
             mFragment = new RegisterFragment();
@@ -918,7 +919,7 @@ public class MainActivity extends AppCompatActivity
             Log.d(LOGGER_TAG, "trying to call onResume");
 
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            if(fragment instanceof PostSnapFragment) {
+            if (fragment instanceof PostSnapFragment) {
                 Log.d(LOGGER_TAG, "instance of PostSnapFragment");
                 ((PostSnapFragment) fragment).customResumeFromBack(HotSearch.Category.DISTRICT.getKey(), restaurant);
             } else if (fragment instanceof RestaurantListFragment) { // refresh RestaurantListFragment
@@ -940,7 +941,7 @@ public class MainActivity extends AppCompatActivity
             Log.d(LOGGER_TAG, "trying to call onResume");
 
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            if(fragment instanceof PostSnapFragment) {
+            if (fragment instanceof PostSnapFragment) {
                 Log.d(LOGGER_TAG, "instance of PostSnapFragment");
                 ((PostSnapFragment) fragment).customResumeFromBack(type, selectedValues);
             } else if (fragment instanceof HotSearchListFragment) {
@@ -976,7 +977,7 @@ public class MainActivity extends AppCompatActivity
 
         mTransaction = getSupportFragmentManager().beginTransaction();
 
-        if(type == HotSearch.SearchResultType.USER.getKey()) {
+        if (type == HotSearch.SearchResultType.USER.getKey()) {
             Log.d(LOGGER_TAG, "showSearchResults by USER");
             SearchResultsByUsersFragment fragment = new SearchResultsByUsersFragment();
             fragment.setArguments(args);
@@ -1008,9 +1009,9 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
 
-        Log.d(LOGGER_TAG, "requestCode: "+String.valueOf(requestCode)+" resultcode: "+resultCode);
+        Log.d(LOGGER_TAG, "requestCode: " + String.valueOf(requestCode) + " resultcode: " + resultCode);
 
-        if(requestCode == MainFragment.REQUEST_CHECK_SETTINGS) {
+        if (requestCode == MainFragment.REQUEST_CHECK_SETTINGS) {
 //            final LocationSettingsStates states = LocationSettingsStates.fromIntent(data);
             switch (requestCode) {
                 case MainFragment.REQUEST_CHECK_SETTINGS:
@@ -1027,15 +1028,15 @@ public class MainActivity extends AppCompatActivity
             fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         }
 
-        if(fragment != null) {
+        if (fragment != null) {
             Log.d("FRAGMENT NOT NULL", fragment.toString());
             fragment.onActivityResult(requestCode, resultCode, data);
         }
 
     }
 
-    private void registerReceiver(){
-        if(!isReceiverRegistered) {
+    private void registerReceiver() {
+        if (!isReceiverRegistered) {
             LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver, new IntentFilter(GCMRegistrationIntentService.REGISTRATION_COMPLETE));
 
             isReceiverRegistered = true;
@@ -1048,7 +1049,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void unregisterGcmReceiver(){
+    private void unregisterGcmReceiver() {
         try {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         } catch (Exception e) {
@@ -1081,7 +1082,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if(mCurrentUser != null) {
+        if (mCurrentUser != null) {
             registerReceiver();
         }
     }
