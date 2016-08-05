@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -80,7 +81,7 @@ public class PostSnapFragment extends BaseFragment {
     String mCurrentPhotoPath;
 
     CustomFontTextView tv_snap_resto;
-    CustomFontTextView tv_snap_location;
+    EditText tv_snap_location;
     CustomFontTextView tv_snap_spending;
     CustomFontTextView tv_snap_dish;
 
@@ -204,7 +205,7 @@ public class PostSnapFragment extends BaseFragment {
         final CustomFontEditText tv_snap_hashtags = (CustomFontEditText) view.findViewById(R.id.tv_snap_hashtags);
 
         tv_snap_resto = (CustomFontTextView) view.findViewById(R.id.tv_snap_resto);
-        tv_snap_location = (CustomFontTextView) view.findViewById(R.id.tv_snap_location);
+        tv_snap_location = (EditText) view.findViewById(R.id.tv_snap_location);
         tv_snap_spending = (CustomFontTextView) view.findViewById(R.id.tv_snap_spending);
         tv_snap_dish = (CustomFontTextView) view.findViewById(R.id.tv_snap_dish);
 

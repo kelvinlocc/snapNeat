@@ -1,5 +1,5 @@
 package com.accordhk.SnapNEat.fragments;
-
+/// original
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -66,6 +66,7 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class MainFragment extends BaseFragment {
+    private String TAG = this.getClass().getName();
     private static String LOGGER_TAG = "MainFragment";
     private int MODE_RANDOM = Constants.HOMEPAGE_SNAP_MODE.RANDOM.getKey();
     private int MODE_LOCATION = Constants.HOMEPAGE_SNAP_MODE.LOCATION.getKey();
@@ -498,6 +499,7 @@ public class MainFragment extends BaseFragment {
             mApi.getSnapsForHomepage(params, new ApiWebServices.ApiListener() {
                 @Override
                 public void onResponse(final Object obj) {
+                    Log.i(TAG, "onResponse: onResponse obj: "+obj);
                     final ResponseSnapsHomepage res = (ResponseSnapsHomepage) obj;
 
                     final CustomFontTextView message = (CustomFontTextView) view.findViewById(R.id.message);

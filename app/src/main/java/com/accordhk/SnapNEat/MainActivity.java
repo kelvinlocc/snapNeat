@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -144,8 +145,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toast.makeText(MainActivity.this, "updated...123", Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "onCreate: git update");
+        Toast.makeText(MainActivity.this, "MainActivity", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onCreate: savedInstanceState: "+savedInstanceState);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -597,11 +598,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showSettingsFragmentFromLanguageChange() {
-        mTransaction = getSupportFragmentManager().beginTransaction();
-        mTransaction.replace(R.id.fragment_container, new SettingsFragment(), fragmentTag);
-        mTransaction.addToBackStack(fragmentTag);
-        mTransaction.commit();
+        new Handler().post(new Runnable() {
+            public void run() { // kl
+                mTransaction = getSupportFragmentManager().beginTransaction();
+                mTransaction.replace(R.id.fragment_container, new SettingsFragment(), fragmentTag);
+                mTransaction.addToBackStack(fragmentTag);
+                mTransaction.commit();
+            }
+        });
+
+
     }
+
 
     @Override
     public void showLanguageFragment() {
@@ -1085,6 +1093,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
+        Toast.makeText(MainActivity.this, "onResume @MainActivity", Toast.LENGTH_SHORT).show();
         super.onResume();
         if (mCurrentUser != null) {
             registerReceiver();
@@ -1095,6 +1104,13 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
         unregisterGcmReceiver();
         super.onPause();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Toast.makeText(MainActivity.this, "onDestroy @ MainActivity", Toast.LENGTH_SHORT).show();
+
     }
 
     private void doLogoutUser() {

@@ -627,6 +627,7 @@ public class Utils {
 
         String sessionString = new SharedPref(mContext).getSessionString();
         Log.d(LOGGER_TAG, "SessionString: "+sessionString);
+        Log.i("ProfileFollowings", "generateAuthHeader: sessionString: "+sessionString);
         if(sessionString.isEmpty() == false)
             header.put("Authorization", "SnapNEat:"+sessionString);
 

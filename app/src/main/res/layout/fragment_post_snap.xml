@@ -170,12 +170,10 @@
                         android:background="#0000"
                         />
 
-                    <com.accordhk.SnapNEat.utils.CustomFontTextView
-                        android:layout_width="match_parent"
+                    <EditText
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/font_28"
                         android:id="@+id/tv_snap_location"
-                        android:textColor="#9fa0a0"
                         android:hint="@string/s12_restaurant_address" />
 
                 </LinearLayout>

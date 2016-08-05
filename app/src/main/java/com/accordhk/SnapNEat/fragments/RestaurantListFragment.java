@@ -2,6 +2,7 @@ package com.accordhk.SnapNEat.fragments;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -15,6 +16,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -24,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.accordhk.SnapNEat.R;
 import com.accordhk.SnapNEat.adapters.RestaurantsMoreRowAdapter;
@@ -127,6 +130,7 @@ public class RestaurantListFragment extends BaseFragment {
 
         // START: GET CURRENT LOCATION
         try {
+            Log.i(TAG, "onCreate: mGoogleApiClient");
             mGoogleApiClient = new GoogleApiClient.Builder(getContext(), new GoogleApiClient.ConnectionCallbacks() {
                 @Override
                 public void onConnected(@Nullable Bundle bundle) {
@@ -134,7 +138,7 @@ public class RestaurantListFragment extends BaseFragment {
 
                     String provider = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
                     if(provider.isEmpty()) {
-                        getActivity().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+//                        getActivity().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
 
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -150,13 +154,17 @@ public class RestaurantListFragment extends BaseFragment {
                                 getGeoCode();
 
                             } else {
-                                Log.d(LOGGER_TAG, "request Location updates");
+                                Toast.makeText(getActivity(), "mLastLocation == null", Toast.LENGTH_SHORT).show();
+                                showAlert();
+                                Log.d(LOGGER_TAG, "request Location updates2");
 
-                                mLocationRequest = createLocationRequest();
-                                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, mLocationListener);
+//                                mLocationRequest = createLocationRequest();                       //kl
+//                                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, mLocationListener); //kl
+//
                             }
                         }
                     } else {
+
 
                         Log.d(LOGGER_TAG, "Asking for permission");
                         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -188,6 +196,28 @@ public class RestaurantListFragment extends BaseFragment {
         }
         // END: GET CURRENT LOCATION
 
+    }
+    ///kl, ask whehter the user want to use location or not
+String TAG = this.getClass().getName();
+    private void showAlert() {
+        Log.i(TAG, "showAlert: ");
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setTitle("Enable Location")
+                .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
+                        "use this app")
+                .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+        dialog.show();
     }
 
     @Override
@@ -389,6 +419,9 @@ public class RestaurantListFragment extends BaseFragment {
             mUtils.dismissDialog(mProgressDialog);
         }
     }
+
+
+
 
     protected LocationRequest createLocationRequest() {
         Log.d(LOGGER_TAG, "createLocationRequest");

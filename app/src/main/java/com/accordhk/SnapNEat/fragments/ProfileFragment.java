@@ -20,11 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.accordhk.SnapNEat.R;
 import com.accordhk.SnapNEat.models.BaseResponse;
+import com.accordhk.SnapNEat.models.Image;
 import com.accordhk.SnapNEat.models.ResponseFileUploadSettings;
 import com.accordhk.SnapNEat.models.ResponseFollowUser;
 import com.accordhk.SnapNEat.models.ResponseUserProfile;
@@ -80,7 +82,7 @@ public class ProfileFragment extends BaseFragment {
     private BlurredNetworkImageView iv_profile_bg;
 
     private int glMaxTextureSize;
-
+    ImageView checker;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -115,9 +117,11 @@ public class ProfileFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.i(TAG, "onCreateView: ");
         mSavedInstanceState = savedInstanceState;
 
         view = inflater.inflate(R.layout.fragment_profile, container, false);
+        checker = (ImageView) view.findViewById(R.id.checker);
         mUtils.dismissDialog(mProgressDialog);
 
         generateView();
@@ -126,6 +130,7 @@ public class ProfileFragment extends BaseFragment {
     }
 
     public void generateView() {
+        Log.i(TAG, "generateView: ");
         profile_pic = (CircleImageView) view.findViewById(R.id.iv_profile_pic);
         iv_profile_bg = (BlurredNetworkImageView) view.findViewById(R.id.iv_profile_bg);
         final CustomFontTextView tv_username = (CustomFontTextView) view.findViewById(R.id.tv_username);
@@ -162,7 +167,7 @@ public class ProfileFragment extends BaseFragment {
         });
 
         final CustomFontTextView btn_turn_notif = (CustomFontTextView) view.findViewById(R.id.btn_turn_notif);
-        //// TODO: 8/4/2016  
+
         //from capture fail
         //TODO:         startActivityForResult
         CustomFontTextView settings_account_avatar_change_take_new_photo = (CustomFontTextView) view.findViewById(R.id.settings_account_avatar_change_take_new_photo);
@@ -175,7 +180,7 @@ public class ProfileFragment extends BaseFragment {
                         ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-                        Log.i(TAG, "startActivityForResult from capture @update");
+                        Log.i(TAG, "startActivityForResult from capture @update,ga");
 
                         getActivity().startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
                     }
@@ -198,7 +203,7 @@ public class ProfileFragment extends BaseFragment {
                     selIntent.setAction(Intent.ACTION_GET_CONTENT);
                     // Always show the chooser (if there are multiple options available)
                     Log.i(TAG, "onClick: startActivityForResult from album");
-                    startActivityForResult(Intent.createChooser(selIntent, "Select Picture"), PICK_IMAGE_REQUEST);
+                    getActivity().startActivityForResult(Intent.createChooser(selIntent, "Select Picture"), PICK_IMAGE_REQUEST);
                 } else
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
             }
@@ -215,15 +220,17 @@ public class ProfileFragment extends BaseFragment {
 
         final Map<String, String> params = mUtils.getBaseRequestMap();
         params.put(User.USER_ID, String.valueOf(userId));
+        Log.i(TAG, "generateView: chech input params: User.USER_ID, String.valueOf(userId) "+User.USER_ID+","+ String.valueOf(userId));
 
         try {
             mProgressDialog.show();
+            Log.i(TAG, "mProgressDialog.show(); ");
             mApi.getUserProfile(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                 @Override
                 public void onResponse(Object object) {
                     try {
                         Log.d(LOGGER_TAG, "getUserProfile: OK");
-
+                        Log.i(TAG, "onResponse: object: "+object);
                         final ResponseUserProfile responseUserProfile = (ResponseUserProfile) object;
                         mUtils.dismissDialog(mProgressDialog);
 
@@ -706,6 +713,7 @@ public class ProfileFragment extends BaseFragment {
                                             args.putInt(ProfileFootprintsFragment.USER_ID, userId);
                                             mFragment = new ProfileFootprintsFragment();
                                         } else {
+                                            // // TODO: Tracker 2
                                             args.putInt(ProfileFollowingsFragment.USER_ID, userId);
                                             mFragment = new ProfileFollowingsFragment();
                                         }
@@ -752,8 +760,8 @@ public class ProfileFragment extends BaseFragment {
     //TODO:                     onActivityResult
     @Override
     public void onActivityResult(final int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "onActivityResult: ");
+//        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult: called");
         Log.d(LOGGER_TAG, "requestCode: " + requestCode + "==resultCode: " + resultCode);
 
         if (requestCode == ProfileFootprintsFragment.REQUEST_CHECK_SETTINGS && resultCode == PackageManager.PERMISSION_GRANTED) {
@@ -770,14 +778,15 @@ public class ProfileFragment extends BaseFragment {
             Bundle extras = data.getExtras();
             Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), (Bitmap) extras.get("data"), glMaxTextureSize);
             String error = mUtils.validateUploadImage(bitmapResult);
-
+//            Bitmap bitmap = (Bitmap)extras.get("data");
+//            checker.setImageBitmap(bitmap);
             if (error.isEmpty()) {
-                Log.i(TAG, "onActivityResult: error.isEmpty  error: " + error + ".");
-//                uploadToServer((Bitmap) bitmapResult.get(Constants.PHOTO_BITMAP));
+
+                Log.i(TAG, "upload to server");
                 uploadToServer(bitmapResult.get(Constants.PHOTO_PATH).toString());
             } else
-                mUtils.getErrorDialog(error).show();
-            Log.i(TAG, "onActivityResult: requestCode == REQUEST_IMAGE_CAPTURE");
+//                mUtils.getErrorDialog(error).show();
+            Log.i(TAG, "REQUEST_IMAGE_CAPTURE finish");
         }
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
@@ -997,6 +1006,8 @@ public class ProfileFragment extends BaseFragment {
 //    }
 
     public void showSnapsFollowings(int userId) {
+        //// TODO: tracker 03
+        Log.i(TAG, "showSnapsFollowings: ");
         mTransaction = getChildFragmentManager().beginTransaction();
 
         Bundle args = new Bundle();

@@ -207,6 +207,14 @@
             android:layout_marginRight="@dimen/fab_margin"
             android:layout_marginLeft="@dimen/fab_margin" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/checker"
+            android:layout_above="@+id/ll_profile_cnt"
+            android:layout_alignStart="@+id/btn_profile_action"
+            android:src="@android:mipmap/sym_def_app_icon" />
+
     </RelativeLayout>
 
     <LinearLayout

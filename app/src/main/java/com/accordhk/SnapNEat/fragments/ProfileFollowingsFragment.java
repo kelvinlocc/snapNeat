@@ -37,7 +37,7 @@ import java.util.logging.Logger;
  * create an instance of this fragment.
  */
 public class ProfileFollowingsFragment extends BaseSearchFragment {
-
+    public String TAG = "ProfileFollowings";
     public static final String USER_ID = "userId";
 
     private int userId;
@@ -87,12 +87,14 @@ public class ProfileFollowingsFragment extends BaseSearchFragment {
             Map<String, String> params = mUtils.getBaseRequestMap();
             params.put(Constants.STR_PAGE, String.valueOf(page));
             params.put(User.USER_ID, String.valueOf(userId));
-
+            Log.i(TAG, "onCreateView: User.USER_ID, String.valueOf(userId): "+User.USER_ID+","+String.valueOf(userId));
+            // // TODO: tracker  1.1
             //mProgressDialog.show();
             mApi.getSnapsFollowings(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                 @Override
                 public void onResponse(Object object) {
                     try {
+                        Log.i(TAG, "onResponse: object: "+object);
                         ResponseListSnaps snaps = (ResponseListSnaps) object;
                         page = snaps.getCurrentPageNo();
 
@@ -143,7 +145,6 @@ public class ProfileFollowingsFragment extends BaseSearchFragment {
                                                 Map<String, String> params = mUtils.getBaseRequestMap();
                                                 params.put(Constants.STR_PAGE, String.valueOf(page));
                                                 params.put(User.USER_ID, String.valueOf(userId));
-
                                                 mApi.getSnapsFollowings(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                                                     @Override
                                                     public void onResponse(Object object) {
