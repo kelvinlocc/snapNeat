@@ -95,7 +95,6 @@ public class RestaurantListFragment extends BaseFragment {
      *
      * @return A new instance of fragment RestaurantListFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static RestaurantListFragment newInstance() {
         RestaurantListFragment fragment = new RestaurantListFragment();
         Bundle args = new Bundle();
@@ -311,6 +310,7 @@ String TAG = this.getClass().getName();
             }
         });
 
+        //// TODO: 8/10/2016
         ImageButton btn_back = (ImageButton) view.findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -485,7 +485,6 @@ String TAG = this.getClass().getName();
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -566,7 +565,6 @@ String TAG = this.getClass().getName();
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
         void showRestaurantsMapFragment();
         void goBackResto(Restaurant resto);

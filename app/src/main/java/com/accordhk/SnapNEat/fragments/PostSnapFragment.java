@@ -59,6 +59,8 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class PostSnapFragment extends BaseFragment {
+    //// TODO: 8/10/2016 head
+    private String TAG = this.getClass().getName();
     private static String LOGGER_TAG = "PostSnapFragment";
 
     public static final int REQUEST_IMAGE_CAPTURE = 12888;
@@ -98,7 +100,6 @@ public class PostSnapFragment extends BaseFragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment PostSnapFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static PostSnapFragment newInstance(String param1, String param2) {
         PostSnapFragment fragment = new PostSnapFragment();
         Bundle args = new Bundle();
@@ -301,7 +302,11 @@ public class PostSnapFragment extends BaseFragment {
                         Map<String, List<String>> bodyParams = new HashMap<String, List<String>>();
                         bodyParams.put(Snap.FILE_TYPES, filetypes);
                         bodyParams.put(Snap.DISH, dishes);
+                        //// TODO: upload to server:
+                        //tv_snap_location
 
+                        Log.i(TAG, "onClick: get location: "+tv_snap_location.getText().toString());
+                        restaurant.setLocation(tv_snap_location.getText().toString().trim());
                         Map<String, String> params = mUtils.getBaseRequestMap();
                         params.put(Snap.RATING, String.valueOf(rating));
                         params.put(Snap.TITLE, String.valueOf(tv_snap_title.getText()));
@@ -315,6 +320,7 @@ public class PostSnapFragment extends BaseFragment {
                         mUtils.dismissDialog(mProgressDialog);
 
                         mProgressDialog.show();
+                        Log.i(TAG, "onClicked: get location: "+tv_snap_location.getText().toString());
 
                         mApi.postNewSnap(params, bodyParams, multiPartParams, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                             @Override
@@ -659,6 +665,7 @@ public class PostSnapFragment extends BaseFragment {
             restaurant = (Restaurant) object;
             if(restaurant != null && restaurant.getName() != null) {
                 if(restaurant.getName().isEmpty() == false) {
+                    //// TODO: get the restaurant info
                     tv_snap_resto.setText(restaurant.getName());
                     tv_snap_location.setText(restaurant.getLocation());
                 }
@@ -719,7 +726,6 @@ public class PostSnapFragment extends BaseFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
         void goBack();
         void showHotSearchMore(List<String> defaultSelected, int type, boolean isSingleSelect, boolean isSelectedValueValue);

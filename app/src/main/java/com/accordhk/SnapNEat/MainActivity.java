@@ -415,7 +415,9 @@ public class MainActivity extends AppCompatActivity
 //                        super.onBackPressed();
 //                }
                 else if (fragment instanceof RestaurantListFragment) {
+                    // // TODO: 8/10/2016
                     Log.d("goback: ", "RestaurantListFragment");
+
                     goBackResto(((RestaurantListFragment) fragment).restaurantFilters);
                 } else if (fragment instanceof HotSearchMoreListFragment) {
                     goBackHotSearchMore(((HotSearchMoreListFragment) fragment).searchMoreType, ((HotSearchMoreListFragment) fragment).categoryFilters);
@@ -929,7 +931,7 @@ public class MainActivity extends AppCompatActivity
         super.onBackPressed();
         try {
             Log.d(LOGGER_TAG, "trying to call onResume");
-
+            Log.i(TAG, "goBackResto: restaurant.getDescription(); "+restaurant.getDescription());
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             if (fragment instanceof PostSnapFragment) {
                 Log.d(LOGGER_TAG, "instance of PostSnapFragment");
