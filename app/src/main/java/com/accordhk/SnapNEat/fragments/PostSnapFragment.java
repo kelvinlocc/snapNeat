@@ -701,12 +701,24 @@ public class PostSnapFragment extends BaseFragment {
                     int id = Integer.parseInt(dish.get(0));
                     if(id == -1)
                         id = Integer.parseInt(dish.get(1));
+                    String allDishes = "";
+                    HotSearch print;
+                    for (int i = 0; i < dish.size(); i++) {
+                        Log.i(TAG, "customResumeFromBack: dish.get "+i+" : "+dish.get(i));
+                        Log.i(TAG, "customResumeFromBack: dish.get "+i+" : "+dish.get(i).toString());
+                        print  = dataSource.getRowByIdAndCategory(Integer.parseInt(dish.get(i)), HotSearch.Category.DISH.getKey());
+                        allDishes = print.getValue()+"\n"+allDishes;
+                        Log.i(TAG, "customResumeFromBack: print: "+print.getValue());
+                    }
+
 
                     HotSearch temp = dataSource.getRowByIdAndCategory(id, HotSearch.Category.DISH.getKey());
 
                     dataSource.close();
                     Log.d(LOGGER_TAG, "temp name: " + temp.getValue());
-                    tv_snap_dish.setText(temp.getValue());
+//                    tv_snap_dish.setText(temp.getValue());
+
+                    tv_snap_dish.setText(allDishes);
 
                 } catch (Exception e){
                     e.printStackTrace();

@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.accordhk.SnapNEat.R;
 import com.accordhk.SnapNEat.adapters.SnapListAdapter;
@@ -274,9 +276,18 @@ public class SearchResultsByHashTagsFragment extends BaseSearchFragment {
             mUtils.dismissDialog(mProgressDialog);
         }
 
-        TextView tv_hot_search_string = (TextView) view.findViewById(R.id.tv_hot_search_string);
-        tv_hot_search_string.setText(searchString);
-        tv_hot_search_string.setFocusable(false);
+//        TextView tv_hot_search_string = (TextView) view.findViewById(R.id.tv_hot_search_string);
+        EditText tv_hot_search_string = (EditText) view.findViewById(R.id.tv_hot_search_string);
+//        tv_hot_search_string.setText(searchString);
+//        tv_hot_search_string.setFocusable(false);
+//        tv_hot_search_string.setText(searchString);
+        Toast.makeText(getContext(), "set focusable true", Toast.LENGTH_SHORT).show();
+        Log.i("check", "onCreateView: setFocusable 2");
+//        tv_hot_search_string.clearFocus();
+//        tv_hot_search_string.setTextIsSelectable(true);
+//        tv_hot_search_string.setFocusableInTouchMode(true);
+//        tv_hot_search_string.setFocusable(true);
+
 
         ImageButton btn_back = (ImageButton) view.findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {

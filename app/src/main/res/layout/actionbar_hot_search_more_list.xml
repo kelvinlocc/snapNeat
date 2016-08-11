@@ -36,7 +36,9 @@
             android:layout_toRightOf="@id/btn_back"
             android:textColor="#FFF"
             app:theme="@style/CustomEditTextWhite2"
-            android:textSize="@dimen/font_24"/>
+            android:hint="@string/s2_filter"
+            android:textSize="@dimen/font_24"
+            android:textIsSelectable="false" />
 
     </RelativeLayout>
 

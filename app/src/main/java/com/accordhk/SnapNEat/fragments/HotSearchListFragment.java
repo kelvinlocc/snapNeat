@@ -42,8 +42,9 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class HotSearchListFragment extends BaseFragment {
+    //// TODO: 8/11/2016 head:
     private static String LOGGER_TAG = "HotSearchListFragment";
-
+    private String TAG = this.getClass().getName();
     private OnFragmentInteractionListener mListener;
 
     public HotSearchListFragment() {
@@ -60,7 +61,6 @@ public class HotSearchListFragment extends BaseFragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment HotSearchListFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static HotSearchListFragment newInstance(String param1, String param2) {
         HotSearchListFragment fragment = new HotSearchListFragment();
         Bundle args = new Bundle();
@@ -179,16 +179,20 @@ public class HotSearchListFragment extends BaseFragment {
 
         final TextView tv_hot_search_string = (TextView) view.findViewById(R.id.tv_hot_search_string);
 
+
+        // // TODO: 8/11/2016  submit button
         TextView btn_submit = (TextView) view.findViewById(R.id.btn_submit);
         btn_submit.setText(mUtils.getStringResource(R.string.s2_search));
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    Log.d(LOGGER_TAG, "btn_search clicked");
+                    Log.d(LOGGER_TAG, "btn_search clicked2");
 
                     int type = HotSearch.SearchResultType.HASH.getKey();
                     String searchText = String.valueOf(tv_hot_search_string.getText()).trim();
+                    //// TODO: 8/11/2016 get search keyword
+                    Log.i(TAG, "onClick: searchText: "+searchText);
                     if (searchText.contains("@") && searchText.contains("#"))
                         mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_not_allowed_search_by_user_hash)).show();
                     else {
@@ -231,7 +235,6 @@ public class HotSearchListFragment extends BaseFragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -282,7 +285,6 @@ public class HotSearchListFragment extends BaseFragment {
      */
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
         void showHotSearchMore(List<String> selValues, int type, boolean isSingleSelect, boolean isSelectedValueValue);
         void showSearchResults(int type, String searchString, HashMap<Integer, List<String>> selectedValuesMap);

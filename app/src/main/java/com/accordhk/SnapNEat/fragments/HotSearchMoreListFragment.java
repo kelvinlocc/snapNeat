@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class HotSearchMoreListFragment extends BaseFragment {
     private static String LOGGER_TAG = "HotSearchMoreListFragment";
-
+    String TAG = LOGGER_TAG;
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String DEFAULT_SELECTED_VALUES = "defaultSelectedValues";
     public static final String SEARCH_MORE_TYPE = "searchMoreType";
@@ -61,6 +61,7 @@ public class HotSearchMoreListFragment extends BaseFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "onCreate: more");
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             searchMoreType = getArguments().getInt(SEARCH_MORE_TYPE);
@@ -81,7 +82,7 @@ public class HotSearchMoreListFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_hot_search_more_list, container, false);
-
+        //// TODO: 8/11/2016 search bar
         final CustomFontEditText tv_hot_search_string = (CustomFontEditText) view.findViewById(R.id.tv_hot_search_string);
 
         AsyncTask<Void, Void, List<HotSearch>> task = new AsyncTask<Void, Void, List<HotSearch>>() {
