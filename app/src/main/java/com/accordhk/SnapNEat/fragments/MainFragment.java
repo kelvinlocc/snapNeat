@@ -264,7 +264,7 @@ public class MainFragment extends BaseFragment {
                 slideDown(rl_choose_distance);
             }
         });
-
+        // // TODO: 8/11/2016  search
         ImageButton btn_search = (ImageButton) view.findViewById(R.id.btn_search);
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
