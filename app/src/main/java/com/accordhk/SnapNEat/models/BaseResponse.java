@@ -6,6 +6,7 @@ package com.accordhk.SnapNEat.models;
 public class BaseResponse {
     private int status;
     private String message;
+    private String favourite_flag;
 
     public int getStatus() {
         return status;
@@ -21,5 +22,13 @@ public class BaseResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getFavourite_flag (){
+        return favourite_flag;
+    }
+
+    public void setFavourite_flag(String string){
+        this.favourite_flag=string;
     }
 }

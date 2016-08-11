@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.accordhk.SnapNEat.R;
 import com.accordhk.SnapNEat.adapters.SnapListImageRecyclerViewAdapter;
@@ -60,9 +61,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * create an instance of this fragment.
  */
 public class SnapDetailsFragment extends BaseFragment {
+    //// TODO: 8/11/2016 head
     private static String LOGGER_TAG = "SnapDetailsFragment";
+    private String TAG = this.getClass().getName();
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -70,7 +72,6 @@ public class SnapDetailsFragment extends BaseFragment {
     public static final String SNAP_ID = "snapId";
     public static final String DISABLE_BACK = "disableBack";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -99,7 +100,6 @@ public class SnapDetailsFragment extends BaseFragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment SnapDetailsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SnapDetailsFragment newInstance(String param1, String param2) {
         SnapDetailsFragment fragment = new SnapDetailsFragment();
         Bundle args = new Bundle();
@@ -401,57 +401,67 @@ public class SnapDetailsFragment extends BaseFragment {
                                             mListener.showRestaurantDetails(Integer.parseInt(snap.getRestaurant().getnId()));
                                     }
                                 });
-
+                                //// TODO: 8/11/2016  snap.getFavouriteFlag()
                                 if (snap.getFavouriteFlag() == Constants.FLAG_TRUE) {
                                     btn_favourite.setImageResource(R.drawable.s10_favourite);
-                                } else {
-                                    btn_favourite.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            try {
-                                                Map<String, String> params = mUtils.getBaseRequestMap();
-                                                params.put(Snap.SNAP_ID, String.valueOf(snapId));
-
-                                                mProgressDialog.show();
-                                                mApi.postAddSnapToFavourites(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
-                                                    @Override
-                                                    public void onResponse(Object object) {
-                                                        try {
-                                                            BaseResponse faveRes = (BaseResponse) object;
-
-                                                            mUtils.dismissDialog(mProgressDialog);
-                                                            if (faveRes != null) {
-                                                                if (faveRes.getStatus() == Constants.RES_UNAUTHORIZED) {
-                                                                    if (mListener != null) {
-                                                                        mListener.showStartingFragmentFromLogout();
-                                                                    }
-                                                                } else if (faveRes.getStatus() != Constants.RES_SUCCESS) {
-                                                                    mUtils.getErrorDialog(faveRes.getMessage()).show();
-                                                                } else {
-                                                                    btn_favourite.setImageResource(R.drawable.s10_favourite);
-                                                                }
-
-                                                            }
-                                                        } catch (Exception e) {
-                                                            e.printStackTrace();
-                                                            mUtils.dismissDialog(mProgressDialog);
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onErrorResponse(VolleyError error) {
-                                                        error.printStackTrace();
-                                                        mUtils.dismissDialog(mProgressDialog);
-                                                        mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_cannot_process_request)).show();
-                                                    }
-                                                });
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                                mUtils.dismissDialog(mProgressDialog);
-                                            }
-                                        }
-                                    });
                                 }
+                                btn_favourite.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        try {
+                                            Map<String, String> params = mUtils.getBaseRequestMap();
+                                            params.put(Snap.SNAP_ID, String.valueOf(snapId));
+
+                                            mProgressDialog.show();
+                                            mApi.postAddSnapToFavourites(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
+                                                @Override
+                                                public void onResponse(Object object) {
+                                                    try {
+                                                        BaseResponse faveRes = (BaseResponse) object;
+                                                        // // TODO: 8/11/2016 set favourite through api
+                                                        Log.i(TAG, "onResponse: object: " + object);
+                                                        Log.i(TAG, "onResponse: faveRes.getFavourite_flag" + faveRes.getFavourite_flag());
+                                                        // @drawable/s10_favourite_def
+                                                        mUtils.dismissDialog(mProgressDialog);
+                                                        if (faveRes != null) {
+                                                            if (faveRes.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                                if (mListener != null) {
+                                                                    mListener.showStartingFragmentFromLogout();
+                                                                }
+                                                            } else if (faveRes.getStatus() != Constants.RES_SUCCESS) {
+                                                                mUtils.getErrorDialog(faveRes.getMessage()).show();
+                                                            } else {
+                                                                if (faveRes.getFavourite_flag() == "1") {
+                                                                    btn_favourite.setImageResource(R.drawable.s10_favourite);
+                                                                    Toast.makeText(getContext(), "you added favourite", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                                else {
+                                                                    btn_favourite.setImageResource(R.drawable.s10_favourite_def);
+                                                                    Toast.makeText(getContext(), "you removed favourite", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+
+                                                        }
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                        mUtils.dismissDialog(mProgressDialog);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onErrorResponse(VolleyError error) {
+                                                    error.printStackTrace();
+                                                    mUtils.dismissDialog(mProgressDialog);
+                                                    mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_cannot_process_request)).show();
+                                                }
+                                            });
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                            mUtils.dismissDialog(mProgressDialog);
+                                        }
+                                    }
+                                });
+
 
                                 if (snap.getLikeFlag() == Constants.FLAG_TRUE) {
                                     btn_like.setImageResource(R.drawable.s10_like);
@@ -564,7 +574,6 @@ public class SnapDetailsFragment extends BaseFragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -652,7 +661,6 @@ public class SnapDetailsFragment extends BaseFragment {
      */
     public interface OnFragmentInteractionListener {
 
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
 
         void goBack();
