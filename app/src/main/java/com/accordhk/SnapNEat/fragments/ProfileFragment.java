@@ -83,6 +83,7 @@ public class ProfileFragment extends BaseFragment {
 
     private int glMaxTextureSize;
     ImageView checker;
+
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -220,7 +221,7 @@ public class ProfileFragment extends BaseFragment {
 
         final Map<String, String> params = mUtils.getBaseRequestMap();
         params.put(User.USER_ID, String.valueOf(userId));
-        Log.i(TAG, "generateView: chech input params: User.USER_ID, String.valueOf(userId) "+User.USER_ID+","+ String.valueOf(userId));
+        Log.i(TAG, "generateView: chech input params: User.USER_ID, String.valueOf(userId) " + User.USER_ID + "," + String.valueOf(userId));
 
         try {
             mProgressDialog.show();
@@ -230,7 +231,7 @@ public class ProfileFragment extends BaseFragment {
                 public void onResponse(Object object) {
                     try {
                         Log.d(LOGGER_TAG, "getUserProfile: OK");
-                        Log.i(TAG, "onResponse: object: "+object);
+                        Log.i(TAG, "onResponse: object: " + object);
                         final ResponseUserProfile responseUserProfile = (ResponseUserProfile) object;
                         mUtils.dismissDialog(mProgressDialog);
 
@@ -396,7 +397,7 @@ public class ProfileFragment extends BaseFragment {
 
                                             }
                                         });
-
+                                        //// TODO: 8/12/2016  following
                                         btn_tab1.setWidth(metrics.widthPixels / 4);
                                         btn_tab1.setText(mUtils.getStringResource(R.string.p1_followings));
                                         btn_tab1.setOnClickListener(new View.OnClickListener() {
@@ -461,6 +462,7 @@ public class ProfileFragment extends BaseFragment {
                                         btn_tab4.setWidth(metrics.widthPixels / 4);
                                         btn_tab4.setVisibility(View.VISIBLE);
                                         btn_tab4.setText(mUtils.getStringResource(R.string.p1b_footprints));
+                                        //// TODO: 8/12/2016  footprint
                                         btn_tab4.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -786,7 +788,7 @@ public class ProfileFragment extends BaseFragment {
                 uploadToServer(bitmapResult.get(Constants.PHOTO_PATH).toString());
             } else
 //                mUtils.getErrorDialog(error).show();
-            Log.i(TAG, "REQUEST_IMAGE_CAPTURE finish");
+                Log.i(TAG, "REQUEST_IMAGE_CAPTURE finish");
         }
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {

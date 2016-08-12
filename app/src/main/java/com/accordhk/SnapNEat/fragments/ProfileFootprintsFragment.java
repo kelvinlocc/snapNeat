@@ -2,6 +2,7 @@ package com.accordhk.SnapNEat.fragments;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -143,7 +145,7 @@ public class ProfileFootprintsFragment extends BaseSearchFragment {
 
                     String provider = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
                     if(provider.isEmpty()) {
-                        getActivity().startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_CHECK_SETTINGS);
+//                        getActivity().startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), REQUEST_CHECK_SETTINGS); //kl
                     }
 
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
@@ -163,9 +165,9 @@ public class ProfileFootprintsFragment extends BaseSearchFragment {
 
                                 } else {
                                     Log.d(LOGGER_TAG, "request Location updates");
-
-                                    mLocationRequest = createLocationRequest();
-                                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, mLocationListener);
+                                    showAlert();
+//                                    mLocationRequest = createLocationRequest(); //kl
+//                                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, mLocationListener);  //kl
                                 }
                             } else
                                 mGoogleApiClient.connect();
@@ -189,6 +191,27 @@ public class ProfileFootprintsFragment extends BaseSearchFragment {
         }
     }
 
+    String TAG = this.getClass().getName();
+    private void showAlert() {
+        Log.i(TAG, "showAlert: ");
+        final AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+        dialog.setTitle("Enable Location")
+                .setMessage("Your Locations Settings is set to 'Off'.\nPlease Enable Location to " +
+                        "use this app")
+                .setPositiveButton("Location Settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                        Intent myIntent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(myIntent);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
+                    }
+                });
+        dialog.show();
+    }
     private void getFootprints(double lat, double lng) {
         try {
             Map<String, String> params = mUtils.getBaseRequestMap();

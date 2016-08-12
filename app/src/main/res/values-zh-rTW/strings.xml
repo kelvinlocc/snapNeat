@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">相機先食_DEV</string>
+    <string name="app_name">手機食先_DEV</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -72,7 +72,7 @@
     <string name="p1_posts">發帖</string>
     <string name="p1_followings">關注</string>
     <string name="p1_followers">被關注</string>
-    <string name="p1_gallery">相冊</string>"
+    <string name="p1_gallery">相冊</string>
     <string name="p1_favourites">收藏</string>
 
     <string name="p5_followings">關注</string>

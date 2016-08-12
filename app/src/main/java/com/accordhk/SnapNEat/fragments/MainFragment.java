@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.accordhk.SnapNEat.R;
 import com.accordhk.SnapNEat.adapters.SnapHomepageAdapter;
+import com.accordhk.SnapNEat.models.ResponseFileUploadSettings;
+import com.accordhk.SnapNEat.models.ResponseFollowUser;
 import com.accordhk.SnapNEat.models.ResponsePostLike;
 import com.accordhk.SnapNEat.models.ResponseSnapsHomepage;
 import com.accordhk.SnapNEat.models.Snap;
@@ -47,6 +49,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.drive.query.internal.LogicalFilter;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -66,7 +69,6 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class MainFragment extends BaseFragment {
-    private String TAG = this.getClass().getName();
     private static String LOGGER_TAG = "MainFragment";
     private int MODE_RANDOM = Constants.HOMEPAGE_SNAP_MODE.RANDOM.getKey();
     private int MODE_LOCATION = Constants.HOMEPAGE_SNAP_MODE.LOCATION.getKey();
@@ -115,6 +117,9 @@ public class MainFragment extends BaseFragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private int userId;
+    public static final String USER_ID = "userId";
+    public static String TAG = "MainFragment";
 
     public MainFragment() {
         // Required empty public constructor
@@ -134,6 +139,7 @@ public class MainFragment extends BaseFragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        Log.i(TAG, "newInstance: param1+\",\"+param2: "+param1+","+param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -145,6 +151,13 @@ public class MainFragment extends BaseFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // getting user id from arguments
+        if (getArguments() != null) {
+            userId = getArguments().getInt(USER_ID);
+            Log.i(TAG, ": userId "+userId);
+
+        }
+        else Log.i(TAG, "onCreate: getArguments is null");
 
         distance = 1;
 
@@ -192,6 +205,108 @@ public class MainFragment extends BaseFragment {
         rl_share = (RelativeLayout) view.findViewById(R.id.rl_share);
 
         rl_choose_distance = (RelativeLayout) view.findViewById(R.id.rl_choose_distance);
+        final ImageButton btn_profile_action = (ImageButton) view.findViewById(R.id.btn_profile_action);
+        btn_profile_action.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPref sharedPref = new SharedPref(getContext());
+                if (sharedPref.getFileUploadSettingTypes().isEmpty()) {
+                    try {
+                        mApi.getFileUploadSetting(mUtils.getBaseRequestMap(), mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
+                            @Override
+                            public void onResponse(Object object) {
+                                try {
+                                    ResponseFileUploadSettings fileUploadSettings = (ResponseFileUploadSettings) object;
+
+                                    if (fileUploadSettings.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                        if (mListener != null) {
+                                            mListener.showStartingFragmentFromLogout();
+                                        }
+                                    } else if (fileUploadSettings.getStatus() == Constants.RES_SUCCESS) {
+                                        (new SharedPref(getContext())).setFileUploadSettings(fileUploadSettings);
+                                        if (mListener != null) {
+                                            Log.i(TAG, "onResponse: go to add snap post");
+                                            mListener.addSnapPost();  // // TODO: 8/12/2016
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                error.printStackTrace();
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    if (mListener != null) {
+                        Log.i(TAG, "onResponse: go to add snap post");
+
+                        mListener.addSnapPost(); //// TODO: 8/12/2016
+                    }
+                }
+
+            }
+        });
+//        btn_profile_action.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (userId != 0) {
+//                    try {
+//
+//                        Map<String, String> params = mUtils.getBaseRequestMap();
+//                        params.put(User.USER_ID, String.valueOf(userId)); //// TODO: 8/12/2016
+//
+//                        mProgressDialog.show();
+//                        mApi.postFollowUser(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
+//                            @Override
+//                            public void onResponse(Object object) {
+//                                try {
+//                                    ResponseFollowUser response = (ResponseFollowUser) object;
+//                                    mUtils.dismissDialog(mProgressDialog);
+//
+//                                    if (response.getStatus() == Constants.RES_UNAUTHORIZED) {
+//                                        if (mListener != null) {
+//                                            mListener.showStartingFragmentFromLogout();
+//                                        }
+//                                    } else if (response.getStatus() != Constants.RES_SUCCESS) {
+//                                        mUtils.getErrorDialog(response.getMessage()).show();
+//                                    } else {
+//                                        if (response.getFollowFlag() == Constants.FLAG_TRUE) {
+//                                            btn_profile_action.setImageResource(R.drawable.s7_btn_add_user_sel);
+//                                        } else {
+//                                            btn_profile_action.setImageResource(R.drawable.s7_btn_add_user);
+//                                        }
+//                                        ((CustomFontTextView) view.findViewById(R.id.tv_no_followers)).setText(String.valueOf(response.getTotalFollowers()));
+//                                    }
+//                                } catch (Exception e) {
+//                                    e.printStackTrace();
+//                                    mUtils.dismissDialog(mProgressDialog);
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                error.printStackTrace();
+//                                mUtils.dismissDialog(mProgressDialog);
+//                                mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_cannot_process_request)).show();
+//                            }
+//                        });
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                        mUtils.dismissDialog(mProgressDialog);
+//                    }
+//                }
+//                else {
+//                    Toast.makeText(getContext(), "userID is null !!!", Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
 
         RelativeLayout rl_share_fb = (RelativeLayout) view.findViewById(R.id.rl_share_fb);
         RelativeLayout rl_share_instagram = (RelativeLayout) view.findViewById(R.id.rl_share_instagram);
@@ -916,7 +1031,8 @@ public class MainFragment extends BaseFragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
+        void addSnapPost(); //// TODO: 8/12/2016  add a add_snap_button;
         void onFragmentInteraction(Uri uri);
         void toggleSideBarNav();
         void showHotSearchListFragment();

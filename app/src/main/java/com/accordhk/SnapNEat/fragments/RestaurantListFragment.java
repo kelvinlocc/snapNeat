@@ -137,7 +137,7 @@ public class RestaurantListFragment extends BaseFragment {
 
                     String provider = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
                     if(provider.isEmpty()) {
-//                        getActivity().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+//                        getActivity().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)); //kl
                     }
 
                     if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED

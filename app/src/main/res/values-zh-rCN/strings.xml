@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">相機先食_DEV</string>
+    <string name="app_name">手机食先_DEV</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -13,7 +13,7 @@
     <string name="common_ok">确定</string>
     <string name="common_cancel">取消</string>
     <string name="common_loading">载入中...</string>
-    <string name="common_error">錯誤</string>
+    <string name="common_error">错误</string>
     <string name="common_success">已成功！</string>
     <string name="common_permission_denied">Permission Denied</string>
 
@@ -21,31 +21,30 @@
     <string name="common_female">女</string>
     <string name="common_unspecified">不明</string>
 
-    <string name="a1_other_ways_to_login">其他方式登錄</string>
-    <string name="a1_login">登錄</string>
-    <string name="a1_register">註冊</string>
-    <string name="a1_guest_mode">遊客登錄</string>
+    <string name="a1_other_ways_to_login">其他方式登录</string>
+    <string name="a1_login">登录</string>
+    <string name="a1_register">注册</string>
 
-    <string name="a2_your_email_to_login">請輸入郵箱</string>
-    <string name="a2_your_display_name">請輸入昵稱</string>
-    <string name="a2_your_password">請輸入密碼</string>
+    <string name="a2_your_email_to_login">请输入邮箱</string>
+    <string name="a2_your_display_name">请输入昵称</string>
+    <string name="a2_your_password">请输入密码</string>
     <string name="a2_confirm_your_password">再次输入新密码</string>
-    <string name="a2_register">註冊</string>
-    <string name="a2_login">登錄</string>
+    <string name="a2_register">注册</string>
+    <string name="a2_login">登录</string>
 
-    <string name="a3_login">登錄</string>
-    <string name="a3_your_email_to_login">請輸入郵箱</string>
-    <string name="a3_your_password">請輸入密碼</string>
-    <string name="a3_forgot_password">忘記密碼</string>
-    <string name="a3_register">註冊</string>
+    <string name="a3_login">登录</string>
+    <string name="a3_your_email_to_login">请输入邮箱</string>
+    <string name="a3_your_password">请输入密码</string>
+    <string name="a3_forgot_password">忘记密码</string>
+    <string name="a3_register">注册</string>
 
-    <string name="a5_your_registered_email">請輸入您的註冊電郵</string>
-    <string name="a5_reset_password">重設密碼</string>
+    <string name="a5_your_registered_email">请输入您的注册电邮</string>
+    <string name="a5_reset_password">重设密码</string>
 
     <string name="s2_map_view">地铁</string>
 
-    <string name="s1_like">喜歡</string>
-    <string name="s1_navigate">啟程</string>
+    <string name="s1_like">喜欢</string>
+    <string name="s1_navigate">启程</string>
 
     <string name="side_menu_home_page">主页</string>
     <string name="side_menu_profile">个人资料</string>
@@ -57,33 +56,33 @@
     <string name="s2_dish">菜系</string>
     <string name="s2_spendings">价格</string>
     <string name="s2_hot_hashtags">热门标籤</string>
-    <string name="s2_search">開始</string>
+    <string name="s2_search">开始</string>
     <string name="s2_more_filters">更多 ></string>
     <string name="s2_error_specify">必须输入搜索字符串</string>
 
     <string name="s3_search_district">搜尋地区</string>
     <string name="s3_all">全选</string>
 
-    <string name="s4_spendings">價格</string>
+    <string name="s4_spendings">价格</string>
     <string name="s4_all">全选</string>
 
-    <string name="s5_search_dish">價格</string>
+    <string name="s5_search_dish">价格</string>
 
     <string name="p1_posts">帖子</string>
-    <string name="p1_followings">關注</string>
-    <string name="p1_followers">被關注</string>
+    <string name="p1_followings">关注</string>
+    <string name="p1_followers">被关注</string>
     <string name="p1_gallery">相冊</string>
     <string name="p1_favourites">收藏</string>
 
-    <string name="p5_followings">關注</string>
-    <string name="p5_followers">被關注</string>
+    <string name="p5_followings">关注</string>
+    <string name="p5_followers">被关注</string>
 
     <string name="p1a_take_a_new_photo">拍照</string>
     <string name="p1a_choose_from_album">从相簿中选择</string>
     <string name="p1a_cancel">取消</string>
 
     <string name="s12_post">發帖</string>
-    <string name="s12_title_food_name">標題 (食物名稱)</string>
+    <string name="s12_title_food_name">标题（食物名称）</string>
     <string name="s12_restaurant_name">餐厅的名字</string>
     <string name="s12_restaurant_address">餐厅地址</string>
     <string name="s12_spendings">价格</string>
@@ -91,15 +90,15 @@
     <string name="s12_comments">注释</string>
     <string name="s12_hashtags">标籤</string>
 
-    <string name="s12_add_photo">新增圖片</string>
+    <string name="s12_add_photo">新增图片</string>
     <string name="s12_submit">提交</string>
     <string name="s12_take_a_new_photo">拍照</string>
     <string name="s12_choose_from_album">从相簿中选择</string>
 
-    <string name="s13a_address">地點</string>
-    <string name="s13a_add">加入 %1$s 為新餐廳</string>
+    <string name="s13a_address">地点</string>
+    <string name="s13a_add">加入 %1$s 为新餐厅</string>
     <string name="s13a_add_text1">加入</string>
-    <string name="s13a_add_text2">為新餐廳</string>
+    <string name="s13a_add_text2">为新餐厅</string>
 
     <string name="p1b_gallery">相冊</string>
     <string name="p1b_footprints">足硛</string>
@@ -108,28 +107,28 @@
     <string name="p1c_turn_off_notifications">关闭通知</string>
     <string name="p1c_cancel">取消</string>
 
-    <string name="p6_report_inappropriate">舉報不良信息</string>
-    <string name="p6_specify_the_reason">選擇常見舉報原因</string>
-    <string name="p6_input_other_reason">輸入其他</string>
+    <string name="p6_report_inappropriate">举报不良信息</string>
+    <string name="p6_specify_the_reason">选择常见举报原因</string>
+    <string name="p6_input_other_reason">输入其他</string>
     <string name="p6_submit">提交</string>
 
     <string name="notification_shared_a_snap_post">寫了一篇 Snap 食評:</string>
 
     <string name="s10_share">分享</string>
     <string name="s10_food_of_this_restaurant">同店美食</string>
-    <string name="s10_report">舉報</string>
+    <string name="s10_report">举报</string>
 
     <string name="s11_food_of_this_restaurant">同店美食</string>
 
-    <string name="g1_enable_gps_location_service">開啟GPS設定</string>
+    <string name="g1_enable_gps_location_service">开启GPS设定</string>
     <string name="g1_cancel">取消</string>
-    <string name="g1_enable">開啟</string>
+    <string name="g1_enable">开启</string>
 
     <string name="s10a_cancel">取消</string>
     <string name="s10a_your_friend">你的朋友</string>
-    <string name="s10a_shared_a_snap_post">寫了一篇Snap食評</string>
+    <string name="s10a_shared_a_snap_post">写了一篇snap食评</string>
 
-    <string name="a6_settings">設置</string>
+    <string name="a6_settings">设置</string>
     <string name="a6_my_account">我的帐号</string>
     <string name="a6_connected_services">已连接伺服</string>
     <string name="a6_language">语言</string>
@@ -144,8 +143,8 @@
     <string name="a7_phone">电话</string>
     <string name="a7_email">电子邮箱</string>
     <string name="a7_hashtags">标籤</string>
-    <string name="a7_introduction">簡介</string>
-    <string name="a7_change_avatar">編輯頭像</string>
+    <string name="a7_introduction">简介</string>
+    <string name="a7_change_avatar">编辑头像</string>
     <string name="a7_done">完成</string>
 
     <string name="a7a_take_a_new_photo">拍照</string>
@@ -229,5 +228,6 @@
 
     <string name="choose_gender">选择性别</string>
 
-    <string name="fb_share_title">你的朋友%1$s寫了一篇Snap食評:</string>
+    <string name="fb_share_title">你的朋友％1$ s的写了一篇snap食评：</string>
+    <string name="a1_guest_mode">遊客登录</string>
 </resources>

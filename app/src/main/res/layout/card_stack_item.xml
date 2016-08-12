@@ -34,7 +34,9 @@
             android:layout_toRightOf="@id/food_name"
             android:ellipsize="end"
             android:singleLine="true"
-            android:layout_alignBaseline="@id/food_name"/>
+            android:layout_alignBaseline="@id/food_name"
+            android:text="location"
+            android:gravity="right" />
 
 
 

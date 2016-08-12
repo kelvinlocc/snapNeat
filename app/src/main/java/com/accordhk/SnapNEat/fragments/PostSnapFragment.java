@@ -145,7 +145,7 @@ public class PostSnapFragment extends BaseFragment {
         rl_resto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.showRestaurantList(restaurant);
                 }
             }
@@ -155,7 +155,7 @@ public class PostSnapFragment extends BaseFragment {
         ib_resto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.showRestaurantList(restaurant);
                 }
             }
@@ -165,7 +165,7 @@ public class PostSnapFragment extends BaseFragment {
         rl_spending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.showHotSearchMore(spendingList, HotSearch.Category.SPENDINGS.getKey(), true, false);
                 }
             }
@@ -175,7 +175,7 @@ public class PostSnapFragment extends BaseFragment {
         ib_spending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.showHotSearchMore(spendingList, HotSearch.Category.SPENDINGS.getKey(), true, false);
                 }
             }
@@ -185,7 +185,7 @@ public class PostSnapFragment extends BaseFragment {
         rl_dish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.showHotSearchMoreShowAll(dish, HotSearch.Category.DISH.getKey(), false, false, false);
                 }
             }
@@ -195,7 +195,7 @@ public class PostSnapFragment extends BaseFragment {
         ib_dish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.showHotSearchMoreShowAll(dish, HotSearch.Category.DISH.getKey(), false, false, false);
                 }
             }
@@ -263,7 +263,7 @@ public class PostSnapFragment extends BaseFragment {
                 if (bitmaps.size() < 1)
                     error = mUtils.getStringResource(R.string.error_minimum_no_images);
                 else {
-                    if(bitmaps.size() > 5)
+                    if (bitmaps.size() > 5)
                         error = mUtils.getStringResource(R.string.error_maximum_no_images);
                 }
 
@@ -282,7 +282,7 @@ public class PostSnapFragment extends BaseFragment {
 
                         for (int i = 0; i < bitmaps.size(); i++) {
                             Uri uri = Uri.parse(bitmaps.get(i));
-                            Log.d(LOGGER_TAG, "bitmap uri: "+uri.toString());
+                            Log.d(LOGGER_TAG, "bitmap uri: " + uri.toString());
 
                             multiPartParams.put(uri.toString().trim(), mUtils.converUriToFileData(getActivity(), uri));
 
@@ -305,7 +305,7 @@ public class PostSnapFragment extends BaseFragment {
                         //// TODO: upload to server:
                         //tv_snap_location
 
-                        Log.i(TAG, "onClick: get location: "+tv_snap_location.getText().toString());
+                        Log.i(TAG, "onClick: get location: " + tv_snap_location.getText().toString());
                         restaurant.setLocation(tv_snap_location.getText().toString().trim());
                         Map<String, String> params = mUtils.getBaseRequestMap();
                         params.put(Snap.RATING, String.valueOf(rating));
@@ -320,7 +320,7 @@ public class PostSnapFragment extends BaseFragment {
                         mUtils.dismissDialog(mProgressDialog);
 
                         mProgressDialog.show();
-                        Log.i(TAG, "onClicked: get location: "+tv_snap_location.getText().toString());
+                        Log.i(TAG, "onClicked: get location: " + tv_snap_location.getText().toString());
 
                         mApi.postNewSnap(params, bodyParams, multiPartParams, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                             @Override
@@ -332,7 +332,7 @@ public class PostSnapFragment extends BaseFragment {
 
                                     if (response != null) {
 
-                                        if(response.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                        if (response.getStatus() == Constants.RES_UNAUTHORIZED) {
                                             if (mListener != null) {
                                                 mListener.showStartingFragmentFromLogout();
                                             }
@@ -500,14 +500,14 @@ public class PostSnapFragment extends BaseFragment {
         Log.d(LOGGER_TAG, "requestCode: " + requestCode + "==resultCode: " + resultCode);
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK && data != null) {
-            Log.d(LOGGER_TAG, "captured!!! "+mCurrentPhotoPath);
+            Log.d(LOGGER_TAG, "captured!!! " + mCurrentPhotoPath);
 
             Bundle extras = data.getExtras();
 //            Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), (Bitmap) extras.get("data"), 500);
             Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), (Bitmap) extras.get("data"), glMaxTextureSize);
             String error = mUtils.validateUploadImage(bitmapResult);
 
-            if(error.isEmpty()) {
+            if (error.isEmpty()) {
                 bitmaps.add(bitmapResult.get(Constants.PHOTO_PATH).toString());
 
                 SharedPref sharedPref = new SharedPref(getContext());
@@ -521,14 +521,14 @@ public class PostSnapFragment extends BaseFragment {
             Log.d(LOGGER_TAG, "selected!!!");
 
             //If Single image selected then it will fetch from Gallery
-            if(data.getData()!=null){
+            if (data.getData() != null) {
 
                 try {
                     Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData()), glMaxTextureSize);
                     Log.d("LOG_TAG", "SINGLE Selected Image: " + bitmapResult.get(Constants.PHOTO_PATH));
 
                     String error = mUtils.validateUploadImage(bitmapResult);
-                    if(error.isEmpty()) {
+                    if (error.isEmpty()) {
                         bitmaps.add(bitmapResult.get(Constants.PHOTO_PATH).toString());
 
                         SharedPref sharedPref = new SharedPref(getContext());
@@ -542,18 +542,18 @@ public class PostSnapFragment extends BaseFragment {
 
                 rv_snap_photos.setAdapter(createNewAdapter(bitmaps));
 
-            }else{
-                if(data.getClipData()!=null){
+            } else {
+                if (data.getClipData() != null) {
 
                     Uri uri;
 
-                    ClipData mClipData=data.getClipData();
+                    ClipData mClipData = data.getClipData();
 
-                    if(mClipData.getItemCount() > (5-bitmaps.size())) {
+                    if (mClipData.getItemCount() > (5 - bitmaps.size())) {
                         mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_maximum_no_images)).show();
                     } else {
                         String error = "";
-                        for(int i=0;i<mClipData.getItemCount();i++){
+                        for (int i = 0; i < mClipData.getItemCount(); i++) {
 
                             ClipData.Item item = mClipData.getItemAt(i);
                             uri = item.getUri();
@@ -564,7 +564,7 @@ public class PostSnapFragment extends BaseFragment {
                                 Log.d("LOG_TAG", "MULTI Selected Images" + bitmapResult.get(Constants.PHOTO_PATH));
 
                                 error = mUtils.validateUploadImage(bitmapResult);
-                                if(error.isEmpty()) {
+                                if (error.isEmpty()) {
                                     bitmaps.add(bitmapResult.get(Constants.PHOTO_PATH).toString());
                                     Log.d("LOG_TAG", "Selected Images Total: " + bitmaps.size());
 
@@ -581,7 +581,7 @@ public class PostSnapFragment extends BaseFragment {
                         Log.d("LOG_TAG", "Selected Images Total: " + bitmaps.size());
                         rv_snap_photos.setAdapter(createNewAdapter(bitmaps));
 
-                        if(error.isEmpty() == false)
+                        if (error.isEmpty() == false)
                             mUtils.getErrorDialog(error).show();
 
                     }
@@ -659,12 +659,12 @@ public class PostSnapFragment extends BaseFragment {
     }
 
     @SuppressWarnings("unchecked")
-    public void customResumeFromBack(int type, Object object){
+    public void customResumeFromBack(int type, Object object) {
         //if(object instanceof Restaurant) {
-        if(type == HotSearch.Category.DISTRICT.getKey()) {
+        if (type == HotSearch.Category.DISTRICT.getKey()) {
             restaurant = (Restaurant) object;
-            if(restaurant != null && restaurant.getName() != null) {
-                if(restaurant.getName().isEmpty() == false) {
+            if (restaurant != null && restaurant.getName() != null) {
+                if (restaurant.getName().isEmpty() == false) {
                     //// TODO: get the restaurant info
                     tv_snap_resto.setText(restaurant.getName());
                     tv_snap_location.setText(restaurant.getLocation());
@@ -673,7 +673,7 @@ public class PostSnapFragment extends BaseFragment {
         } else if (type == HotSearch.Category.SPENDINGS.getKey()) {//else if (object instanceof Spending) {
             spendingList = (List<String>) object;
             // only one spending
-            if(spendingList.isEmpty() == false) {
+            if (spendingList.isEmpty() == false) {
                 try {
                     HotSearchFilterDataSource dataSource = new HotSearchFilterDataSource(getContext());
                     dataSource.open();
@@ -687,40 +687,45 @@ public class PostSnapFragment extends BaseFragment {
                     spending = new Spending();
                     spending.setId(temp.getId());
 
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         } else {
             dish = (List<String>) object;
-            if(dish.isEmpty() == false) {
+            if (dish.isEmpty() == false) {
                 try {
                     HotSearchFilterDataSource dataSource = new HotSearchFilterDataSource(getContext());
                     dataSource.open();
 
                     int id = Integer.parseInt(dish.get(0));
-                    if(id == -1)
+                    if (id == -1)
                         id = Integer.parseInt(dish.get(1));
                     String allDishes = "";
                     HotSearch print;
                     for (int i = 0; i < dish.size(); i++) {
-                        Log.i(TAG, "customResumeFromBack: dish.get "+i+" : "+dish.get(i));
-                        Log.i(TAG, "customResumeFromBack: dish.get "+i+" : "+dish.get(i).toString());
-                        print  = dataSource.getRowByIdAndCategory(Integer.parseInt(dish.get(i)), HotSearch.Category.DISH.getKey());
-                        allDishes = print.getValue()+"\n"+allDishes;
-                        Log.i(TAG, "customResumeFromBack: print: "+print.getValue());
+                        Log.i(TAG, "customResumeFromBack: dish.get " + i + " : " + dish.get(i));
+                        Log.i(TAG, "customResumeFromBack: dish.get " + i + " : " + dish.get(i).toString());
+                        print = dataSource.getRowByIdAndCategory(Integer.parseInt(dish.get(i)), HotSearch.Category.DISH.getKey());
+                        if (allDishes == "") {
+                            allDishes = print.getValue();
+                        } else {
+                            allDishes = allDishes + "\n" + print.getValue();
+                        }
+                        Log.i(TAG, "customResumeFromBack: print: " + print.getValue());
                     }
 
 
                     HotSearch temp = dataSource.getRowByIdAndCategory(id, HotSearch.Category.DISH.getKey());
 
                     dataSource.close();
+
                     Log.d(LOGGER_TAG, "temp name: " + temp.getValue());
 //                    tv_snap_dish.setText(temp.getValue());
-
+                    Log.i(TAG, "customResumeFromBack: allDishes: " + allDishes);
                     tv_snap_dish.setText(allDishes);
 
-                } catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -739,11 +744,17 @@ public class PostSnapFragment extends BaseFragment {
      */
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
+
         void goBack();
+
         void showHotSearchMore(List<String> defaultSelected, int type, boolean isSingleSelect, boolean isSelectedValueValue);
+
         void showHotSearchMoreShowAll(List<String> defaultSelected, int type, boolean isSingleSelect, boolean isSelectedValueValue, boolean showAllOption);
+
         void showRestaurantList(Restaurant restaurant);
+
         void showStartingFragmentFromLogout();
+
         void showUserProfile(int userId);
     }
 }

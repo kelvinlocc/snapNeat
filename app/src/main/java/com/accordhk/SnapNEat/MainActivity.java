@@ -289,6 +289,7 @@ public class MainActivity extends AppCompatActivity
                         if (mCurrentUser.getId() < 1) { // No logged in user
                             mFragment = new StartingFragment();
                         } else {
+                            // // TODO: 8/12/2016  go to profile fragment
                             Bundle args = new Bundle();
                             args.putInt(ProfileFragment.USER_ID, mCurrentUser.getId());
                             mFragment = new ProfileFragment();
@@ -482,8 +483,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_homepage) {
+            User user = new SharedPref(getApplicationContext()).getLoggedInUser(); // kl from profile_followings 
 
+            // // TODO: 8/12/2016  go to main fragment, homepage
             mFragment = new MainFragment();
+            Bundle args = new Bundle();
+//            args.putInt(ProfileFragment.USER_ID, mCurrentUser.getId()); //kl
+            args.putInt(MainFragment.USER_ID, user.getId()); // from profile fragment
+            Log.i(TAG, "onNavigationItemSelected: user.getId(): "+user.getId());
+            mFragment.setArguments(args);
+
 //            User user = new SharedPref(getApplicationContext()).getLoggedInUser();
 //            if(user != null)
 //                mFragment = new MainFragment();
