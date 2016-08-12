@@ -88,6 +88,13 @@ public class SnapDetailsFragment extends BaseFragment {
     // wechat
     private IWXAPI iwapi;
 
+
+
+    public interface SnapCardListener {
+
+    }
+
+
     public SnapDetailsFragment() {
         // Required empty public constructor
     }
@@ -176,6 +183,8 @@ public class SnapDetailsFragment extends BaseFragment {
             public void onClick(View v) {
                 if (mListener != null) {
                     mListener.goBack();
+//                    ((MainFragment)).update();
+
                 }
             }
         });
@@ -461,7 +470,9 @@ public class SnapDetailsFragment extends BaseFragment {
                                         }
                                     }
                                 });
-
+                                //// TODO: 8/12/2016
+                                //  get isLiked
+                                Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snap.getLikeFlag());
 
                                 if (snap.getLikeFlag() == Constants.FLAG_TRUE) {
                                     btn_like.setImageResource(R.drawable.s10_like);
@@ -470,6 +481,7 @@ public class SnapDetailsFragment extends BaseFragment {
                                     @Override
                                     public void onClick(View v) {
                                         try {
+//                                            mListener.onLikeClick(v,snap);
                                             Map<String, String> params = mUtils.getBaseRequestMap();
                                             params.put(Snap.SNAP_ID, String.valueOf(snapId));
 
@@ -480,9 +492,8 @@ public class SnapDetailsFragment extends BaseFragment {
                                                     try {
                                                         ResponsePostLike faveRes = (ResponsePostLike) object;
                                                         //                                                mUtils.dismissDialog(mProgressDialog);
-
                                                         if (faveRes != null) {
-
+                                                            Log.i(TAG, "check@ getView: faveRes.getLikeStatus(): "+faveRes.getLikeStatus());
                                                             if (faveRes.getStatus() == Constants.RES_UNAUTHORIZED) {
                                                                 if (mListener != null) {
                                                                     mListener.showStartingFragmentFromLogout();
@@ -490,8 +501,10 @@ public class SnapDetailsFragment extends BaseFragment {
                                                             } else if (faveRes.getStatus() != Constants.RES_SUCCESS) {
                                                                 mUtils.getErrorDialog(faveRes.getMessage()).show();
                                                             } else {
+
                                                                 if (faveRes.getLikeStatus() == Constants.FLAG_TRUE)
                                                                     btn_like.setImageResource(R.drawable.s10_like);
+
                                                                 else
                                                                     btn_like.setImageResource(R.drawable.s10_like_def);
                                                                 tv_num_likes.setText(String.valueOf(faveRes.getTotalLikes()));
@@ -659,11 +672,15 @@ public class SnapDetailsFragment extends BaseFragment {
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
+
+
     public interface OnFragmentInteractionListener {
 
         void onFragmentInteraction(Uri uri);
 
         void goBack();
+
+
 
         void showReportInappropriate(int userId, int snapId);
 

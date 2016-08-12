@@ -1,6 +1,7 @@
 package com.accordhk.SnapNEat.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.accordhk.SnapNEat.R;
 import com.accordhk.SnapNEat.utils.Constants;
 import com.accordhk.SnapNEat.utils.CustomFontTextView;
 import com.accordhk.SnapNEat.utils.VolleySingleton;
+import com.accordhk.SnapNEat.utils.mySharePreference_app;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
 
@@ -27,16 +29,19 @@ import java.util.List;
 public class SnapHomepageAdapter extends ArrayAdapter<Snap> {
 
     private static String LOGGER_TAG = "SnapHomepageAdapter";
-
+    String TAG = LOGGER_TAG;
     ImageLoader mImageLoader;
     private Context mContext;
-
+    mySharePreference_app myPref;
     private SnapCardListener mListener;
 
     public interface SnapCardListener {
         public void onProfilePicClick(View v, Snap snap);
+
         public void onLikeClick(View v, Snap snap);
+
         public void onShareClick(View v, Snap snap);
+
         public void onNavigateClick(View v, Snap snap);
     }
 
@@ -48,7 +53,7 @@ public class SnapHomepageAdapter extends ArrayAdapter<Snap> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        myPref = new mySharePreference_app();
         final Snap snap = getItem(position);
 
         if (convertView == null) {
@@ -107,8 +112,14 @@ public class SnapHomepageAdapter extends ArrayAdapter<Snap> {
         btn_like.setTag(convertView);
         btn_like.setImageResource(R.drawable.s1_btn_like_default);
 
-        if(snap.getLikeFlag() == Constants.FLAG_TRUE)
+        if (snap.getLikeFlag() == Constants.FLAG_TRUE) {
             btn_like.setImageResource(R.drawable.s1_btn_like);
+            Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snap.getLikeFlag());
+        }
+        else {
+            Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snap.getLikeFlag());
+        }
+        Log.i(TAG, "check@ update here!");
 
         btn_like.setOnClickListener(new View.OnClickListener() {
             @Override

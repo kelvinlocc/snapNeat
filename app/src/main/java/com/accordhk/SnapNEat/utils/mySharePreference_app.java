@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class mySharePreference_app {
     static String preference_key = "my_preference";
     static String editor_key = "USER_ID";
+    static String like_key = "check_like";
     String TAG = this.getClass().getName();
 
     public void setUserId (Context context, String user_id){
@@ -33,5 +34,45 @@ public class mySharePreference_app {
         return user_id;
 
     }
+    public void like (Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(preference_key,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(like_key,true);
+        editor.apply();
+    }
+
+    public void dislike (Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(preference_key,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(like_key,false);
+        editor.apply();
+    }
+
+    public boolean isLike (Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(preference_key,Context.MODE_PRIVATE);
+
+        return sharedPreferences.getBoolean(like_key,false);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }

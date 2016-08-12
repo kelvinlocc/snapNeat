@@ -121,6 +121,9 @@ public class MainFragment extends BaseFragment {
     public static final String USER_ID = "userId";
     public static String TAG = "MainFragment";
 
+    // button
+    ImageButton btn_like;
+
     public MainFragment() {
         // Required empty public constructor
     }
@@ -200,6 +203,7 @@ public class MainFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.i(TAG, "onCreateView: check@");
         view = inflater.inflate(R.layout.fragment_main, container, false);
         mCardStack = (CardStack) view.findViewById(R.id.card_stack);
         rl_share = (RelativeLayout) view.findViewById(R.id.rl_share);
@@ -307,6 +311,7 @@ public class MainFragment extends BaseFragment {
 //                }
 //            }
 //        });
+
 
         RelativeLayout rl_share_fb = (RelativeLayout) view.findViewById(R.id.rl_share_fb);
         RelativeLayout rl_share_instagram = (RelativeLayout) view.findViewById(R.id.rl_share_instagram);
@@ -583,11 +588,27 @@ public class MainFragment extends BaseFragment {
 
         return view;
     }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        Log.i(TAG, "onViewCreated: ");
+        super.onViewCreated(view, savedInstanceState);
 
-    /**
-     * Gets the snaps base of the mode
-     * @param mode
-     */
+//        if (savedInstanceState == null && !fragmentAlreadyLoaded) {
+//            fragmentAlreadyLoaded = true;
+//
+//            // Code placed here will be executed once
+//        }
+
+        Log.i(TAG, "onViewCreated: ");
+    }
+
+
+
+        /**
+         * Gets the snaps base of the mode
+         * @param mode
+         */
     private void getSnaps(int mode) {
         getSnaps(mode, 0.00, 0.00);
     }
@@ -654,7 +675,7 @@ public class MainFragment extends BaseFragment {
                                     if (mIndex == res.getResults().size())
                                         message.setText(mUtils.getStringResource(R.string.error_no_more_snap));
                                 }
-
+                                //// TODO: 8/12/2016 top card stack tapped;
                                 @Override
                                 public void topCardTapped() {
                                     Snap snap = (Snap) mCardStack.getAdapter().getItem(mCardStack.getCurrIndex());
@@ -871,6 +892,7 @@ public class MainFragment extends BaseFragment {
 
             @Override
             public void onLikeClick(View v, Snap s) {
+                Log.i(TAG, "check@ onLikeClick: ");
                 final RelativeLayout parentView = (RelativeLayout) v.getTag();
 
                 User user = new SharedPref(getContext()).getLoggedInUser();
@@ -893,10 +915,12 @@ public class MainFragment extends BaseFragment {
                                 } else if(snapLikeRes.getStatus() != Constants.RES_SUCCESS) {
                                     mUtils.getErrorDialog(snapLikeRes.getMessage()).show();
                                 } else {
-                                    ImageButton btn_like = (ImageButton) parentView.findViewById(R.id.btn_like);
+                                    //// TODO: 8/12/2016  like button
+                                    btn_like = (ImageButton) parentView.findViewById(R.id.btn_like);
                                     CustomFontTextView like_count = (CustomFontTextView) parentView.findViewById(R.id.like_count);
 
                                     like_count.setText(String.valueOf(snapLikeRes.getTotalLikes()));
+                                    Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snapLikeRes.getLikeStatus());
 
                                     if(snapLikeRes.getLikeStatus() == Constants.FLAG_TRUE)
                                         btn_like.setImageResource(R.drawable.s1_btn_like);
@@ -925,6 +949,19 @@ public class MainFragment extends BaseFragment {
         });
 
     }
+    @Override
+    public void onResume()
+    {  // After a pause OR at startup
+        Log.i(TAG, "check@ onResume: ");
+        super.onResume();
+//        btn_like.setBackgroundColor(9);
+        Log.i(TAG, "check@ onResume: update something");
+        //Refresh your stuff here
+    }
+    public void update (){
+        Log.i(TAG, "check@ update: ");
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

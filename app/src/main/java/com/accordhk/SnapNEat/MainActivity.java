@@ -16,6 +16,7 @@ import android.os.StrictMode;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
@@ -146,11 +147,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toast.makeText(MainActivity.this, "MainActivity", Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "onCreate: savedInstanceState: "+savedInstanceState);
+        Log.i(TAG, "onCreate: savedInstanceState: " + savedInstanceState);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+
+        getFragmentManager().addOnBackStackChangedListener(getListener());
+
 
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
@@ -210,7 +214,6 @@ public class MainActivity extends AppCompatActivity
             if (savedInstanceState != null) {
                 return;
             }
-
 //            mManager = getSupportFragmentManager();
 //            mManager.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
 //                @Override
@@ -226,14 +229,13 @@ public class MainActivity extends AppCompatActivity
 //                    }
 //                }
 //            });
-
             mTransaction = getSupportFragmentManager().beginTransaction();
 
-                if (mCurrentUser == null) { // No logged in user; show login page
-                    mFragment = new StartingFragment();
-                } else { // User still logged in; show homepage
-                    mFragment = new MainFragment();
-                }
+            if (mCurrentUser == null) { // No logged in user; show login page
+                mFragment = new StartingFragment();
+            } else { // User still logged in; show homepage
+                mFragment = new MainFragment();
+            }
 
             updateNavigationDrawerItems();
 
@@ -246,7 +248,7 @@ public class MainActivity extends AppCompatActivity
                     try {
                         int snapId = Integer.parseInt(intentPath.substring(intentPath.lastIndexOf("=") + 1));
                         Log.d("snapId: ", String.valueOf(snapId));
-
+                        // // TODO: 8/12/2016  go to snap detail fragment 
                         mFragment = new SnapDetailsFragment();
                         Bundle args = new Bundle();
                         args.putInt(SnapDetailsFragment.SNAP_ID, snapId);
@@ -319,7 +321,11 @@ public class MainActivity extends AppCompatActivity
         } else {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             if (fragment != null) {
+                Log.i(TAG, "onBackPressed: ");
                 if (fragment instanceof MainFragment) {
+                    Log.i(TAG, "onBackPressed: to Main fragment");
+
+
                     if ((((MainFragment) fragment).getmPopupBackStack()).size() > 0) {
                         ((MainFragment) fragment).slideDown(((MainFragment) fragment).getmPopupBackStack().pop());
                     } else
@@ -330,10 +336,24 @@ public class MainActivity extends AppCompatActivity
                     } else
                         super.onBackPressed();
                 } else if (fragment instanceof SnapDetailsFragment) {
+                    Log.i(TAG, "onBackPressed: SnapDetailsFragment");
+
+
                     if ((((SnapDetailsFragment) fragment).getmPopupBackStack()).size() > 0) {
+                        Log.i(TAG, "onBackPressed: ");
                         ((SnapDetailsFragment) fragment).slideDown(((SnapDetailsFragment) fragment).getmPopupBackStack().pop());
                     } else
-                        super.onBackPressed();
+                        fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+                    if (fragment instanceof MainFragment) {
+                        Log.i(TAG, "fragment instanceof MainFragment: ");
+                    }
+                    else {
+                        Log.i(TAG, "onBackPressed: fragment.getTag(): "+fragment.getTag());
+                    }
+                    Log.i(TAG, "onBackPressed: ");
+                    super.onBackPressed();
+
+
                 } else if (fragment instanceof SettingsAccountFragment) {
                     if ((((SettingsAccountFragment) fragment).getmPopupBackStack()).size() > 0) {
                         ((SettingsAccountFragment) fragment).slideDown(((SettingsAccountFragment) fragment).getmPopupBackStack().pop());
@@ -447,6 +467,28 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+    private android.app.FragmentManager.OnBackStackChangedListener getListener() {
+        Log.i(TAG, "getListener: ");
+        android.app.FragmentManager.OnBackStackChangedListener result = new android.app.FragmentManager.OnBackStackChangedListener() {
+            public void onBackStackChanged()
+
+            {
+                Log.i(TAG, "onBackStackChanged: ");
+                FragmentManager manager = getSupportFragmentManager();
+
+                if (manager != null) {
+                    MainFragment currFrag = (MainFragment) manager.findFragmentById(R.id.fragment_container);
+
+                    currFrag.onResume();
+                    Log.i(TAG, "onBackStackChanged: ");
+                }
+            }
+        };
+
+        return result;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -490,7 +532,7 @@ public class MainActivity extends AppCompatActivity
             Bundle args = new Bundle();
 //            args.putInt(ProfileFragment.USER_ID, mCurrentUser.getId()); //kl
             args.putInt(MainFragment.USER_ID, user.getId()); // from profile fragment
-            Log.i(TAG, "onNavigationItemSelected: user.getId(): "+user.getId());
+            Log.i(TAG, "onNavigationItemSelected: user.getId(): " + user.getId());
             mFragment.setArguments(args);
 
 //            User user = new SharedPref(getApplicationContext()).getLoggedInUser();
@@ -869,6 +911,7 @@ public class MainActivity extends AppCompatActivity
         mTransaction.commit();
     }
 
+    // // TODO: 8/12/2016  go to show snap detail 
     @Override
     public void showSnapDetails(int id) {
         viewSnapDetails(id, false);
@@ -881,9 +924,9 @@ public class MainActivity extends AppCompatActivity
         args.putBoolean(SnapDetailsFragment.DISABLE_BACK, disableBackFlag);
         args.putInt(SnapDetailsFragment.SNAP_ID, id);
         fragment.setArguments(args);
-
+        // // TODO: 8/12/2016 add tag 
         mTransaction = getSupportFragmentManager().beginTransaction();
-        mTransaction.add(R.id.fragment_container, fragment);
+        mTransaction.add(R.id.fragment_container, fragment,"snapDetail");
         mTransaction.addToBackStack(null);
         mTransaction.commit();
     }
@@ -940,7 +983,7 @@ public class MainActivity extends AppCompatActivity
         super.onBackPressed();
         try {
             Log.d(LOGGER_TAG, "trying to call onResume");
-            Log.i(TAG, "goBackResto: restaurant.getDescription(); "+restaurant.getDescription());
+            Log.i(TAG, "goBackResto: restaurant.getDescription(); " + restaurant.getDescription());
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             if (fragment instanceof PostSnapFragment) {
                 Log.d(LOGGER_TAG, "instance of PostSnapFragment");
@@ -1050,6 +1093,9 @@ public class MainActivity extends AppCompatActivity
         } else {
             fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         }
+        if (requestCode == 1) {
+            Log.i(TAG, "onActivityResult: ");
+        }
 
         if (fragment != null) {
             Log.d("FRAGMENT NOT NULL", fragment.toString());
@@ -1105,6 +1151,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         Toast.makeText(MainActivity.this, "onResume @MainActivity", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "onResume: ");
         super.onResume();
         if (mCurrentUser != null) {
             registerReceiver();
@@ -1118,7 +1165,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         super.onDestroy();
         Toast.makeText(MainActivity.this, "onDestroy @ MainActivity", Toast.LENGTH_SHORT).show();
 
