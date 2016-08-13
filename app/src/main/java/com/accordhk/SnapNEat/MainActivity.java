@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity
                 } else if (fragment instanceof SnapDetailsFragment) {
                     Log.i(TAG, "onBackPressed: SnapDetailsFragment");
 
-
+                    // // TODO: 8/12/2016  pop stack from snap detail fragment 
                     if ((((SnapDetailsFragment) fragment).getmPopupBackStack()).size() > 0) {
                         Log.i(TAG, "onBackPressed: ");
                         ((SnapDetailsFragment) fragment).slideDown(((SnapDetailsFragment) fragment).getmPopupBackStack().pop());
@@ -346,13 +346,15 @@ public class MainActivity extends AppCompatActivity
                         fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                     if (fragment instanceof MainFragment) {
                         Log.i(TAG, "fragment instanceof MainFragment: ");
-                    }
-                    else {
-                        Log.i(TAG, "onBackPressed: fragment.getTag(): "+fragment.getTag());
+                    } else {
+                        Log.i(TAG, "onBackPressed: fragment.getTag(): " + fragment.getTag());
+
                     }
                     Log.i(TAG, "onBackPressed: ");
                     super.onBackPressed();
-
+                    if (fragment instanceof MainFragment)
+                    fragment.onResume();
+                    
 
                 } else if (fragment instanceof SettingsAccountFragment) {
                     if ((((SettingsAccountFragment) fragment).getmPopupBackStack()).size() > 0) {
@@ -926,7 +928,7 @@ public class MainActivity extends AppCompatActivity
         fragment.setArguments(args);
         // // TODO: 8/12/2016 add tag 
         mTransaction = getSupportFragmentManager().beginTransaction();
-        mTransaction.add(R.id.fragment_container, fragment,"snapDetail");
+        mTransaction.add(R.id.fragment_container, fragment, "snapDetail");
         mTransaction.addToBackStack(null);
         mTransaction.commit();
     }
