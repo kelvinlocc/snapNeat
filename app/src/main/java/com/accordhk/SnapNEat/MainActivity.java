@@ -337,7 +337,6 @@ public class MainActivity extends AppCompatActivity
                         super.onBackPressed();
                 } else if (fragment instanceof SnapDetailsFragment) {
                     Log.i(TAG, "onBackPressed: SnapDetailsFragment");
-
                     // // TODO: 8/12/2016  pop stack from snap detail fragment 
                     if ((((SnapDetailsFragment) fragment).getmPopupBackStack()).size() > 0) {
                         Log.i(TAG, "onBackPressed: ");
@@ -348,13 +347,33 @@ public class MainActivity extends AppCompatActivity
                         Log.i(TAG, "fragment instanceof MainFragment: ");
                     } else {
                         Log.i(TAG, "onBackPressed: fragment.getTag(): " + fragment.getTag());
-
                     }
                     Log.i(TAG, "onBackPressed: ");
                     super.onBackPressed();
-                    if (fragment instanceof MainFragment)
-                    fragment.onResume();
-                    
+                    try {
+                        Log.d(LOGGER_TAG, "trying to call onResume");
+
+                        fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+
+                        if (fragment instanceof RestaurantListFragment) { // refresh RestaurantListFragment
+                            Log.d(LOGGER_TAG, "instance of RestaurantListFragment");
+                            ((RestaurantListFragment) fragment).generateView();
+                        }
+                        if (fragment instanceof MainFragment) {
+                            fragment.onResume();
+                            ((MainFragment) fragment).getSnaps(1);
+//                            ((MainFragment) fragment).getSnaps();
+//                            ((MainFragment) fragment).update();
+
+                            Log.i(TAG, "fragment instance of MainFragment");
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+
 
                 } else if (fragment instanceof SettingsAccountFragment) {
                     if ((((SettingsAccountFragment) fragment).getmPopupBackStack()).size() > 0) {

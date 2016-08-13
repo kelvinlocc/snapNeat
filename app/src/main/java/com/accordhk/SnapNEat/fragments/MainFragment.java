@@ -107,12 +107,10 @@ public class MainFragment extends BaseFragment {
 
     private int distance;
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -136,7 +134,6 @@ public class MainFragment extends BaseFragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment MainFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static MainFragment newInstance(String param1, String param2) {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
@@ -162,7 +159,7 @@ public class MainFragment extends BaseFragment {
         }
         else Log.i(TAG, "onCreate: getArguments is null");
 
-        distance = 1;
+        distance = 2;
 
         FacebookSdk.sdkInitialize(getContext());
         callbackManager = CallbackManager.Factory.create();
@@ -205,6 +202,10 @@ public class MainFragment extends BaseFragment {
         // Inflate the layout for this fragment
         Log.i(TAG, "onCreateView: check@");
         view = inflater.inflate(R.layout.fragment_main, container, false);
+        View view_02 = inflater.inflate(R.layout.fragment_snap_details, container, false);
+//        btn_like = (ImageButton) view_02.findViewById(R.id.btn_like);
+
+
         mCardStack = (CardStack) view.findViewById(R.id.card_stack);
         rl_share = (RelativeLayout) view.findViewById(R.id.rl_share);
 
@@ -584,16 +585,16 @@ public class MainFragment extends BaseFragment {
         });
 
         // get snaps for homepage
-        getSnaps(MODE_RANDOM);
+//        getSnaps(MODE_RANDOM);
+        getSnaps(1);
+        Log.i(TAG, "check@ MODE_RANDOM= "+MODE_RANDOM);
 
         return view;
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
         Log.i(TAG, "onViewCreated: ");
         super.onViewCreated(view, savedInstanceState);
-
 //        if (savedInstanceState == null && !fragmentAlreadyLoaded) {
 //            fragmentAlreadyLoaded = true;
 //
@@ -609,13 +610,15 @@ public class MainFragment extends BaseFragment {
          * Gets the snaps base of the mode
          * @param mode
          */
-    private void getSnaps(int mode) {
+        //kl chnage to puclic
+    public void getSnaps(int mode) {
         getSnaps(mode, 0.00, 0.00);
     }
 
     private void getSnaps(int mode, double lat, double lon) {
         Map<String, String> params = (new Utils(getActivity())).getBaseRequestMap();
         params.put(Snap.MODE, Integer.toString(mode));
+        Log.i(TAG, "getSnaps: mode,MODE_LOCATION "+mode+","+MODE_LOCATION);
 
         if (mode == MODE_LOCATION) {
             params.put(Snap.LATITUDE, String.valueOf(lat));
@@ -766,6 +769,8 @@ public class MainFragment extends BaseFragment {
 //        } else {
 //            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
 //        }
+
+
     private void getSnapsByDistance(final int dist) {
         Log.d(LOGGER_TAG, "mGoogleApiClient is null? " + (mGoogleApiClient == null));
 
@@ -954,11 +959,16 @@ public class MainFragment extends BaseFragment {
     {  // After a pause OR at startup
         Log.i(TAG, "check@ onResume: ");
         super.onResume();
+//        btn_like.setImageResource(R.drawable.s1_btn_like);
+//        btn_like.setBackgroundColor(9);
 //        btn_like.setBackgroundColor(9);
         Log.i(TAG, "check@ onResume: update something");
+
         //Refresh your stuff here
+
     }
     public void update (){
+        btn_like.setImageResource(R.drawable.s1_btn_like);
         Log.i(TAG, "check@ update: ");
     }
 
