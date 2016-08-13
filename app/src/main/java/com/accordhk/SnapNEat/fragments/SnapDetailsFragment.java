@@ -49,6 +49,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -470,7 +471,7 @@ public class SnapDetailsFragment extends BaseFragment {
                                         }
                                     }
                                 });
-                                //// TODO: 8/12/2016
+                                //// TODO: 8/12/2016 btn_like
                                 //  get isLiked
                                 Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snap.getLikeFlag());
 
@@ -480,52 +481,65 @@ public class SnapDetailsFragment extends BaseFragment {
                                 btn_like.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        try {
+                                        User user = new SharedPref(getContext()).getLoggedInUser();
+                                        Log.i(TAG, "check@ snap.getUser().getUserId()"+snap.getUser().getUserId());
+                                        Log.i(TAG, "onClick: username,password "+snap.getUser().getUsername()+","+snap.getUser().getPassword());
+                                        String current_username = user.getUsername();
+                                        String snap_username = snap.getUser().getUsername();
+                                        Log.i(TAG, "onClick: "+current_username+","+snap_username);
+                                        if (!Objects.equals(current_username, snap_username)) {
+                                            try {
 //                                            mListener.onLikeClick(v,snap);
-                                            Map<String, String> params = mUtils.getBaseRequestMap();
-                                            params.put(Snap.SNAP_ID, String.valueOf(snapId));
+                                                Map<String, String> params = mUtils.getBaseRequestMap();
+                                                params.put(Snap.SNAP_ID, String.valueOf(snapId));
 
-                                            //                                        mProgressDialog.show();
-                                            mApi.postSnapLike(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
-                                                @Override
-                                                public void onResponse(Object object) {
-                                                    try {
-                                                        ResponsePostLike faveRes = (ResponsePostLike) object;
-                                                        //                                                mUtils.dismissDialog(mProgressDialog);
-                                                        if (faveRes != null) {
-                                                            Log.i(TAG, "check@ getView: faveRes.getLikeStatus(): "+faveRes.getLikeStatus());
-                                                            if (faveRes.getStatus() == Constants.RES_UNAUTHORIZED) {
-                                                                if (mListener != null) {
-                                                                    mListener.showStartingFragmentFromLogout();
+                                                //                                        mProgressDialog.show();
+                                                mApi.postSnapLike(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
+                                                    @Override
+                                                    public void onResponse(Object object) {
+                                                        try {
+                                                            ResponsePostLike faveRes = (ResponsePostLike) object;
+                                                            //                                                mUtils.dismissDialog(mProgressDialog);
+                                                            if (faveRes != null) {
+                                                                Log.i(TAG, "check@ getView: faveRes.getLikeStatus(): " + faveRes.getLikeStatus());
+                                                                if (faveRes.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                                    if (mListener != null) {
+                                                                        mListener.showStartingFragmentFromLogout();
+                                                                    }
+                                                                } else if (faveRes.getStatus() != Constants.RES_SUCCESS) {
+                                                                    mUtils.getErrorDialog(faveRes.getMessage()).show();
+                                                                } else {
+
+                                                                    if (faveRes.getLikeStatus() == Constants.FLAG_TRUE)
+                                                                        btn_like.setImageResource(R.drawable.s10_like);
+
+                                                                    else
+                                                                        btn_like.setImageResource(R.drawable.s10_like_def);
+                                                                    tv_num_likes.setText(String.valueOf(faveRes.getTotalLikes()));
                                                                 }
-                                                            } else if (faveRes.getStatus() != Constants.RES_SUCCESS) {
-                                                                mUtils.getErrorDialog(faveRes.getMessage()).show();
-                                                            } else {
-
-                                                                if (faveRes.getLikeStatus() == Constants.FLAG_TRUE)
-                                                                    btn_like.setImageResource(R.drawable.s10_like);
-
-                                                                else
-                                                                    btn_like.setImageResource(R.drawable.s10_like_def);
-                                                                tv_num_likes.setText(String.valueOf(faveRes.getTotalLikes()));
                                                             }
+                                                        } catch (Exception e) {
+                                                            e.printStackTrace();
                                                         }
-                                                    } catch (Exception e) {
-                                                        e.printStackTrace();
+
                                                     }
 
-                                                }
-
-                                                @Override
-                                                public void onErrorResponse(VolleyError error) {
-                                                    //                                                mUtils.dismissDialog(mProgressDialog);
-                                                    mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_cannot_process_request)).show();
-                                                }
-                                            });
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                            //                                        mUtils.dismissDialog(mProgressDialog);
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        //                                                mUtils.dismissDialog(mProgressDialog);
+                                                        mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_cannot_process_request)).show();
+                                                    }
+                                                });
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                                //                                        mUtils.dismissDialog(mProgressDialog);
+                                            }
                                         }
+                                        else {
+                                            Toast.makeText(getContext(), "you cannot dislike your own snap!", Toast.LENGTH_SHORT).show();
+                                        }
+
+
                                     }
                                 });
 

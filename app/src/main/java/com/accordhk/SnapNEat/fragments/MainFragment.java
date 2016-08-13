@@ -897,15 +897,20 @@ public class MainFragment extends BaseFragment {
 
             @Override
             public void onLikeClick(View v, Snap s) {
+
+
                 Log.i(TAG, "check@ onLikeClick: ");
                 final RelativeLayout parentView = (RelativeLayout) v.getTag();
 
                 User user = new SharedPref(getContext()).getLoggedInUser();
+                Log.i(TAG, "snap.getUser() "+s.getUser());
+                Log.i(TAG, "user.getUserId()"+user.getUserId());
                 if(user != null) { // user currently logged in
                     try {
                         final Map<String, String> params = mUtils.getBaseRequestMap();
                         params.put(Snap.SNAP_ID, String.valueOf(s.getnId()));
 
+                        //// TODO: 8/13/2016  snap like
 //                        mProgressDialog.show();
                         mApi.postSnapLike(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                             @Override

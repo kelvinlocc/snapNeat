@@ -30,6 +30,7 @@ import com.accordhk.SnapNEat.adapters.PostNewSnapRecyclerViewAdapter;
 import com.accordhk.SnapNEat.dao.HotSearchFilterDataSource;
 import com.accordhk.SnapNEat.models.HotSearch;
 import com.accordhk.SnapNEat.models.ResponseBaseWithId;
+import com.accordhk.SnapNEat.models.ResponsePostLike;
 import com.accordhk.SnapNEat.models.Restaurant;
 import com.accordhk.SnapNEat.models.Snap;
 import com.accordhk.SnapNEat.models.Spending;
@@ -321,7 +322,7 @@ public class PostSnapFragment extends BaseFragment {
 
                         mProgressDialog.show();
                         Log.i(TAG, "onClicked: get location: " + tv_snap_location.getText().toString());
-
+                        // // TODO: 8/13/2016  api: post new snap
                         mApi.postNewSnap(params, bodyParams, multiPartParams, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                             @Override
                             public void onResponse(Object object) {
@@ -336,12 +337,58 @@ public class PostSnapFragment extends BaseFragment {
                                             if (mListener != null) {
                                                 mListener.showStartingFragmentFromLogout();
                                             }
-
                                         } else if (response.getStatus() != Constants.RES_SUCCESS) {
                                             mUtils.getErrorDialog(response.getMessage()).show();
                                         } else {
 
                                             if (mListener != null) {
+                                                response.getId();
+                                                //// TODO: 8/13/2016  snap like
+                                                // try to like the snap by the uploader automatically
+                                                try {
+                                                    final Map<String, String> params = mUtils.getBaseRequestMap();
+                                                    params.put(Snap.SNAP_ID, String.valueOf(response.getId()));
+                                                    mApi.postSnapLike(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
+
+                                                        @Override
+                                                        public void onResponse(Object obj) {
+//                                mUtils.dismissDialog(mProgressDialog);
+                                                            ResponsePostLike snapLikeRes = (ResponsePostLike) obj;
+
+                                                            if(snapLikeRes.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                                if(mListener != null) {
+                                                                    mListener.showStartingFragmentFromLogout();
+                                                                }
+                                                            } else if(snapLikeRes.getStatus() != Constants.RES_SUCCESS) {
+                                                                mUtils.getErrorDialog(snapLikeRes.getMessage()).show();
+                                                            } else {
+                                                                //// TODO: 8/12/2016  like button
+                                                                Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snapLikeRes.getLikeStatus());
+
+                                                                if(snapLikeRes.getLikeStatus() == Constants.FLAG_TRUE)
+                                                                {
+                                                                    Log.i(TAG, "onResponse: like success");
+                                                                }
+                                                                else{
+                                                                    Log.i(TAG, "onResponse: like failed");
+                                                                }
+                                                            }
+
+                                                        }
+
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+//                                mUtils.dismissDialog(mProgressDialog);
+                                                            Log.d(LOGGER_TAG, "Error in postSnapLike: " + error.getLocalizedMessage());
+                                                        }
+                                                    });
+
+
+
+                                                } catch (Exception e) {
+                                                    Log.d(LOGGER_TAG, "Error in onLikeClick: " + e.getLocalizedMessage());
+                                                }
+                                                Log.i(TAG, "onResponse: get snap id: "+response.getId());
                                                 getActivity().getSupportFragmentManager().popBackStack();
                                                 User user = new SharedPref(mContext).getLoggedInUser();
                                                 mListener.showUserProfile(user.getId());
