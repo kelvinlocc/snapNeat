@@ -60,6 +60,8 @@
         android:name="android.support.multidex.MultiDexApplication">
 
         <!--android:windowSoftInputMode="stateVisible|adjustResize"-->
+
+
         <activity
             android:name="com.accordhk.SnapNEat.MainActivity"
             android:label="@string/app_name"
@@ -88,6 +90,14 @@
                 <data android:scheme="sneapp" />
 
             </intent-filter>
+            <!--for multiple selection-->
+            <intent-filter>
+                <action android:name="luminous.ACTION_PICK" />
+                <action android:name="luminous.ACTION_MULTIPLE_PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name="com.accordhk.SnapNEat.SplashActivity"

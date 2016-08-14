@@ -245,7 +245,7 @@ public class GMapFragment extends BaseFragment {
 
     private void setUpMapIfNeeded(View inflatedView) {
         if (mMap == null) {
-            mMap = ((MapView) inflatedView.findViewById(R.id.map)).getMap();
+//            mMap = ((MapView) inflatedView.findViewById(R.id.map)).getMap();// bugs
             if (mMap != null) {
                 setUpMap();
             }

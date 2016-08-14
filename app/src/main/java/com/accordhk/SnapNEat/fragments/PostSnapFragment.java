@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.accordhk.SnapNEat.R;
 import com.accordhk.SnapNEat.adapters.PostNewSnapRecyclerViewAdapter;
@@ -45,6 +47,7 @@ import com.accordhk.SnapNEat.utils.VolleySingleton;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -510,8 +513,14 @@ public class PostSnapFragment extends BaseFragment {
                     Intent selIntent = new Intent();
                     // Show only images, no videos or anything else
                     selIntent.setType("image/*");
-                    selIntent.setAction(Intent.ACTION_GET_CONTENT);
+                    Toast.makeText(getContext(), "updated", Toast.LENGTH_SHORT).show();
+//                    selIntent.setAction(Intent.ACTION_GET_CONTENT);
+                    selIntent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+
                     selIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+
+//
+
                     // Always show the chooser (if there are multiple options available)
                     startActivityForResult(Intent.createChooser(selIntent, "Select Picture"), PICK_IMAGE_REQUEST);
                 } else

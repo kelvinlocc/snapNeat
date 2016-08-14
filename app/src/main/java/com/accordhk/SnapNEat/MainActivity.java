@@ -69,6 +69,7 @@ import com.accordhk.SnapNEat.services.GCMRegistrationIntentService;
 import com.accordhk.SnapNEat.utils.SharedPref;
 import com.accordhk.SnapNEat.utils.Utils;
 import com.android.volley.VolleyError;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.gson.Gson;
@@ -152,7 +153,14 @@ public class MainActivity extends AppCompatActivity
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        // For single image
+//        Intent i = new Intent(Action.ACTION_PICK);
+//        startActivityForResult(i, 100);
 
+// For multiple images
+
+//        Intent i2 = new Intent(Action.ACTION_MULTIPLE_PICK);
+//        startActivityForResult(i, 200);
         getFragmentManager().addOnBackStackChangedListener(getListener());
 
 

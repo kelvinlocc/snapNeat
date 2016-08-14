@@ -1,3 +1,7 @@
 include ':app', ':volley', ':CardStack'
 project(':volley').projectDir = new File('app/libs/volley')
 project(':CardStack').projectDir = new File('app/libs/AndroidSwipeableCardStack/CardStack')
+//project(':mylibrary').projectDir = new File('app/libs/mylibrary')
+
+//include ':libs:multi'
+//project(':multi').projectDir = new File('app/libs/multi')
