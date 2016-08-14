@@ -59,6 +59,7 @@ import com.wenchao.cardstack.CardStack;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -905,50 +906,59 @@ public class MainFragment extends BaseFragment {
                 User user = new SharedPref(getContext()).getLoggedInUser();
                 Log.i(TAG, "snap.getUser() "+s.getUser());
                 Log.i(TAG, "user.getUserId()"+user.getUserId());
+                String current_username = user.getUsername();
+                String snap_username = s.getUser().getUsername();
+                Log.i(TAG, "onLikeClick: username = "+current_username+","+snap_username);
                 if(user != null) { // user currently logged in
-                    try {
-                        final Map<String, String> params = mUtils.getBaseRequestMap();
-                        params.put(Snap.SNAP_ID, String.valueOf(s.getnId()));
+                    if (!Objects.equals(current_username, snap_username)) {
+                        try {
+                            final Map<String, String> params = mUtils.getBaseRequestMap();
+                            params.put(Snap.SNAP_ID, String.valueOf(s.getnId()));
 
-                        //// TODO: 8/13/2016  snap like
+                            //// TODO: 8/13/2016  snap like
 //                        mProgressDialog.show();
-                        mApi.postSnapLike(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
-                            @Override
-                            public void onResponse(Object obj) {
+                            mApi.postSnapLike(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
+                                @Override
+                                public void onResponse(Object obj) {
 //                                mUtils.dismissDialog(mProgressDialog);
-                                ResponsePostLike snapLikeRes = (ResponsePostLike) obj;
+                                    ResponsePostLike snapLikeRes = (ResponsePostLike) obj;
 
-                                if(snapLikeRes.getStatus() == Constants.RES_UNAUTHORIZED) {
-                                    if(mListener != null) {
-                                        mListener.showStartingFragmentFromLogout();
+                                    if (snapLikeRes.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                        if (mListener != null) {
+                                            mListener.showStartingFragmentFromLogout();
+                                        }
+                                    } else if (snapLikeRes.getStatus() != Constants.RES_SUCCESS) {
+                                        mUtils.getErrorDialog(snapLikeRes.getMessage()).show();
+                                    } else {
+                                        //// TODO: 8/12/2016  like button
+                                        btn_like = (ImageButton) parentView.findViewById(R.id.btn_like);
+                                        CustomFontTextView like_count = (CustomFontTextView) parentView.findViewById(R.id.like_count);
+
+                                        like_count.setText(String.valueOf(snapLikeRes.getTotalLikes()));
+                                        Log.i(TAG, "check@ getView: snap.getLikeFlag(): " + snapLikeRes.getLikeStatus());
+
+                                        if (snapLikeRes.getLikeStatus() == Constants.FLAG_TRUE)
+                                            btn_like.setImageResource(R.drawable.s1_btn_like);
+                                        else
+                                            btn_like.setImageResource(R.drawable.s1_btn_like_default);
                                     }
-                                } else if(snapLikeRes.getStatus() != Constants.RES_SUCCESS) {
-                                    mUtils.getErrorDialog(snapLikeRes.getMessage()).show();
-                                } else {
-                                    //// TODO: 8/12/2016  like button
-                                    btn_like = (ImageButton) parentView.findViewById(R.id.btn_like);
-                                    CustomFontTextView like_count = (CustomFontTextView) parentView.findViewById(R.id.like_count);
 
-                                    like_count.setText(String.valueOf(snapLikeRes.getTotalLikes()));
-                                    Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snapLikeRes.getLikeStatus());
-
-                                    if(snapLikeRes.getLikeStatus() == Constants.FLAG_TRUE)
-                                        btn_like.setImageResource(R.drawable.s1_btn_like);
-                                    else
-                                        btn_like.setImageResource(R.drawable.s1_btn_like_default);
                                 }
 
-                            }
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
 //                                mUtils.dismissDialog(mProgressDialog);
-                                Log.d(LOGGER_TAG, "Error in postSnapLike: " + error.getLocalizedMessage());
-                            }
-                        });
-                    } catch (Exception e) {
+                                    Log.d(LOGGER_TAG, "Error in postSnapLike: " + error.getLocalizedMessage());
+                                }
+                            });
+                        } catch (Exception e) {
+
 //                        mUtils.dismissDialog(mProgressDialog);
-                        Log.d(LOGGER_TAG, "Error in onLikeClick: " + e.getLocalizedMessage());
+                            Log.d(LOGGER_TAG, "Error in onLikeClick: " + e.getLocalizedMessage());
+                        }
+                    }
+                    else {
+                        Toast.makeText(getContext(), "you cannot dislike your own snap!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
 //                    mUtils.dismissDialog(mProgressDialog);
