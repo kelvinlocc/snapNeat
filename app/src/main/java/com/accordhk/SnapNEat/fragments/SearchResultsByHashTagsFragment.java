@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -94,24 +96,29 @@ public class SearchResultsByHashTagsFragment extends BaseSearchFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
 
+
             searchString = getArguments().getString(SEARCH_STRING);
             searchType = getArguments().getInt(SEARCH_TYPE);
-            if(getArguments().getSerializable(SEARCH_CATEGORIES) != null)
+            if (getArguments().getSerializable(SEARCH_CATEGORIES) != null)
                 selectedValuesMap = (HashMap<Integer, List<String>>) getArguments().getSerializable(SEARCH_CATEGORIES);
         }
     }
+
+    GridView gv_search_results;
+    CustomFontTextView message;
+    Map<String, String> params;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_search_results_list, container, false);
-        final CustomFontTextView message = (CustomFontTextView) view.findViewById(R.id.message);
-        final GridView gv_search_results = (GridView) view.findViewById(R.id.gv_search_results);
+        message = (CustomFontTextView) view.findViewById(R.id.message);
+        gv_search_results = (GridView) view.findViewById(R.id.gv_search_results);
 
         try {
 
-            Map<String, String> params = mUtils.getBaseRequestMap();
+            params = mUtils.getBaseRequestMap();
             params.put(Constants.STR_PAGE, String.valueOf(page));
             params.put(SEARCH_STRING, String.valueOf(searchString));
 
@@ -132,29 +139,87 @@ public class SearchResultsByHashTagsFragment extends BaseSearchFragment {
 //            if(cat.isEmpty() == false)
 //                params.put(SEARCH_CATEGORY_FILTERS, android.text.TextUtils.join(",", cat));
 
-            if(selectedValuesMap.containsKey(HotSearch.Category.DISTRICT.getKey())) {
-                if(selectedValuesMap.get(HotSearch.Category.DISTRICT.getKey()).isEmpty() == false)
+            if (selectedValuesMap.containsKey(HotSearch.Category.DISTRICT.getKey())) {
+                if (selectedValuesMap.get(HotSearch.Category.DISTRICT.getKey()).isEmpty() == false)
                     params.put(SEARCH_DISTRICT_CATEGORY_FILTERS, android.text.TextUtils.join(",", selectedValuesMap.get(HotSearch.Category.DISTRICT.getKey())));
             }
 
-            if(selectedValuesMap.containsKey(HotSearch.Category.DISH.getKey())) {
-                if(selectedValuesMap.get(HotSearch.Category.DISH.getKey()).isEmpty() == false)
+            if (selectedValuesMap.containsKey(HotSearch.Category.DISH.getKey())) {
+                if (selectedValuesMap.get(HotSearch.Category.DISH.getKey()).isEmpty() == false)
                     params.put(SEARCH_DISH_CATEGORY_FILTERS, android.text.TextUtils.join(",", selectedValuesMap.get(HotSearch.Category.DISH.getKey())));
             }
 
-            if(selectedValuesMap.containsKey(HotSearch.Category.SPENDINGS.getKey())) {
-                if(selectedValuesMap.get(HotSearch.Category.SPENDINGS.getKey()).isEmpty() == false)
+            if (selectedValuesMap.containsKey(HotSearch.Category.SPENDINGS.getKey())) {
+                if (selectedValuesMap.get(HotSearch.Category.SPENDINGS.getKey()).isEmpty() == false)
                     params.put(SEARCH_SPENDING_CATEGORY_FILTERS, android.text.TextUtils.join(",", selectedValuesMap.get(HotSearch.Category.SPENDINGS.getKey())));
             }
 
-            if(selectedValuesMap.containsKey(HotSearch.Category.HASHTAGS.getKey())) {
-                if(selectedValuesMap.get(HotSearch.Category.HASHTAGS.getKey()).isEmpty() == false)
+            if (selectedValuesMap.containsKey(HotSearch.Category.HASHTAGS.getKey())) {
+                if (selectedValuesMap.get(HotSearch.Category.HASHTAGS.getKey()).isEmpty() == false)
                     params.put(SEARCH_CATEGORY_FILTERS, android.text.TextUtils.join(",", selectedValuesMap.get(HotSearch.Category.HASHTAGS.getKey())));
             }
 
             page = 1;
-
             mProgressDialog.show();
+            getSearchResult();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mUtils.dismissDialog(mProgressDialog);
+        }
+
+//        TextView tv_hot_search_string = (TextView) view.findViewById(R.id.tv_hot_search_string);
+        final EditText tv_hot_search_string = (EditText) view.findViewById(R.id.tv_hot_search_string);
+        tv_hot_search_string.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                Toast.makeText(getContext(), "beforeTextChanged", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Toast.makeText(getContext(), "onTextChanged", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String hashTag = tv_hot_search_string.getText().toString().trim();
+                Toast.makeText(getContext(), "search for "+hashTag, Toast.LENGTH_SHORT).show();
+                params = mUtils.getBaseRequestMap();
+                params.put(Constants.STR_PAGE, String.valueOf(page));
+                params.put(SEARCH_STRING, String.valueOf(hashTag));
+
+                getSearchResult();
+
+            }
+        });
+//        tv_hot_search_string.setText(searchString);
+//        tv_hot_search_string.setFocusable(false);
+//        tv_hot_search_string.setText(searchString);
+        Log.i("check", "onCreateView: setFocusable 2");
+//        tv_hot_search_string.clearFocus();
+//        tv_hot_search_string.setTextIsSelectable(true);
+//        tv_hot_search_string.setFocusableInTouchMode(true);
+//        tv_hot_search_string.setFocusable(true);
+
+
+        ImageButton btn_back = (ImageButton) view.findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.goBack();
+                }
+            }
+        });
+
+        return view;
+    }
+
+    public void getSearchResult() {
+        Toast.makeText(getContext(), "updated the hashTag search", Toast.LENGTH_SHORT).show();
+        try {
             mApi.getSnapsByFoodHash(params, new ApiWebServices.ApiListener() {
                 @Override
                 public void onResponse(Object object) {
@@ -271,35 +336,14 @@ public class SearchResultsByHashTagsFragment extends BaseSearchFragment {
                     mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_cannot_process_request)).show();
                 }
             });
-        } catch (Exception e) {
+        } catch (
+                Exception e
+                )
+
+        {
             e.printStackTrace();
             mUtils.dismissDialog(mProgressDialog);
         }
-
-//        TextView tv_hot_search_string = (TextView) view.findViewById(R.id.tv_hot_search_string);
-        EditText tv_hot_search_string = (EditText) view.findViewById(R.id.tv_hot_search_string);
-//        tv_hot_search_string.setText(searchString);
-//        tv_hot_search_string.setFocusable(false);
-//        tv_hot_search_string.setText(searchString);
-        Toast.makeText(getContext(), "set focusable true", Toast.LENGTH_SHORT).show();
-        Log.i("check", "onCreateView: setFocusable 2");
-//        tv_hot_search_string.clearFocus();
-//        tv_hot_search_string.setTextIsSelectable(true);
-//        tv_hot_search_string.setFocusableInTouchMode(true);
-//        tv_hot_search_string.setFocusable(true);
-
-
-        ImageButton btn_back = (ImageButton) view.findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.goBack();
-                }
-            }
-        });
-
-        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -350,7 +394,9 @@ public class SearchResultsByHashTagsFragment extends BaseSearchFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
         void showSnapDetails(int id);
+
         void goBack();
     }
 }

@@ -21,7 +21,8 @@
         android:singleLine="true"
         android:textColor="@color/colorGrey"
         android:textSize="@dimen/font_24"
-        android:textCursorDrawable="@null"/>
+        android:textCursorDrawable="@null"
+        android:hint="res" />
 
     <ListView
         android:layout_width="match_parent"

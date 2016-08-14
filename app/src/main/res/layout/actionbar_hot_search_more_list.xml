@@ -38,7 +38,8 @@
             app:theme="@style/CustomEditTextWhite2"
             android:hint="@string/s2_filter"
             android:textSize="@dimen/font_24"
-            android:textIsSelectable="false" />
+            android:textIsSelectable="false"
+            android:text="hash search" />
 
     </RelativeLayout>
 
