@@ -368,12 +368,14 @@ public class MainActivity extends AppCompatActivity
                             ((RestaurantListFragment) fragment).generateView();
                         }
                         if (fragment instanceof MainFragment) {
-                            fragment.onResume();
-                            ((MainFragment) fragment).getSnaps(1);
-//                            ((MainFragment) fragment).getSnaps();
+//                            fragment.onResume();
+//                            ((MainFragment) fragment).getSnaps(1);
+                            Log.i(TAG, "fragment instance of MainFragment");
+                            ((MainFragment) fragment).update();
+
 //                            ((MainFragment) fragment).update();
 
-                            Log.i(TAG, "fragment instance of MainFragment");
+
                         }
 
                     } catch (Exception e) {

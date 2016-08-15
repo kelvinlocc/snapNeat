@@ -114,12 +114,14 @@ public class SnapHomepageAdapter extends ArrayAdapter<Snap> {
 
         if (snap.getLikeFlag() == Constants.FLAG_TRUE) {
             btn_like.setImageResource(R.drawable.s1_btn_like);
-            Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snap.getLikeFlag());
         }
         else {
-            Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snap.getLikeFlag());
         }
-        Log.i(TAG, "check@ update here!");
+        Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snap.getLikeFlag());
+        Log.i(TAG, "getTitle: "+snap.getTitle());
+        Log.i(TAG, "getUsername: "+snap.getUser().getUsername());
+        Log.i(TAG, "getTotalLikes: "+snap.getTotalLikes());
+
 
         btn_like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,5 +156,9 @@ public class SnapHomepageAdapter extends ArrayAdapter<Snap> {
 
         return convertView;
         //return super.getView(position, convertView, parent);
+    }
+
+    public void directLike (){
+
     }
 }

@@ -1,5 +1,6 @@
 package com.accordhk.SnapNEat.fragments;
 /// original
+
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +36,7 @@ import com.accordhk.SnapNEat.utils.CustomFontTextView;
 import com.accordhk.SnapNEat.utils.SharedPref;
 import com.accordhk.SnapNEat.utils.Utils;
 import com.accordhk.SnapNEat.utils.VolleySingleton;
+import com.accordhk.SnapNEat.utils.mySharePreference_app;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
@@ -45,6 +47,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.cast.Cast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -122,6 +125,7 @@ public class MainFragment extends BaseFragment {
 
     // button
     ImageButton btn_like;
+    mySharePreference_app myPref;
 
     public MainFragment() {
         // Required empty public constructor
@@ -140,7 +144,7 @@ public class MainFragment extends BaseFragment {
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
-        Log.i(TAG, "newInstance: param1+\",\"+param2: "+param1+","+param2);
+        Log.i(TAG, "newInstance: param1+\",\"+param2: " + param1 + "," + param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -152,13 +156,15 @@ public class MainFragment extends BaseFragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //update like in homepage
+        myPref = new mySharePreference_app();
+
         // getting user id from arguments
         if (getArguments() != null) {
             userId = getArguments().getInt(USER_ID);
-            Log.i(TAG, ": userId "+userId);
+            Log.i(TAG, ": userId " + userId);
 
-        }
-        else Log.i(TAG, "onCreate: getArguments is null");
+        } else Log.i(TAG, "onCreate: getArguments is null");
 
         distance = 2;
 
@@ -191,7 +197,7 @@ public class MainFragment extends BaseFragment {
         mLocationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                Log.d(LOGGER_TAG, "Location changed: "+String.valueOf(location.getLatitude())+"--"+String.valueOf(location.getLongitude()));
+                Log.d(LOGGER_TAG, "Location changed: " + String.valueOf(location.getLatitude()) + "--" + String.valueOf(location.getLongitude()));
                 getSnaps(MODE_LOCATION, location.getLatitude(), location.getLongitude());
             }
         };
@@ -266,7 +272,7 @@ public class MainFragment extends BaseFragment {
 //                    try {
 //
 //                        Map<String, String> params = mUtils.getBaseRequestMap();
-//                        params.put(User.USER_ID, String.valueOf(userId)); //// TODO: 8/12/2016
+//                        params.put(User.USER_ID, String.valueOf(userId));
 //
 //                        mProgressDialog.show();
 //                        mApi.postFollowUser(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
@@ -480,7 +486,7 @@ public class MainFragment extends BaseFragment {
 //        });
 
         ImageButton btn_facebook = (ImageButton) view.findViewById(R.id.btn_facebook);
-        if(isPackageInstalled(Constants.FACEBOOK_PACKAGE))
+        if (isPackageInstalled(Constants.FACEBOOK_PACKAGE))
             rl_share_fb.setVisibility(View.VISIBLE);
         else
             rl_share_fb.setVisibility(View.GONE);
@@ -518,7 +524,7 @@ public class MainFragment extends BaseFragment {
         });
 
         ImageButton btn_instagram = (ImageButton) view.findViewById(R.id.btn_instagram);
-        if(isPackageInstalled(Constants.INSTAGRAM_PACKAGE))
+        if (isPackageInstalled(Constants.INSTAGRAM_PACKAGE))
             rl_share_instagram.setVisibility(View.VISIBLE);
         else
             rl_share_instagram.setVisibility(View.GONE);
@@ -538,7 +544,7 @@ public class MainFragment extends BaseFragment {
                 shareIntent.setType("image/*");
                 try {
 
-                    if(s.getImage() != null && s.getImage().trim().isEmpty() == false) {
+                    if (s.getImage() != null && s.getImage().trim().isEmpty() == false) {
                         showPermitSaveExternal(shareIntent, s.getImage().trim());
                     } else {
                         mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_no_image_to_share)).show();
@@ -565,7 +571,7 @@ public class MainFragment extends BaseFragment {
                 shareIntent.setType("image/*");
                 try {
 
-                    if(s.getImage() != null && s.getImage().trim().isEmpty() == false) {
+                    if (s.getImage() != null && s.getImage().trim().isEmpty() == false) {
                         showPermitSaveExternal(shareIntent, s.getImage().trim());
                     } else {
                         mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_no_image_to_share)).show();
@@ -586,12 +592,13 @@ public class MainFragment extends BaseFragment {
         });
 
         // get snaps for homepage
-//        getSnaps(MODE_RANDOM);
-        getSnaps(1);
-        Log.i(TAG, "check@ MODE_RANDOM= "+MODE_RANDOM);
+        getSnaps(MODE_RANDOM);
+//        getSnaps(1); for fixed snap
+        Log.i(TAG, "check@ MODE_RANDOM= " + MODE_RANDOM);
 
         return view;
     }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         Log.i(TAG, "onViewCreated: ");
@@ -606,12 +613,14 @@ public class MainFragment extends BaseFragment {
     }
 
 
+    /**
+     * Gets the snaps base of the mode
+     *
+     * @param mode
+     */
+    //kl chnage to puclic
+    ResponseSnapsHomepage res_02;
 
-        /**
-         * Gets the snaps base of the mode
-         * @param mode
-         */
-        //kl chnage to puclic
     public void getSnaps(int mode) {
         getSnaps(mode, 0.00, 0.00);
     }
@@ -619,7 +628,7 @@ public class MainFragment extends BaseFragment {
     private void getSnaps(int mode, double lat, double lon) {
         Map<String, String> params = (new Utils(getActivity())).getBaseRequestMap();
         params.put(Snap.MODE, Integer.toString(mode));
-        Log.i(TAG, "getSnaps: mode,MODE_LOCATION "+mode+","+MODE_LOCATION);
+        Log.i(TAG, "getSnaps: mode,MODE_LOCATION " + mode + "," + MODE_LOCATION);
 
         if (mode == MODE_LOCATION) {
             params.put(Snap.LATITUDE, String.valueOf(lat));
@@ -628,7 +637,7 @@ public class MainFragment extends BaseFragment {
         }
 
         User user = new SharedPref(mContext).getLoggedInUser();
-        if(user != null) {
+        if (user != null) {
             params.put(Snap.USER_ID, String.valueOf(user.getId()));
         }
 
@@ -639,16 +648,16 @@ public class MainFragment extends BaseFragment {
             mApi.getSnapsForHomepage(params, new ApiWebServices.ApiListener() {
                 @Override
                 public void onResponse(final Object obj) {
-                    Log.i(TAG, "onResponse: onResponse obj: "+obj);
+                    Log.i(TAG, "onResponse: onResponse obj: " + obj);
                     final ResponseSnapsHomepage res = (ResponseSnapsHomepage) obj;
-
+                    res_02 = res;
                     final CustomFontTextView message = (CustomFontTextView) view.findViewById(R.id.message);
 
                     if (res.getStatus() == Constants.RES_SUCCESS) {
 
                         Log.d(LOGGER_TAG, "SIZE: " + String.valueOf(res.getResults().size()));
 
-                        if(res.getResults().size() > 0) {
+                        if (res.getResults().size() > 0) {
                             mCardStack.setVisibility(View.VISIBLE);
                             mCardStack.setContentResource(R.layout.card_stack_item);
                             //mCardStack.setStackMargin(60);
@@ -679,7 +688,8 @@ public class MainFragment extends BaseFragment {
                                     if (mIndex == res.getResults().size())
                                         message.setText(mUtils.getStringResource(R.string.error_no_more_snap));
                                 }
-                                //// TODO: 8/12/2016 top card stack tapped;
+
+                                //// TODO: 8/12/2016 topCardTapped
                                 @Override
                                 public void topCardTapped() {
                                     Snap snap = (Snap) mCardStack.getAdapter().getItem(mCardStack.getCurrIndex());
@@ -690,11 +700,9 @@ public class MainFragment extends BaseFragment {
                             });
                             mUtils.dismissDialog(mProgressDialog);
                         } else {
-//                            mUtils.getDialog(mUtils.getStringResource(R.string.error_no_data)).show();
                             mCardStack.setVisibility(View.GONE);
                             mUtils.dismissDialog(mProgressDialog);
                             message.setText(res.getMessage());
-//                            mUtils.getDialog(res.getMessage()).show();
                         }
 
                     } else {
@@ -730,8 +738,6 @@ public class MainFragment extends BaseFragment {
 
         return mLocationRequest;
     }
-
-
 //    }
 
     //    private void showPermitSaveExternal(String strUrl){
@@ -770,7 +776,6 @@ public class MainFragment extends BaseFragment {
 //        } else {
 //            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
 //        }
-
 
     private void getSnapsByDistance(final int dist) {
         Log.d(LOGGER_TAG, "mGoogleApiClient is null? " + (mGoogleApiClient == null));
@@ -812,7 +817,7 @@ public class MainFragment extends BaseFragment {
     private void getSnapsByLocation() {
 
         String provider = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
-        if(provider.isEmpty()) {
+        if (provider.isEmpty()) {
             getActivity().startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
         }
 
@@ -821,10 +826,10 @@ public class MainFragment extends BaseFragment {
 
             Log.d(LOGGER_TAG, "Permission granted");
 
-            if(mGoogleApiClient != null) {
+            if (mGoogleApiClient != null) {
 
-                Log.d(LOGGER_TAG, "mGoogleApiClient.isConnected() ? "+mGoogleApiClient.isConnected());
-                if(mGoogleApiClient.isConnected()) {
+                Log.d(LOGGER_TAG, "mGoogleApiClient.isConnected() ? " + mGoogleApiClient.isConnected());
+                if (mGoogleApiClient.isConnected()) {
 
                     mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
                     if (mLastLocation != null) {
@@ -851,7 +856,7 @@ public class MainFragment extends BaseFragment {
 //                if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)) {
 //
 //                } else
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSION_ACCESS_COARSE_LOCATION);
             }
             // The ACCESS_FINE_LOCATION is denied, then I request it and manage the result in
             // onRequestPermissionsResult() using the constant MY_PERMISSION_ACCESS_FINE_LOCATION
@@ -860,7 +865,7 @@ public class MainFragment extends BaseFragment {
 //                if(ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) {
 //
 //                } else
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_ACCESS_FINE_LOCATION);
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSION_ACCESS_FINE_LOCATION);
             }
 
         }
@@ -868,6 +873,7 @@ public class MainFragment extends BaseFragment {
 
     /**
      * Generates new adapter
+     *
      * @param res
      * @return
      */
@@ -877,7 +883,7 @@ public class MainFragment extends BaseFragment {
             @Override
             public void onProfilePicClick(View v, Snap s) {
                 Log.d(LOGGER_TAG, "onProfilePicClick");
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.showUserProfile(s.getUser().getId());
                 }
             }
@@ -897,19 +903,16 @@ public class MainFragment extends BaseFragment {
             }
 
             @Override
-            public void onLikeClick(View v, Snap s) {
-
-
+            public void onLikeClick(View v, final Snap s) {
                 Log.i(TAG, "check@ onLikeClick: ");
                 final RelativeLayout parentView = (RelativeLayout) v.getTag();
-
                 User user = new SharedPref(getContext()).getLoggedInUser();
-                Log.i(TAG, "snap.getUser() "+s.getUser());
-                Log.i(TAG, "user.getUserId()"+user.getUserId());
+                Log.i(TAG, "snap.getUser() " + s.getUser());
+                Log.i(TAG, "user.getUserId()" + user.getUserId());
                 String current_username = user.getUsername();
-                String snap_username = s.getUser().getUsername();
-                Log.i(TAG, "onLikeClick: username = "+current_username+","+snap_username);
-                if(user != null) { // user currently logged in
+                final String snap_username = s.getUser().getUsername();
+                Log.i(TAG, "onLikeClick: username = " + current_username + "," + snap_username);
+                if (user != null) { // user currently logged in
                     if (!Objects.equals(current_username, snap_username)) {
                         try {
                             final Map<String, String> params = mUtils.getBaseRequestMap();
@@ -936,13 +939,15 @@ public class MainFragment extends BaseFragment {
 
                                         like_count.setText(String.valueOf(snapLikeRes.getTotalLikes()));
                                         Log.i(TAG, "check@ getView: snap.getLikeFlag(): " + snapLikeRes.getLikeStatus());
+//                                        Log.i(TAG, "snap_username"+snap_username);
+//                                        Log.i(TAG, "snapLikeRes.getTotalLikes() "+snapLikeRes.getTotalLikes());
+//                                        Log.i(TAG, "s.getTitle()"+s.getTitle());
 
                                         if (snapLikeRes.getLikeStatus() == Constants.FLAG_TRUE)
                                             btn_like.setImageResource(R.drawable.s1_btn_like);
                                         else
                                             btn_like.setImageResource(R.drawable.s1_btn_like_default);
                                     }
-
                                 }
 
                                 @Override
@@ -956,35 +961,102 @@ public class MainFragment extends BaseFragment {
 //                        mUtils.dismissDialog(mProgressDialog);
                             Log.d(LOGGER_TAG, "Error in onLikeClick: " + e.getLocalizedMessage());
                         }
-                    }
-                    else {
+                        if (s.getLikeFlag() == 0) {
+                            s.setLikeFlag(1);
+                            Log.i(TAG, "set like");
+                        } else {
+                            s.setLikeFlag(0);
+                            Log.i(TAG, "set unlike");
+                        }
+                    } else {
                         Toast.makeText(getContext(), "you cannot dislike your own snap!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
 //                    mUtils.dismissDialog(mProgressDialog);
-                    if(mListener != null)
+                    if (mListener != null)
                         mListener.showLoginRegistrationFragment(true);
                 }
             }
         });
 
     }
+
     @Override
-    public void onResume()
-    {  // After a pause OR at startup
+    public void onResume() {  // After a pause OR at startup
         Log.i(TAG, "check@ onResume: ");
         super.onResume();
-//        btn_like.setImageResource(R.drawable.s1_btn_like);
-//        btn_like.setBackgroundColor(9);
-//        btn_like.setBackgroundColor(9);
-        Log.i(TAG, "check@ onResume: update something");
-
-        //Refresh your stuff here
+//        Snap snap = (Snap) mCardStack.getAdapter().getItem(mCardStack.getCurrIndex());
 
     }
-    public void update (){
-        btn_like.setImageResource(R.drawable.s1_btn_like);
-        Log.i(TAG, "check@ update: ");
+
+    public void update() {
+        //// TODO: 8/15/2016
+
+//        mCardStack.getAdapter().notify();
+//        myPref.getLike();
+        int Snap_ID = myPref.get_snap_id(getContext());
+
+        Log.d(TAG, "update: snap_id,like " + myPref.get_snap_id(getContext()));
+        if (myPref.get_like(getContext())) {
+            Log.i(TAG, "update: like true");
+        } else {
+            Log.i(TAG, "update: like false");
+        }
+        for (int i = 0; i < res_02.getResults().size(); i++) {
+            Log.i(TAG, "update: snapid getnId()"+res_02.getResults().get(i).getnId());
+            Log.i(TAG, "update: snapid loop: "+res_02.getResults().get(i).getTitle());
+            int Snap_id_new = Integer.parseInt(res_02.getResults().get(i).getnId());
+            if (Snap_id_new == Snap_ID) {
+                Log.i(TAG, "update: snap_id "+Snap_ID);
+                int totalLIke = res_02.getResults().get(i).getTotalLikes();
+                if (myPref.get_like(getContext())) {
+                    res_02.getResults().get(i).setLikeFlag(1);
+                    res_02.getResults().get(i).setTotalLikes(totalLIke+1);
+
+                    Log.i(TAG, "update: setlikeFlag");
+                }
+                else {
+                    res_02.getResults().get(i).setLikeFlag(0);
+                    res_02.getResults().get(i).setTotalLikes(totalLIke-1);
+                }
+            }
+        }
+
+
+        mCardStack.setAdapter(getCardAdapter(res_02.getResults()));
+//        mCardStack.reset(true);
+//        mCardStack.getAdapter().notifyDataSetChanged();
+//        mCardStack.getAdapter();
+//        mCardStack.setListener(new CardStack.CardEventListener() {
+//            @Override
+//            public boolean swipeEnd(int section, float distance) {
+//                return (distance > 300) ? true : false;
+//            }
+//
+//            @Override
+//            public boolean swipeStart(int section, float distance) {
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean swipeContinue(int section, float distanceX, float distanceY) {
+//                return true;
+//            }
+//
+//            @Override
+//            public void discarded(int mIndex, int direction) {
+//            }
+//
+//            //// TODO: 8/12/2016 topCardTapped
+//            @Override
+//            public void topCardTapped() {
+//                Snap snap = (Snap) mCardStack.getAdapter().getItem(mCardStack.getCurrIndex());
+//                if (mListener != null) {
+//                    mListener.showSnapDetails(Integer.parseInt(snap.getnId()));
+//                }
+//            }
+//        });
+        Log.i(TAG, "check@ update: 7");
     }
 
 
@@ -1020,7 +1092,8 @@ public class MainFragment extends BaseFragment {
 
             case 0x101: {
 
-            } default:
+            }
+            default:
                 callbackManager.onActivityResult(requestCode, resultCode, data);
                 Log.d(LOGGER_TAG, "result " + ShareDialog.canShow(ShareLinkContent.class));
         }
@@ -1038,8 +1111,8 @@ public class MainFragment extends BaseFragment {
         super.onDetach();
         mListener = null;
 
-        if(mGoogleApiClient != null) {
-            if(mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient != null) {
+            if (mGoogleApiClient.isConnected()) {
                 LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, mLocationListener);
                 mGoogleApiClient.disconnect();
             }
@@ -1049,8 +1122,8 @@ public class MainFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if(mGoogleApiClient != null) {
-            if(mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient != null) {
+            if (mGoogleApiClient.isConnected()) {
                 LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, mLocationListener);
                 mGoogleApiClient.disconnect();
             }
@@ -1072,7 +1145,7 @@ public class MainFragment extends BaseFragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
 
-            if(mGoogleApiClient != null) {
+            if (mGoogleApiClient != null) {
                 mGoogleApiClient.connect();
             }
 
@@ -1095,14 +1168,23 @@ public class MainFragment extends BaseFragment {
     public interface OnFragmentInteractionListener {
 
         void addSnapPost(); //// TODO: 8/12/2016  add a add_snap_button;
+
         void onFragmentInteraction(Uri uri);
+
         void toggleSideBarNav();
+
         void showHotSearchListFragment();
+
         void showLoginRegistrationFragment(boolean showLoginFlag);
+
         void showUserProfile(int userId);
+
         void showSnapDetails(int id);
+
         void showGMapFragment(int id, float latitude, float longitude, String title, String name);
+
         void showStartingFragmentFromLogout();
+
         void showNearbyRestaurantsMapFragment();
     }
 }

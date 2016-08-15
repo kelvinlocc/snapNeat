@@ -235,7 +235,7 @@ public class CardStack extends RelativeLayout {
 
         @Override
         public void onChanged() {
-            Log.i(TAG, "onChanged ");
+            Log.i(TAG, "onChanged ");//
 
             reset(false);
         }

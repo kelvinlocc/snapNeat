@@ -34,6 +34,7 @@ import com.accordhk.SnapNEat.utils.CustomFontTextView;
 import com.accordhk.SnapNEat.utils.ExpandableTextView;
 import com.accordhk.SnapNEat.utils.SharedPref;
 import com.accordhk.SnapNEat.utils.VolleySingleton;
+import com.accordhk.SnapNEat.utils.mySharePreference_app;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
@@ -88,7 +89,6 @@ public class SnapDetailsFragment extends BaseFragment {
 
     // wechat
     private IWXAPI iwapi;
-
 
 
     public interface SnapCardListener {
@@ -154,6 +154,7 @@ public class SnapDetailsFragment extends BaseFragment {
 //        // end: wechat
 
     }
+    mySharePreference_app myPref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -164,6 +165,8 @@ public class SnapDetailsFragment extends BaseFragment {
         display.getSize(size);
         final int width = size.x;
         final int height = (size.y / 2) + 50;
+        //update like in homepage
+        myPref = new mySharePreference_app();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_snap_details, container, false);
@@ -444,8 +447,7 @@ public class SnapDetailsFragment extends BaseFragment {
                                                                 if (faveRes.getFavourite_flag() == "1") {
                                                                     btn_favourite.setImageResource(R.drawable.s10_favourite);
                                                                     Toast.makeText(getContext(), "you added favourite", Toast.LENGTH_SHORT).show();
-                                                                }
-                                                                else {
+                                                                } else {
                                                                     btn_favourite.setImageResource(R.drawable.s10_favourite_def);
                                                                     Toast.makeText(getContext(), "you removed favourite", Toast.LENGTH_SHORT).show();
                                                                 }
@@ -473,7 +475,7 @@ public class SnapDetailsFragment extends BaseFragment {
                                 });
                                 //// TODO: 8/12/2016 btn_like
                                 //  get isLiked
-                                Log.i(TAG, "check@ getView: snap.getLikeFlag(): "+snap.getLikeFlag());
+                                Log.i(TAG, "check@ getView: snap.getLikeFlag(): " + snap.getLikeFlag());
 
                                 if (snap.getLikeFlag() == Constants.FLAG_TRUE) {
                                     btn_like.setImageResource(R.drawable.s10_like);
@@ -482,11 +484,11 @@ public class SnapDetailsFragment extends BaseFragment {
                                     @Override
                                     public void onClick(View v) {
                                         User user = new SharedPref(getContext()).getLoggedInUser();
-                                        Log.i(TAG, "check@ snap.getUser().getUserId()"+snap.getUser().getUserId());
-                                        Log.i(TAG, "onClick: username,password "+snap.getUser().getUsername()+","+snap.getUser().getPassword());
+                                        Log.i(TAG, "check@ snap.getUser().getUserId()" + snap.getUser().getUserId());
+                                        Log.i(TAG, "onClick: username,password " + snap.getUser().getUsername() + "," + snap.getUser().getPassword());
                                         String current_username = user.getUsername();
                                         String snap_username = snap.getUser().getUsername();
-                                        Log.i(TAG, "onClick: "+current_username+","+snap_username);
+                                        Log.i(TAG, "onClick: " + current_username + "," + snap_username);
                                         if (!Objects.equals(current_username, snap_username)) {
                                             try {
 //                                            mListener.onLikeClick(v,snap);
@@ -510,11 +512,14 @@ public class SnapDetailsFragment extends BaseFragment {
                                                                     mUtils.getErrorDialog(faveRes.getMessage()).show();
                                                                 } else {
 
-                                                                    if (faveRes.getLikeStatus() == Constants.FLAG_TRUE)
+                                                                    if (faveRes.getLikeStatus() == Constants.FLAG_TRUE) {
                                                                         btn_like.setImageResource(R.drawable.s10_like);
-
-                                                                    else
+                                                                        myPref.updateUserLike(getContext(),snapId,true);
+                                                                    } else {
                                                                         btn_like.setImageResource(R.drawable.s10_like_def);
+                                                                        myPref.updateUserLike(getContext(),snapId,false);
+                                                                    }
+
                                                                     tv_num_likes.setText(String.valueOf(faveRes.getTotalLikes()));
                                                                 }
                                                             }
@@ -534,8 +539,7 @@ public class SnapDetailsFragment extends BaseFragment {
                                                 e.printStackTrace();
                                                 //                                        mUtils.dismissDialog(mProgressDialog);
                                             }
-                                        }
-                                        else {
+                                        } else {
                                             Toast.makeText(getContext(), "you cannot dislike your own snap!", Toast.LENGTH_SHORT).show();
                                         }
 
@@ -693,7 +697,6 @@ public class SnapDetailsFragment extends BaseFragment {
         void onFragmentInteraction(Uri uri);
 
         void goBack();
-
 
 
         void showReportInappropriate(int userId, int snapId);
