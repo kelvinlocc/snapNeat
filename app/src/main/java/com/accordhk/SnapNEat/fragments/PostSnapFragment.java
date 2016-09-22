@@ -254,7 +254,7 @@ public class PostSnapFragment extends BaseFragment {
         CustomFontTextView action_bar_title = (CustomFontTextView) view.findViewById(R.id.action_bar_title);
         action_bar_title.setText(mUtils.getStringResource(R.string.s12_post));
 
-        CustomFontTextView btn_submit = (CustomFontTextView) view.findViewById(R.id.btn_submit);
+        final CustomFontTextView btn_submit = (CustomFontTextView) view.findViewById(R.id.btn_submit);
         btn_submit.setText(mUtils.getStringResource(R.string.s12_submit));
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -277,13 +277,10 @@ public class PostSnapFragment extends BaseFragment {
                 } else {
 
                     try {
-
                         // get filetypes
                         List<String> filetypes = new ArrayList<String>();
                         List<String> dishes = dish;
-
                         Map<String, byte[]> multiPartParams = new HashMap<String, byte[]>();
-
                         for (int i = 0; i < bitmaps.size(); i++) {
                             Uri uri = Uri.parse(bitmaps.get(i));
                             Log.d(LOGGER_TAG, "bitmap uri: " + uri.toString());
@@ -326,10 +323,12 @@ public class PostSnapFragment extends BaseFragment {
                         mProgressDialog.show();
                         Log.i(TAG, "onClicked: get location: " + tv_snap_location.getText().toString());
                         // // TODO: 8/13/2016  api: post new snap
+                        btn_submit.setClickable(false);
                         mApi.postNewSnap(params, bodyParams, multiPartParams, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                             @Override
                             public void onResponse(Object object) {
                                 try {
+                                    btn_submit.setClickable(true);
                                     ResponseBaseWithId response = (ResponseBaseWithId) object;
 
                                     mUtils.dismissDialog(mProgressDialog);

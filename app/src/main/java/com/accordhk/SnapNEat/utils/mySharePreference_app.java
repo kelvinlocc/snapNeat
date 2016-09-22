@@ -50,14 +50,14 @@ public class mySharePreference_app {
         SharedPreferences sharedPreferences = context.getSharedPreferences(update_like_key,Context.MODE_PRIVATE);
         int snap_id =  sharedPreferences.getInt(snap_id_key,0);
         Log.i(TAG, "getUserID: snap_id "+snap_id);
-        Toast.makeText(context, "snap_id "+snap_id, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "snap_id "+snap_id, Toast.LENGTH_SHORT).show();
         return snap_id;
     }
     public boolean get_like (Context context){
         SharedPreferences sharedPreferences = context.getSharedPreferences(update_like_key,Context.MODE_PRIVATE);
         boolean like =  sharedPreferences.getBoolean(like_key,false);
         Log.i(TAG, "getUserID: like "+like);
-        Toast.makeText(context, "like "+like, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "like "+like, Toast.LENGTH_SHORT).show();
         return like;
     }
 

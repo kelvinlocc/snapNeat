@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,8 @@ import com.android.volley.VolleyError;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static com.google.android.gms.wearable.DataMap.TAG;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -43,6 +47,7 @@ public class SettingsFragment extends BaseFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static String TAG = "SettingsFragment";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -86,6 +91,13 @@ public class SettingsFragment extends BaseFragment {
                              final Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
+            Log.i(TAG, "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
+//            Log.i(TAG, "onCreateView: ");
+//            Log.i(TAG, "Found fragment: name: "+fm.getBackStackEntryAt(entry).getClass().getName());
+        }
 
         mUtils.dismissDialog(mProgressDialog);
 

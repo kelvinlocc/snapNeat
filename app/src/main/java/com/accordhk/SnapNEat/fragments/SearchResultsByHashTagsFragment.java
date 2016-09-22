@@ -174,18 +174,18 @@ public class SearchResultsByHashTagsFragment extends BaseSearchFragment {
         tv_hot_search_string.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Toast.makeText(getContext(), "beforeTextChanged", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "beforeTextChanged", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Toast.makeText(getContext(), "onTextChanged", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "onTextChanged", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 String hashTag = tv_hot_search_string.getText().toString().trim();
-                Toast.makeText(getContext(), "search for "+hashTag, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), "search for "+hashTag, Toast.LENGTH_SHORT).show();
                 params = mUtils.getBaseRequestMap();
                 params.put(Constants.STR_PAGE, String.valueOf(page));
                 params.put(SEARCH_STRING, String.valueOf(hashTag));
@@ -218,13 +218,13 @@ public class SearchResultsByHashTagsFragment extends BaseSearchFragment {
     }
 
     public void getSearchResult() {
-        Toast.makeText(getContext(), "updated the hashTag search", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "updated the hashTag search", Toast.LENGTH_SHORT).show();
         try {
             mApi.getSnapsByFoodHash(params, new ApiWebServices.ApiListener() {
                 @Override
                 public void onResponse(Object object) {
                     try {
-                        Log.d(LOGGER_TAG, "getSnapsByFoodHash");
+//                        Log.d(LOGGER_TAG, "getSnapsByFoodHash");
                         ResponseListSnaps listSnaps = (ResponseListSnaps) object;
 
                         if (listSnaps != null) {

@@ -17,6 +17,7 @@ android {
         javaMaxHeapSize "4g"
     }
     packagingOptions {
+        exclude 'META-INF/LICENSE' // kl exclude the duplicated files
         exclude 'META-INF/DEPENDENCIES' // will not include DEPENDENCIES file
     }
     defaultConfig {

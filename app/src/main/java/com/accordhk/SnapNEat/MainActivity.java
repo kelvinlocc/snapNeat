@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toast.makeText(MainActivity.this, "MainActivity", Toast.LENGTH_SHORT).show();
+
         Log.i(TAG, "onCreate: savedInstanceState: " + savedInstanceState);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -561,10 +561,16 @@ public class MainActivity extends AppCompatActivity
             // // TODO: 8/12/2016  go to main fragment, homepage
             mFragment = new MainFragment();
             Bundle args = new Bundle();
+            if(user != null) {
+                Log.i(TAG, "onNavigationItemSelected: user is NOT null");
 //            args.putInt(ProfileFragment.USER_ID, mCurrentUser.getId()); //kl
-            args.putInt(MainFragment.USER_ID, user.getId()); // from profile fragment
-            Log.i(TAG, "onNavigationItemSelected: user.getId(): " + user.getId());
-            mFragment.setArguments(args);
+                args.putInt(MainFragment.USER_ID, user.getId()); // from profile fragment
+                Log.i(TAG, "onNavigationItemSelected: user.getId(): " + user.getId());
+                mFragment.setArguments(args);
+            }
+            else {
+                Log.i(TAG, "onNavigationItemSelected: user is null");
+            }
 
 //            User user = new SharedPref(getApplicationContext()).getLoggedInUser();
 //            if(user != null)
@@ -697,8 +703,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void showLanguageFragment() {
+        Log.i(TAG, "showLanguageFragment: ");
+        FragmentManager fm = getSupportFragmentManager();
+
+        for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
+//            Log.i(TAG, "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
+        }
+
         mTransaction = getSupportFragmentManager().beginTransaction();
         mTransaction.add(R.id.fragment_container, new SettingsLanguageFragment(), fragmentTag);
+        Log.i(TAG, "showLanguageFragment: fragmentTag: "+fragmentTag);
         mTransaction.addToBackStack(fragmentTag);
         mTransaction.commit();
     }
@@ -986,7 +1000,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void goBack() {
-//        super.onBackPressed();
+        super.onBackPressed();
 //
 //        try {
 //            Log.d(LOGGER_TAG, "trying to call onResume");
@@ -1004,8 +1018,7 @@ public class MainActivity extends AppCompatActivity
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-        Toast.makeText(MainActivity.this, "back!", Toast.LENGTH_SHORT).show();
-        this.onBackPressed();
+//        this.onBackPressed();
 
     }
 
@@ -1181,7 +1194,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onResume() {
-        Toast.makeText(MainActivity.this, "onResume @MainActivity", Toast.LENGTH_SHORT).show();
         Log.i(TAG, "onResume: ");
         super.onResume();
         if (mCurrentUser != null) {
@@ -1198,7 +1210,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Toast.makeText(MainActivity.this, "onDestroy @ MainActivity", Toast.LENGTH_SHORT).show();
 
     }
 

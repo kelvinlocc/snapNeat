@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
@@ -33,22 +34,8 @@
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
             android:scaleType="fitCenter"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:padding="3dp" />
-
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/btn_by_distance"
-            android:background="#0000"
-            android:layout_toRightOf="@id/btn_search"
-            android:src="@drawable/distance2"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:scaleType="fitCenter"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
             android:padding="3dp" />
 
         <!--<ToggleButton-->
@@ -70,22 +57,25 @@
             android:id="@+id/btn_by_location"
             android:background="#0000"
             android:src="@drawable/btn_location_white"
-            android:layout_toRightOf="@id/btn_by_distance"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
             android:scaleType="fitCenter"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@+id/btn_by_distance" />
 
         <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
             android:background="#0000"
             android:id="@+id/btn_profile_action"
             android:layout_toRightOf="@+id/btn_by_location"
-            android:src="@drawable/p1_btn_edit_profile"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:src="@drawable/new_snap"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:scaleType="fitCenter"
+            android:cropToPadding="false"
+            android:layout_height="30dp"
+            android:layout_width="30dp"
+            android:padding="3dp" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -95,6 +85,19 @@
             android:src="@drawable/logow"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true" />
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/btn_by_distance"
+            android:background="#0000"
+            android:src="@drawable/distance2"
+            android:scaleType="fitCenter"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_alignParentTop="false"
+            android:layout_toEndOf="@+id/btn_search"
+            android:padding="3dp" />
 
     </RelativeLayout>
 

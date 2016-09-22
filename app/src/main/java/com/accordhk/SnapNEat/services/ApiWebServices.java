@@ -928,9 +928,10 @@ public class ApiWebServices implements IApi {
 //
 //        VolleySingleton.getInstance(mContext).addToRequestQueue(request);
 //    }
-
+    private static String TAG = "ApiWebServices";
     @Override
     public void postNewSnap(Map<String, String> params, Map<String, List<String>> bodyParams, Map<String, byte[]> multiPartParams, Map<String, String> header, ApiListener listener) throws Exception {
+        Log.i(TAG, "postNewSnap: super counter: postNewSnap");
         mListener = listener;
         final Map<String, String> headers = header;
 
@@ -1086,7 +1087,7 @@ public class ApiWebServices implements IApi {
         mListener = listener;
         String url = Constants.RESTAURANT_LIST+urlEncodeUTF8(params);
 
-        Log.d(LOGGER_TAG, "URL: "+url);
+        Log.d(LOGGER_TAG, "getRestaurants URL: "+url);
         GsonRequest<ResponseRestaurants> request = new GsonRequest<ResponseRestaurants>(Method.GET, url, ResponseRestaurants.class, null, header,
                 new Response.Listener<ResponseRestaurants>() {
                     @Override

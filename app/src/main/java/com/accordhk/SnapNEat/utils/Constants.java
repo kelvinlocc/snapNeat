@@ -7,8 +7,8 @@ public class Constants {
 //    public static final String BASE_URL = "http://snapneatdev.accordhkcloud.com/service/"; //"https://server[:port]/service/";
 //    public static final String BASE_URL = "http://snapneatuat.accordhkcloud.com/service/";
 
-    public static final String BASE_URL = "http://snapneatdev.accordhkcloudapi.com/service/";
-//    public static final String BASE_URL = "http://snapneatuat.accordhkcloudapi.com/service/";
+//    public static final String BASE_URL = "http://snapneatdev.accordhkcloudapi.com/service/";
+    public static final String BASE_URL = "http://snapneatuat.accordhkcloudapi.com/service/";
 
     public static final String BASE_USER = BASE_URL+"user";
     public static final String BASE_DEVICE = BASE_URL+"device";

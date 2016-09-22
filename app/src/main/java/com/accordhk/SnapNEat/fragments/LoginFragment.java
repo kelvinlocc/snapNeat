@@ -89,6 +89,7 @@ public class LoginFragment extends BaseFragment {
         final EditText et_email = (EditText) view.findViewById(R.id.et_email);
         final EditText et_password = (EditText) view.findViewById(R.id.et_password);
 
+
         Button btn_login = (Button) view.findViewById(R.id.btn_login);
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override

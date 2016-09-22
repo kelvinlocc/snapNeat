@@ -1,0 +1,87 @@
+﻿.LOG
+debug:
+1.)  pls. disable all the debug messages,  it's quite annoying when I want to test it...
+> ok, disable all debug toast.makeText
+ 2.) in the personal profile,  after I change the Avatar  (no matter it's camera or photo from album),  it cannot be refresh, i need to exit the function and go to setting again.
+> not found, please provide more detail, like the image size, dimension etc...
+ 3.) you may try to click "search" ��> enter something like  "@a",  then the top search bar cannot be clicked.
+>ok, done.!
+ 4.) change the app icon name to "�֙Cʳ��",  now it's Snap N Eat_DEV
+>ok,done.!
+5.)  pop up window to ask whether user want to exit or not, while adding a new snap
+> to be confirm 
+6.) settings > language>  select lanuage > setting > language>setting> home
+> ok,done.!
+7.) android icon 
+> ok,done.!
+8.) add a new restaurant.
+ u may add a new restuarant from the app.... step. 1) add a new snap,  2) in he resturant, add anything  in the name...  3) click the "+" it will popup another page for entering...
+and one more bug, i try to add a new restaurant from my phone,  the restaurant can't be shown afterward..... seem data can't be saved.  (i checked CMS)
+>cannnot update address, no param in api for other field like price...
+
+10.)22, they want to add a ��black block�� behind the white text, so that the district can be shown more clearly to user
+> I already add a black block behind the white text? or which one have to add?
+>wait for desginer's instructions
+10.1) 52
+> these 3 icons have to be a more wider ?
+ ��-->  need NARROWER
+>ok.!
+>set layout margin to 3 for right and left
+11.) 54  (try to shorter the menu width a bit only)
+>how short it is? to just wrap the text?
+��--> they said it has too much white space on the right hand side for using big phone.  maybe just make it a bit shorter will be ok.
+> to be a fixed 200dp width
+>ok.!
+
+12.) pls check 76 
+Android
+Scenario 1) It shows 5 same snaps.
+Scenario 2) It shows one snap randomly.
+> some case the snap will upload multiple times, finding causes
+> found and fixed, (the submit button can be pressed while waiting for the api for response)
+> wait for confirm
+
+13.) check more Crashcases,  I found one. 
+   steps:
+    - logout user
+    - click guest mode
+    - click the menu, and home page. ��> crash then.
+>java.lang.NullPointerException: Attempt to invoke virtual method 'int com.accordhk.SnapNEat.models.User.getId()' on a null object reference
+>fixing
+>fixed, need to take more look.!
+
+14.)black box not done on this page.
+> fixed.!
+[6:10:13 PM]
+19:01 9/22/2016
+15.)  click on home page, setting etc on the nav_view sometime cause no snap on the home,
+> not found, (probably due to the internet connection)
+19:05 9/22/2016
+
+19:08 9/22/2016
+once u fixed the above few matters... pls generate the APK and pointing to  snapneatuat.accordhkcloudapi.com    ,  now it's still pointing to DEV.
+> pointed snapneatuat.accordhkcloudapi.com    
+
+19:46 9/22/2016
+
+22:17 9/22/2016
+
+22:33 9/22/2016
+16.) one more bugs...  when I click the Setting —> languag —> after changing the language and click back button,  the interface has not change the language.
+> only update the fragment 
+SettingsLanguageFragment.super.getActivity().onConfigurationChanged(config);
+//                getActivity().onConfigurationChanged(config);// this generate one more activty
+//                SettingsLanguageFragment.super.onConfigurationChanged(config);
+//                mListener.goBack();
+
+17.) in this screen,  no matter i choose take photo or load album,  the circle photo can't be refreshed...   i need to click Done and back button and enter this screen again.   pls. check too.
+> fixed, but need to take a futher look
+// at SettingsAccountFragment
+//at mImageLoader.get(user.getAvatar(), ImageLoader.getImageListener(profile_pic, R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
+
+
+
+
+23:04 9/22/2016
+
+23:23 9/22/2016

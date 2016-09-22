@@ -1,0 +1,34 @@
+.LOG
+
+
+
+---
+---
+keystore:
+keyAlias 'android_sne_release'
+            keyPassword 'Se20151.0'
+//            storeFile file('/Users/jm/Documents/Work/Kilid2/Projects/Mobile/SnapNEat/android_sne_release.jks')
+            storeFile file('C:/Users/chichiu/Documents/GitHub/snapNeat/android_sne_release.jks')
+            storePassword 'Se20151.0'
+
+
+how to login:
+go to beanstalk homepage to login ac:
+http://beanstalkapp.com/
+
+email: kelvinlo@accordhk.com
+Account domain : accordhk   .beanstalkapp.com
+username: kelvinlo
+password: n
+git link:
+https://accordhk.git.beanstalkapp.com/snapneat_android_git.git
+
+workable
+android_studio
+19:01 9/22/2016
+
+19:03 9/22/2016
+
+19:05 9/22/2016
+
+22:17 9/22/2016

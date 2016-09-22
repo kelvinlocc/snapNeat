@@ -122,7 +122,7 @@ public class ProfileFragment extends BaseFragment {
         mSavedInstanceState = savedInstanceState;
 
         view = inflater.inflate(R.layout.fragment_profile, container, false);
-        checker = (ImageView) view.findViewById(R.id.checker);
+//        checker = (ImageView) view.findViewById(R.id.checker);
         mUtils.dismissDialog(mProgressDialog);
 
         generateView();
@@ -801,6 +801,7 @@ public class ProfileFragment extends BaseFragment {
                 String error = mUtils.validateUploadImage(bitmapResult);
 
                 if (error.isEmpty())
+
 //                    uploadToServer((Bitmap) bitmapResult.get(Constants.PHOTO_BITMAP));
                     uploadToServer(bitmapResult.get(Constants.PHOTO_PATH).toString());
                 else

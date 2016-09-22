@@ -153,7 +153,7 @@ public class RestaurantListFragment extends BaseFragment {
                                 getGeoCode();
 
                             } else {
-                                Toast.makeText(getActivity(), "mLastLocation == null", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getActivity(), "mLastLocation == null", Toast.LENGTH_SHORT).show();
                                 showAlert();
                                 Log.d(LOGGER_TAG, "request Location updates2");
 
@@ -240,20 +240,26 @@ String TAG = this.getClass().getName();
                 Log.d(LOGGER_TAG, "selectedID: " + String.valueOf(mapSelectedRestaurant.getId()));
 
                 if (mapSelectedRestaurant.getId() == -1) { // add new restaurant
+                    Log.i(TAG, "onItemClick: getId() == -1 ");
                     Log.d("Add restaurant:", "YOSH");
                     try {
                         Map<String, String> params = mUtils.getBaseRequestMap();
 
                         // the orig name is in description
                         params.put(Restaurant.NAME, mapSelectedRestaurant.getDescription());
+                        Log.i(TAG, "onItemClick: la and lo "+mLatitude+","+mLongitude);
                         params.put(Restaurant.LATITUDE, String.valueOf(mLatitude));
                         params.put(Restaurant.LONGITUDE, String.valueOf(mLongitude));
+                        params.put(Restaurant.LOCATION,String.valueOf("sample address"));
 
                         mProgressDialog.show();
+                        Log.i(TAG, "onItemClick: postNewRestaurant");
                         mApi.postNewRestaurant(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                             @Override
                             public void onResponse(Object object) {
                                 try {
+                                    Log.i(TAG, "onResponse: postNewRestaurant");
+                                    Log.i(TAG, "onResponse: object: "+object);
                                     ResponseBaseWithId response = (ResponseBaseWithId) object;
                                     mUtils.dismissDialog(mProgressDialog);
                                     if (response != null) {
@@ -269,16 +275,15 @@ String TAG = this.getClass().getName();
                                             restaurantFilters.setLatitude(mLatitude);
                                             restaurantFilters.setLongitude(mLongitude);
                                             restaurantFilters.setLocation(mCurrentAddress);
-
                                             if (mListener != null)
                                                 mListener.goBackResto(restaurantFilters);
                                         }
                                     }
                                 } catch (Exception e) {
+                                    Log.i(TAG, "onResponse: postNewRestaurant");
                                     e.printStackTrace();
                                 }
                             }
-
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 error.printStackTrace();
@@ -291,10 +296,8 @@ String TAG = this.getClass().getName();
                         mUtils.dismissDialog(mProgressDialog);
                     }
                 } else { // restaurants displayed are from CMS
-
 //                    new SharedPref(getContext()).setSelectedRestaurant(mapSelectedRestaurant);
                     restaurantFilters = mapSelectedRestaurant;
-
                     for (int x = 0; x < lv_resto.getAdapter().getCount(); x++) {
                         View v = lv_resto.getChildAt(x);
                         try {
@@ -303,13 +306,10 @@ String TAG = this.getClass().getName();
                             e.printStackTrace();
                         }
                     }
-
                     (view.findViewById(R.id.iv_check)).setVisibility(View.VISIBLE);
                 }
-
             }
         });
-
         //// TODO: 8/10/2016
         ImageButton btn_back = (ImageButton) view.findViewById(R.id.btn_back);
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -334,16 +334,18 @@ String TAG = this.getClass().getName();
 
         try {
             Map<String, String> params = mUtils.getBaseRequestMap();
-            params.put(Constants.STR_PAGE, String.valueOf(-1));
-
+//            params.put(Constants.STR_PAGE, String.valueOf(-1));
+            params.put(Constants.STR_PAGE, String.valueOf(1));
             mProgressDialog.show();
             mApi.getRestaurants(params, mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                 @Override
                 public void onResponse(Object object) {
+                    Log.i(TAG, "onResponse: getRestaurants object "+object.toString());
                     try {
                         final ResponseRestaurants restaurants = (ResponseRestaurants) object;
 
                         if (restaurants != null) {
+                            Log.i(TAG, "onResponse: getResult "+restaurants.getResults().get(0).getName());
                             if(restaurants.getStatus() == Constants.RES_UNAUTHORIZED) {
                                 if (mListener != null) {
                                     mUtils.dismissDialog(mProgressDialog);
@@ -355,24 +357,18 @@ String TAG = this.getClass().getName();
                             } else {
                                 final RestaurantsMoreRowAdapter adapter = new RestaurantsMoreRowAdapter(getContext(), R.layout.list_new_resto_check_image_row
                                         , restaurants.getResults(), restaurantFilters, mCurrentAddress);
-
                                 lv_resto.setAdapter(adapter);
                                 lv_resto.setTextFilterEnabled(true);
-
                                 et_resto_search.addTextChangedListener(new TextWatcher() {
                                     @Override
                                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
                                     }
-
                                     @Override
                                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                                         adapter.getFilter().filter(s.toString());
                                     }
-
                                     @Override
                                     public void afterTextChanged(Editable s) {
-
                                     }
                                 });
                             }
@@ -380,7 +376,6 @@ String TAG = this.getClass().getName();
                         mUtils.dismissDialog(mProgressDialog);
                     } catch (Exception e) {
                         e.printStackTrace();
-
                         try {
                             ResponseBaseWithId response = (ResponseBaseWithId) object;
                             if (response != null) {
@@ -393,7 +388,6 @@ String TAG = this.getClass().getName();
                                     restaurantFilters.setLatitude(mLatitude);
                                     restaurantFilters.setLongitude(mLongitude);
                                     restaurantFilters.setLocation(mCurrentAddress);
-
                                     mUtils.dismissDialog(mProgressDialog);
 
                                     if (mListener != null)
@@ -406,7 +400,6 @@ String TAG = this.getClass().getName();
                         }
                     }
                 }
-
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
@@ -414,7 +407,6 @@ String TAG = this.getClass().getName();
                     mUtils.getErrorDialog(mUtils.getStringResource(R.string.error_cannot_process_request)).show();
                 }
             });
-
         } catch (Exception e) {
             mUtils.dismissDialog(mProgressDialog);
         }

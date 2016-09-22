@@ -25,7 +25,8 @@
         android:paddingRight="@dimen/fab_margin"
         android:paddingLeft="@dimen/fab_margin"
         android:id="@+id/tv_snap_title"
-        android:text="Title" />
+        android:text="Title"
+        android:background="@android:color/black" />
 
     <!--
     android:layout_width="@dimen/iv_profile_card_stack_width"
@@ -42,6 +43,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginBottom="5dp"
         android:layout_alignBottom="@id/iv_result_image"
-        android:layout_alignStart="@id/iv_result_image"/>
+        android:layout_alignStart="@id/iv_result_image"
+        android:background="@android:color/black" />
 
 </RelativeLayout>

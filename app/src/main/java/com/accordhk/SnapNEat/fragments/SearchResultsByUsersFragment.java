@@ -4,10 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,7 +49,7 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class SearchResultsByUsersFragment extends BaseSearchFragment {
-    private static String LOGGER_TAG = "SearchResultsByUsersFragment";
+    private static String TAG = "SearchResultsByUsersF";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,19 +97,24 @@ public class SearchResultsByUsersFragment extends BaseSearchFragment {
             searchType = getArguments().getInt(SEARCH_TYPE);
         }
     }
-
+    Map<String, String> params;
+    CustomFontTextView message;
+    ListView ll_result_users;
+    User user;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.list_search_result_by_user, container, false);
 
-        final CustomFontTextView message = (CustomFontTextView) view.findViewById(R.id.message);
-        final ListView ll_result_users = (ListView) view.findViewById(R.id.ll_result_users);
+         message = (CustomFontTextView) view.findViewById(R.id.message);
+        ll_result_users = (ListView) view.findViewById(R.id.ll_result_users);
 
-        Map<String, String> params = mUtils.getBaseRequestMap();
+        params = mUtils.getBaseRequestMap();
         params.put(Constants.STR_PAGE, String.valueOf(page));
         params.put(SEARCH_STRING, searchString);
+        // for frist time
+        getSearchResult();
 
         // get selected categories
 //        SharedPref sharedPref = new SharedPref(getContext());
@@ -125,13 +134,58 @@ public class SearchResultsByUsersFragment extends BaseSearchFragment {
 //
 //        params.put(SEARCH_CATEGORY_FILTERS, filters);
 
-        final User user = new SharedPref(mContext).getLoggedInUser();
+        user = new SharedPref(mContext).getLoggedInUser();
         if(user != null) {
             params.put(Snap.USER_ID, String.valueOf(user.getId()));
         }
 
         page = 1;
 
+
+//        TextView tv_hot_search_string = (TextView) view.findViewById(R.id.tv_hot_search_string);
+        final EditText tv_hot_search_string = (EditText) view.findViewById(R.id.tv_hot_search_string);
+        Log.i(TAG, "onCreateView: searchString "+searchString);
+        tv_hot_search_string.setText(searchString);
+//        tv_hot_search_string.setFocusable(false);
+        tv_hot_search_string.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                Toast.makeText(getContext(), "beforeTextChanged", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                Toast.makeText(getContext(), "onTextChanged", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String hashTag = tv_hot_search_string.getText().toString().trim();
+//                Toast.makeText(getContext(), "search for "+hashTag, Toast.LENGTH_SHORT).show();
+                params = mUtils.getBaseRequestMap();
+                params.put(Constants.STR_PAGE, String.valueOf(page));
+                params.put(SEARCH_STRING, String.valueOf(hashTag));
+
+                getSearchResult();
+
+            }
+        });
+
+
+        ImageButton btn_back = (ImageButton) view.findViewById(R.id.btn_back);
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener != null) {
+                    mListener.goBack();
+                }
+            }
+        });
+
+        return view;
+    }
+
+    public void getSearchResult(){
         try {
             mProgressDialog.show();
             mApi.getSnapsByUser(params, new ApiWebServices.ApiListener() {
@@ -305,22 +359,6 @@ public class SearchResultsByUsersFragment extends BaseSearchFragment {
             mUtils.dismissDialog(mProgressDialog);
             e.printStackTrace();
         }
-
-        TextView tv_hot_search_string = (TextView) view.findViewById(R.id.tv_hot_search_string);
-        tv_hot_search_string.setText(searchString);
-        tv_hot_search_string.setFocusable(false);
-
-        ImageButton btn_back = (ImageButton) view.findViewById(R.id.btn_back);
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mListener != null) {
-                    mListener.goBack();
-                }
-            }
-        });
-
-        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

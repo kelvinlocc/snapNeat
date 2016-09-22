@@ -15,6 +15,7 @@ public class Restaurant {
     public static final String LONGITUDE = "longitude";
     public static final String NAME = "name";
     public static final String DISTANCE = "distance";
+    public static final String LOCATION = "location";
 
     private String nId;
     private int id;

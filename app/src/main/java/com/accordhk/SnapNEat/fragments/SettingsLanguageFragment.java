@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import static com.google.android.gms.wearable.DataMap.TAG;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -33,6 +36,7 @@ import java.util.Locale;
  */
 public class SettingsLanguageFragment extends BaseFragment {
     public static final String CURRENT_LANG = "currentLanguage";
+    private static String TAG = "SettingsLanguageF";
 
     private OnFragmentInteractionListener mListener;
 
@@ -70,6 +74,12 @@ public class SettingsLanguageFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
+            Log.i(TAG, "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
+//            Log.i(TAG, "name: "+fm.toString());
+        }
+        Log.i(TAG, "onCreateView: SettingsLan ");
         View view = inflater.inflate(R.layout.fragment_settings_language, container, false);
 
         final ListView lv_languages = (ListView) view.findViewById(R.id.lv_languages);
@@ -118,11 +128,21 @@ public class SettingsLanguageFragment extends BaseFragment {
 
                 // call this when the language setting is updated from Settings-Language page
                 // updates the navigatonview
-                getActivity().onConfigurationChanged(config);
+SettingsLanguageFragment.super.getActivity().onConfigurationChanged(config);
+//                getActivity().onConfigurationChanged(config);// this generate one more activty
+//                SettingsLanguageFragment.super.onConfigurationChanged(config);
+//                mListener.goBack();
+
             }
         });
 
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.i(TAG, "onDestroy: ");
+        super.onDestroy();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

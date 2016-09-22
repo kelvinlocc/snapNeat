@@ -209,7 +209,7 @@ public class MainFragment extends BaseFragment {
         // Inflate the layout for this fragment
         Log.i(TAG, "onCreateView: check@");
         view = inflater.inflate(R.layout.fragment_main, container, false);
-        View view_02 = inflater.inflate(R.layout.fragment_snap_details, container, false);
+//        View view_02 = inflater.inflate(R.layout.fragment_snap_details, container, false);
 //        btn_like = (ImageButton) view_02.findViewById(R.id.btn_like);
 
 
@@ -668,16 +668,19 @@ public class MainFragment extends BaseFragment {
                             mCardStack.setListener(new CardStack.CardEventListener() {
                                 @Override
                                 public boolean swipeEnd(int section, float distance) {
+                                    Log.i(TAG, "swipeEnd: section, distance"+section+","+distance);
                                     return (distance > 300) ? true : false;
                                 }
 
                                 @Override
                                 public boolean swipeStart(int section, float distance) {
+                                    Log.i(TAG, "swipeStart: section.distance "+section+","+distance);
                                     return true;
                                 }
 
                                 @Override
                                 public boolean swipeContinue(int section, float distanceX, float distanceY) {
+                                    Log.i(TAG, "swipeContinue2: section,x,y"+section+","+distanceX+","+distanceY);
                                     return true;
                                 }
 
@@ -685,6 +688,7 @@ public class MainFragment extends BaseFragment {
                                 public void discarded(int mIndex, int direction) {
                                     // no more snaps
 //                                    if (mIndex == mCardStack.getStackSize())
+                                    Log.i(TAG, "discarded: ");
                                     if (mIndex == res.getResults().size())
                                         message.setText(mUtils.getStringResource(R.string.error_no_more_snap));
                                 }
@@ -692,6 +696,7 @@ public class MainFragment extends BaseFragment {
                                 //// TODO: 8/12/2016 topCardTapped
                                 @Override
                                 public void topCardTapped() {
+                                    Log.i(TAG, "topCardTapped: ");
                                     Snap snap = (Snap) mCardStack.getAdapter().getItem(mCardStack.getCurrIndex());
                                     if (mListener != null) {
                                         mListener.showSnapDetails(Integer.parseInt(snap.getnId()));

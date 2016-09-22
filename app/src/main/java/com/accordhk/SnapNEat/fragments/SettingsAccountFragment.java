@@ -110,6 +110,7 @@ public class SettingsAccountFragment extends BaseFragment {
         genders.put(Constants.GENDER.UNSPECIFIED.getKey(), mUtils.getStringResource(R.string.common_unspecified));
     }
 
+    private static String TAG ="SettingsAccountFragment";
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -134,14 +135,14 @@ public class SettingsAccountFragment extends BaseFragment {
 
         CustomFontTextView btn_submit = (CustomFontTextView) view.findViewById(R.id.btn_submit);
         btn_submit.setText(mUtils.getStringResource(R.string.a7_done));
-
+        //// TODO: 9/22/2016
         profile_pic = (CircleImageView) view.findViewById(R.id.profile_pic);
 
         user = new SharedPref(getContext()).getLoggedInUser();
 
         mImageLoader = VolleySingleton.getInstance(getContext()).getImageLoader();
 
-        if(user != null) {
+        if (user != null) {
             final CustomFontEditText et_username = (CustomFontEditText) view.findViewById(R.id.et_username);
             et_username.setText(user.getUsername());
 
@@ -153,7 +154,7 @@ public class SettingsAccountFragment extends BaseFragment {
                 }
             });
             int gen = user.getGender();
-            if(genders.containsKey(gen))
+            if (genders.containsKey(gen))
                 et_gender.setText(genders.get(gen));
 
             CustomFontButton btn_gender_cancel = (CustomFontButton) view.findViewById(R.id.btn_gender_cancel);
@@ -204,7 +205,7 @@ public class SettingsAccountFragment extends BaseFragment {
 
             final CustomFontEditText et_intro = (CustomFontEditText) view.findViewById(R.id.et_intro);
             et_intro.setText(user.getAbout());
-
+            Log.i(TAG, "onCreateView: getAvatarThumbnail "+user.getAvatarThumbnail());
             mImageLoader.get(user.getAvatarThumbnail(), ImageLoader.getImageListener(profile_pic, R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
 
             btn_submit.setOnClickListener(new View.OnClickListener() {
@@ -252,8 +253,8 @@ public class SettingsAccountFragment extends BaseFragment {
                                 try {
                                     BaseResponse response = (BaseResponse) object;
                                     if (response != null) {
-                                        if(response.getStatus() == Constants.RES_UNAUTHORIZED) {
-                                            if(mListener != null) {
+                                        if (response.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                            if (mListener != null) {
                                                 mUtils.dismissDialog(mProgressDialog);
                                                 mListener.showStartingFragmentFromLogout();
                                             }
@@ -276,7 +277,7 @@ public class SettingsAccountFragment extends BaseFragment {
 
                                                             mUtils.dismissDialog(mProgressDialog);
                                                             if (responseUserProfile != null) {
-                                                                if(responseUserProfile.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                                                if (responseUserProfile.getStatus() == Constants.RES_UNAUTHORIZED) {
                                                                     if (mListener != null) {
                                                                         mListener.showStartingFragmentFromLogout();
 
@@ -380,7 +381,7 @@ public class SettingsAccountFragment extends BaseFragment {
                 public void onClick(View v) {
 
                     SharedPref sharedPref = new SharedPref(getContext());
-                    if(sharedPref.getFileUploadSettingTypes().isEmpty()) {
+                    if (sharedPref.getFileUploadSettingTypes().isEmpty()) {
                         try {
                             mApi.getFileUploadSetting(mUtils.getBaseRequestMap(), mUtils.generateAuthHeader(), new ApiWebServices.ApiListener() {
                                 @Override
@@ -388,11 +389,11 @@ public class SettingsAccountFragment extends BaseFragment {
                                     try {
                                         ResponseFileUploadSettings fileUploadSettings = (ResponseFileUploadSettings) object;
 
-                                        if(fileUploadSettings.getStatus() == Constants.RES_UNAUTHORIZED) {
+                                        if (fileUploadSettings.getStatus() == Constants.RES_UNAUTHORIZED) {
                                             if (mListener != null) {
                                                 mListener.showStartingFragmentFromLogout();
                                             }
-                                        } else if(fileUploadSettings.getStatus() == Constants.RES_SUCCESS) {
+                                        } else if (fileUploadSettings.getStatus() == Constants.RES_SUCCESS) {
                                             (new SharedPref(getContext())).setFileUploadSettings(fileUploadSettings);
                                             slideUp(rl_choose_photo);
                                         }
@@ -426,7 +427,7 @@ public class SettingsAccountFragment extends BaseFragment {
     public void onActivityResult(final int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.d(LOGGER_TAG, "requestCode: "+requestCode+"==resultCode: "+resultCode);
+        Log.d(LOGGER_TAG, "requestCode: " + requestCode + "==resultCode: " + resultCode);
 
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK && data != null) {
             Log.d(LOGGER_TAG, "captured!!!");
@@ -435,7 +436,7 @@ public class SettingsAccountFragment extends BaseFragment {
             Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), (Bitmap) extras.get("data"), glMaxTextureSize);
             String error = mUtils.validateUploadImage(bitmapResult);
 
-            if(error.isEmpty())
+            if (error.isEmpty())
 //                uploadToServer((Bitmap) bitmapResult.get(Constants.PHOTO_BITMAP));
                 uploadToServer(bitmapResult.get(Constants.PHOTO_PATH).toString());
             else
@@ -447,15 +448,16 @@ public class SettingsAccountFragment extends BaseFragment {
             Log.d(LOGGER_TAG, "selected!!!");
             Uri uri = data.getData();
 
-            Log.d(LOGGER_TAG, "Selected URI: "+uri.getPath());
+            Log.d(LOGGER_TAG, "Selected URI: " + uri.getPath());
             try {
                 Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri), glMaxTextureSize);
                 String error = mUtils.validateUploadImage(bitmapResult);
 
-                if(error.isEmpty())
+                if (error.isEmpty()) {
 //                    uploadToServer((Bitmap) bitmapResult.get(Constants.PHOTO_BITMAP));
                     uploadToServer(bitmapResult.get(Constants.PHOTO_PATH).toString());
-                else
+                    profile_pic.setImageURI(uri);
+                } else
                     mUtils.getErrorDialog(error).show();
 
             } catch (IOException e) {
@@ -466,13 +468,14 @@ public class SettingsAccountFragment extends BaseFragment {
 
     /**
      * Uploads selected avatar to server
+     *
      * @param
      */
 //    private void uploadToServer(Bitmap bitmap) {
     private void uploadToServer(String imageFilePath) {
 //        String base64string = mUtils.convertBitmapToBase64(bitmap);
 
-        if(user != null) {
+        if (user != null) {
             try {
                 Map<String, String> params = mUtils.getBaseRequestMap();
 
@@ -515,8 +518,10 @@ public class SettingsAccountFragment extends BaseFragment {
                                                         new SharedPref(getContext()).setLoggedInUser(responseUserProfile.getUserInfo());
 
                                                         mImageLoader = VolleySingleton.getInstance(getContext()).getImageLoader();
+//                                                        mImageLoader.get(user.getAvatar(), ImageLoader.getImageListener(profile_pic, R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
 
-                                                        mImageLoader.get(user.getAvatar(), ImageLoader.getImageListener(profile_pic, R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
+//                                                        mImageLoader.get(user.getAvatarThumbnail(), ImageLoader.getImageListener(profile_pic, R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
+//                                                        profile_pic.setImageUrl(responseUserProfile.getUserInfo().getAvatar(), mImageLoader);
                                                     }
                                                 }
                                                 mUtils.dismissDialog(mProgressDialog);
@@ -625,8 +630,11 @@ public class SettingsAccountFragment extends BaseFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
         void showSettingsFragment();
+
         void goBack();
+
         void showStartingFragmentFromLogout();
     }
 }
