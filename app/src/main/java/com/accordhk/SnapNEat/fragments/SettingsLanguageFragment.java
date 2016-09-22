@@ -75,7 +75,7 @@ public class SettingsLanguageFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        for(int entry = 0; entry < fm.getBackStackEntryCount(); entry++){
+        for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {
             Log.i(TAG, "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
 //            Log.i(TAG, "name: "+fm.toString());
         }
@@ -91,7 +91,7 @@ public class SettingsLanguageFragment extends BaseFragment {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null) {
+                if (mListener != null) {
                     mListener.goBack();
                 }
             }
@@ -101,7 +101,9 @@ public class SettingsLanguageFragment extends BaseFragment {
         langs.add("English");
         langs.add("繁體中文");
         langs.add("简体中文");
-
+        // g
+        Log.i(TAG, "onCreateView: getContext "+getContext());
+        Log.i(TAG, "onCreateView: getActivity() "+getActivity());
         SettingsLanguageRowAdapter adapter = new SettingsLanguageRowAdapter(getContext(), R.layout.list_label_check_image_row, langs);
         lv_languages.setAdapter(adapter);
 
@@ -109,7 +111,7 @@ public class SettingsLanguageFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                for(int x = 0; x < langs.size(); x++) {
+                for (int x = 0; x < langs.size(); x++) {
                     View v = lv_languages.getChildAt(x);
                     ((ImageView) v.findViewById(R.id.iv_check)).setVisibility(View.INVISIBLE);
                 }
@@ -121,15 +123,20 @@ public class SettingsLanguageFragment extends BaseFragment {
                 Locale.setDefault(locale);
                 Configuration config = new Configuration();
                 config.locale = locale;
+                new SharedPref(getActivity()).setSelectedLanguage(position);
 
-                new SharedPref(getContext()).setSelectedLanguage(position);
+//                new SharedPref(getContext()).setSelectedLanguage(position);
+                //
 
                 getResources().updateConfiguration(config, getResources().getDisplayMetrics());
 
                 // call this when the language setting is updated from Settings-Language page
                 // updates the navigatonview
-SettingsLanguageFragment.super.getActivity().onConfigurationChanged(config);
-//                getActivity().onConfigurationChanged(config);// this generate one more activty
+
+//                SettingsLanguageFragment.super.getActivity().onConfigurationChanged(config);
+                getActivity().onConfigurationChanged(config);// this generate one more activty
+                mListener.goBack();
+//                mListener.goBack();
 //                SettingsLanguageFragment.super.onConfigurationChanged(config);
 //                mListener.goBack();
 
@@ -142,7 +149,14 @@ SettingsLanguageFragment.super.getActivity().onConfigurationChanged(config);
     @Override
     public void onDestroy() {
         Log.i(TAG, "onDestroy: ");
+
         super.onDestroy();
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        for (int entry = 0; entry < fm.getBackStackEntryCount(); entry++) {
+            Log.i(TAG, "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
+//            Log.i(TAG, "name: "+fm.toString());
+        }
+        mListener.goBack();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -182,6 +196,7 @@ SettingsLanguageFragment.super.getActivity().onConfigurationChanged(config);
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
         void goBack();
     }
 }
