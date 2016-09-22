@@ -512,7 +512,7 @@ public class PostSnapFragment extends BaseFragment {
                     Intent selIntent = new Intent();
                     // Show only images, no videos or anything else
                     selIntent.setType("image/*");
-                    Toast.makeText(getContext(), "updated", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "updated", Toast.LENGTH_SHORT).show();
 //                    selIntent.setAction(Intent.ACTION_GET_CONTENT);
                     selIntent.setAction(Intent.ACTION_OPEN_DOCUMENT);
 

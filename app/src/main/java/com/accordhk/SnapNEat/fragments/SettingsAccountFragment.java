@@ -5,9 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -18,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.accordhk.SnapNEat.R;
 import com.accordhk.SnapNEat.models.BaseResponse;
@@ -36,7 +42,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -422,6 +430,7 @@ public class SettingsAccountFragment extends BaseFragment {
 
         return view;
     }
+    Bitmap bitmap,rotatedBitmap;
 
     @Override
     public void onActivityResult(final int requestCode, int resultCode, Intent data) {
@@ -433,21 +442,56 @@ public class SettingsAccountFragment extends BaseFragment {
             Log.d(LOGGER_TAG, "captured!!!");
 
             Bundle extras = data.getExtras();
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            profile_pic.setImageBitmap(photo);
+
             Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), (Bitmap) extras.get("data"), glMaxTextureSize);
             String error = mUtils.validateUploadImage(bitmapResult);
 
-            if (error.isEmpty())
-//                uploadToServer((Bitmap) bitmapResult.get(Constants.PHOTO_BITMAP));
+            if (error.isEmpty()){
+//                profile_pic.setImageBitmap(((Bitmap)extras.get("data")));
                 uploadToServer(bitmapResult.get(Constants.PHOTO_PATH).toString());
+            }
+//                uploadToServer((Bitmap) bitmapResult.get(Constants.PHOTO_BITMAP));}
+
+
             else
-                mUtils.getErrorDialog(error).show();
+            {mUtils.getErrorDialog(error).show();
+                Log.i(TAG, "onActivityResult: error");
+                Toast.makeText(mContext, "error for uploading to server ", Toast.LENGTH_SHORT).show();
+            }
             // =======================3  END  =======================
         }
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Log.d(LOGGER_TAG, "selected!!!");
             Uri uri = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+//                profile_pic.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+            String filename = getRealPathFromURI(uri);
+            try {
+
+
+                ExifInterface exif = new ExifInterface(filename);
+                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                if (orientation != 0) {
+                    Log.i(TAG, "onActivityResult: orientation " + orientation);
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(90);
+                    rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    uri = getImageUri(getContext(), rotatedBitmap);
+
+                    profile_pic.setImageBitmap(rotatedBitmap);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Log.d(LOGGER_TAG, "Selected URI: " + uri.getPath());
             try {
                 Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri), glMaxTextureSize);
@@ -464,6 +508,26 @@ public class SettingsAccountFragment extends BaseFragment {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            ;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
     }
 
     /**
@@ -485,6 +549,7 @@ public class SettingsAccountFragment extends BaseFragment {
                 mProgressDialog.show();
 
                 Uri uri = Uri.parse(imageFilePath);
+                Log.i(TAG, "uploadToServer: uri "+uri);
                 Map<String, byte[]> multiPartParams = new HashMap<>();
                 multiPartParams.put(uri.toString().trim(), mUtils.converUriToFileData(getActivity(), uri));
 
@@ -499,7 +564,6 @@ public class SettingsAccountFragment extends BaseFragment {
                                 mUtils.getErrorDialog(response.getMessage()).show();
                             } else {
                                 try {
-
                                     Map<String, String> userProfileParam = mUtils.getBaseRequestMap();
                                     userProfileParam.put(User.USER_ID, String.valueOf(user.getId()));
 
@@ -516,12 +580,14 @@ public class SettingsAccountFragment extends BaseFragment {
                                                         mUtils.getErrorDialog(responseUserProfile.getMessage()).show();
                                                     } else {
                                                         new SharedPref(getContext()).setLoggedInUser(responseUserProfile.getUserInfo());
-
                                                         mImageLoader = VolleySingleton.getInstance(getContext()).getImageLoader();
+                                                        Bitmap bitmap = getBitmapFromURL(responseUserProfile.getUserInfo().getAvatar());
+                                                        profile_pic.setImageBitmap(bitmap);
 //                                                        mImageLoader.get(user.getAvatar(), ImageLoader.getImageListener(profile_pic, R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
-
 //                                                        mImageLoader.get(user.getAvatarThumbnail(), ImageLoader.getImageListener(profile_pic, R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
 //                                                        profile_pic.setImageUrl(responseUserProfile.getUserInfo().getAvatar(), mImageLoader);
+                                                        Log.i(TAG, "onResponse: user.getAvatarThumbnail()"+user.getAvatarThumbnail());
+
                                                     }
                                                 }
                                                 mUtils.dismissDialog(mProgressDialog);
@@ -560,6 +626,23 @@ public class SettingsAccountFragment extends BaseFragment {
                 mUtils.dismissDialog(mProgressDialog);
             }
         }
+    }
+
+    public Bitmap getBitmapFromURL(String URL_Path) {
+        Log.i(TAG, "getBitmapFromURL: ");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        Bitmap bitmap = null;
+        try {
+            URL url = new URL(URL_Path);
+            bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            return bitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -12,11 +12,14 @@ import com.accordhk.SnapNEat.models.Restaurant;
 import com.accordhk.SnapNEat.models.Spending;
 import com.accordhk.SnapNEat.models.User;
 import com.google.gson.Gson;
+import com.google.gson.internal.Streams;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.accordhk.SnapNEat.fragments.MainFragment.TAG;
 
 /**
  * Created by jm on 26/1/16.
@@ -28,8 +31,11 @@ public class SharedPref {
     private static Gson GSON = new Gson();
 
     private static final String SEL_LANGUAGE = "selLanguage";
-
+    private static String TAG = "SharedPref";
     public SharedPref(Context context) {
+        Log.i(TAG, "SharedPref: context"+context);
+        context.getSharedPreferences(APP_PREF, Context.MODE_PRIVATE);
+        context.getSharedPreferences(APP_PREF, context.MODE_PRIVATE);
         this.mSharedPreferences = context.getSharedPreferences(APP_PREF, Activity.MODE_PRIVATE);
         this.mEditor = mSharedPreferences.edit();
     }

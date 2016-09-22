@@ -5,9 +5,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -43,11 +48,17 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.R.attr.id;
+import static android.R.attr.orientation;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,7 +93,6 @@ public class ProfileFragment extends BaseFragment {
     private BlurredNetworkImageView iv_profile_bg;
 
     private int glMaxTextureSize;
-    ImageView checker;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -110,9 +120,12 @@ public class ProfileFragment extends BaseFragment {
         if (getArguments() != null) {
             userId = getArguments().getInt(USER_ID);
         }
+        Log.i(TAG, "onCreate: getActivity() " + getActivity());
 
         glMaxTextureSize = getGLMaxTextureSize();
     }
+
+    ImageView checker;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,6 +143,8 @@ public class ProfileFragment extends BaseFragment {
         return view;
     }
 
+    ImageButton btn_profile_menu;
+
     public void generateView() {
         Log.i(TAG, "generateView: ");
         profile_pic = (CircleImageView) view.findViewById(R.id.iv_profile_pic);
@@ -139,7 +154,7 @@ public class ProfileFragment extends BaseFragment {
         final CustomFontTextView tv_no_followings = (CustomFontTextView) view.findViewById(R.id.tv_no_followings);
         final CustomFontTextView tv_no_followers = (CustomFontTextView) view.findViewById(R.id.tv_no_followers);
         final ImageButton btn_profile_action = (ImageButton) view.findViewById(R.id.btn_profile_action);
-        final ImageButton btn_profile_menu = (ImageButton) view.findViewById(R.id.btn_profile_menu);
+        btn_profile_menu = (ImageButton) view.findViewById(R.id.btn_profile_menu);
 
         final TextView tv_no_followings_label = (TextView) view.findViewById(R.id.tv_no_followings_label);
 
@@ -236,11 +251,6 @@ public class ProfileFragment extends BaseFragment {
                         mUtils.dismissDialog(mProgressDialog);
 
                         if (responseUserProfile != null) {
-                            /*if(responseUserProfile.getStatus() == Constants.RES_UNAUTHORIZED) {
-                                if (mListener != null) {
-                                    mListener.showStartingFragmentFromLogout();
-                                }
-                            } else */
                             if (responseUserProfile.getStatus() != Constants.RES_SUCCESS) {
                                 mUtils.getErrorDialog(responseUserProfile.getMessage()).show();
                                 new SharedPref(getContext()).setLoggedInUser(null);
@@ -261,9 +271,12 @@ public class ProfileFragment extends BaseFragment {
 
                                 mImageLoader = VolleySingleton.getInstance(getContext()).getImageLoader();
 
-                                Log.d(LOGGER_TAG, "avatar: " + responseUserProfile.getUserInfo().getAvatarThumbnail());
-                                mImageLoader.get(responseUserProfile.getUserInfo().getAvatarThumbnail(), ImageLoader.getImageListener(profile_pic,
-                                        R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
+                                Log.d(LOGGER_TAG, "avatar!: " + responseUserProfile.getUserInfo().getAvatarThumbnail());
+//                                mImageLoader.get(responseUserProfile.getUserInfo().getAvatarThumbnail(), ImageLoader.getImageListener(profile_pic,
+//                                        R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
+                                Bitmap bitmap = getBitmapFromURL(responseUserProfile.getUserInfo().getAvatarThumbnail());
+                                profile_pic.setImageBitmap(bitmap);
+                                iv_profile_bg.setImageBitmap(bitmap);
 
                                 iv_profile_bg.setImageUrl(responseUserProfile.getUserInfo().getAvatar(), mImageLoader);
                                 //                            mImageLoader.get(responseUserProfile.getUserInfo().getAvatar(), ImageLoader.getImageListener(iv_profile_bg, R.drawable.rounded_corner_image_view_bg, R.drawable.rounded_corner_image_view_bg));
@@ -307,7 +320,7 @@ public class ProfileFragment extends BaseFragment {
                                     if (currentUser.getId() == user.getId()) { // current user is equal to user in profile page
 
                                         isOtherUser = false;
-                                        btn_profile_menu.setVisibility(View.INVISIBLE);
+
 
                                         //circle profile icon, click to change icon by capture or album
                                         profile_pic.setOnClickListener(new View.OnClickListener() {
@@ -625,7 +638,7 @@ public class ProfileFragment extends BaseFragment {
                                                                 } else {
                                                                     if (response.getFollowFlag() == Constants.FLAG_TRUE) {
                                                                         btn_profile_action.setImageResource(R.drawable.s7_btn_add_user_sel);
-                                                                        btn_profile_menu.setVisibility(View.INVISIBLE);
+
                                                                     } else {
                                                                         btn_profile_action.setImageResource(R.drawable.s7_btn_add_user);
                                                                     }
@@ -672,7 +685,6 @@ public class ProfileFragment extends BaseFragment {
                                             showFootprints(userId);
                                         }
                                     });
-
                                     btn_tab2.setWidth(metrics.widthPixels / 2);
                                     btn_tab2.setText(mUtils.getStringResource(R.string.p1_gallery));
                                     btn_tab2.setOnClickListener(new View.OnClickListener() {
@@ -682,22 +694,12 @@ public class ProfileFragment extends BaseFragment {
                                             btn_tab2.setTextColor(ContextCompat.getColor(getContext(), R.color.loginRegisterTabText));
                                             btn_tab1.setBackgroundResource(R.color.colorPrimary);
                                             btn_tab1.setTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
-//                                            if (mListener != null) {
-//                                                mListener.showGallery(userId);
-//                                            }
                                             showGallery(userId);
                                         }
                                     });
-
                                     btn_tab3.setVisibility(View.INVISIBLE);
                                     btn_tab4.setVisibility(View.INVISIBLE);
-
-//                                    if (user.getFollowFlag() == Constants.FLAG_TRUE)
-//                                        btn_profile_menu.setVisibility(View.VISIBLE);
-//                                    else
-//                                        btn_profile_menu.setVisibility(View.INVISIBLE);
                                 }
-
                                 if (view.findViewById(R.id.profile_frame_content) != null) {
 
                                     Log.d(LOGGER_TAG, "PROFILE FRAME CONTENT IS NOT NULL");
@@ -759,6 +761,9 @@ public class ProfileFragment extends BaseFragment {
         }
     }
 
+
+    Bitmap rotatedBitmap;
+
     //TODO:                     onActivityResult
     @Override
     public void onActivityResult(final int requestCode, int resultCode, Intent data) {
@@ -780,7 +785,9 @@ public class ProfileFragment extends BaseFragment {
             Bundle extras = data.getExtras();
             Map<String, Object> bitmapResult = mUtils.processBitmap(getActivity(), (Bitmap) extras.get("data"), glMaxTextureSize);
             String error = mUtils.validateUploadImage(bitmapResult);
-//            Bitmap bitmap = (Bitmap)extras.get("data");
+            Bitmap bitmap = (Bitmap)extras.get("data");
+            iv_profile_bg.setImageBitmap(bitmap);
+            profile_pic.setImageBitmap(bitmap);
 //            checker.setImageBitmap(bitmap);
             if (error.isEmpty()) {
 
@@ -793,7 +800,35 @@ public class ProfileFragment extends BaseFragment {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             Log.d(LOGGER_TAG, "selected!!!");
+            Bitmap bitmap = null;
             Uri uri = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                iv_profile_bg.setImageBitmap(bitmap);
+                profile_pic.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            String filename = getRealPathFromURI(uri);
+            try {
+
+
+                ExifInterface exif = new ExifInterface(filename);
+                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                if (orientation != 0) {
+                    Log.i(TAG, "onActivityResult: orientation " + orientation);
+                    Matrix matrix = new Matrix();
+                    matrix.postRotate(90);
+                    rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+                    uri = getImageUri(getContext(), rotatedBitmap);
+                    iv_profile_bg.setImageBitmap(rotatedBitmap);
+                    profile_pic.setImageBitmap(rotatedBitmap);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             Log.d(LOGGER_TAG, "Selected URI: " + uri.getPath());
             try {
@@ -814,6 +849,61 @@ public class ProfileFragment extends BaseFragment {
 
     }
 
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public Bitmap getBitmapFromURL(String URL_Path) {
+        Log.i(TAG, "getBitmapFromURL: ");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        Bitmap bitmap = null;
+        try {
+            URL url = new URL(URL_Path);
+            bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            return bitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bitmap;
+
+
+    }
+
+//    public Bitmap rotateBitmap (String uri){
+//        String filename = getRealPathFromURI(uri);
+//        try {
+//            ExifInterface exif = new ExifInterface(filename);
+//            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+//            Log.i(TAG, "onActivityResult: orientation "+orientation);
+//            Matrix matrix = new Matrix();
+//            matrix.postRotate(90);
+//            rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+//            btn_profile_menu.setImageBitmap(rotatedBitmap);
+//            profile_pic.setImageBitmap(rotatedBitmap);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+    public String getRealPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            ;
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
+
     private void uploadToServer(String imageFilePath) {
         if (user != null) {
             try {
@@ -822,6 +912,7 @@ public class ProfileFragment extends BaseFragment {
 
                 mProgressDialog.show();
                 Uri uri = Uri.parse(imageFilePath);
+                Log.i(TAG, "uploadToServer: uri " + uri);
                 Map<String, byte[]> multiPartParams = new HashMap<>();
                 multiPartParams.put(uri.toString().trim(), mUtils.converUriToFileData(getActivity(), uri));
 
@@ -865,9 +956,13 @@ public class ProfileFragment extends BaseFragment {
                                                         new SharedPref(getContext()).setLoggedInUser(responseUserProfile.getUserInfo());
 
                                                         mImageLoader = VolleySingleton.getInstance(getContext()).getImageLoader();
-
-                                                        mImageLoader.get(responseUserProfile.getUserInfo().getAvatar(), ImageLoader.getImageListener(profile_pic, R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
-                                                        iv_profile_bg.setImageUrl(responseUserProfile.getUserInfo().getAvatar(), mImageLoader);
+                                                        Bitmap bitmap = getBitmapFromURL(responseUserProfile.getUserInfo().getAvatar());
+                                                        iv_profile_bg.setImageBitmap(bitmap);
+                                                        profile_pic.setImageBitmap(bitmap);
+//                                                        mImageLoader.get(responseUserProfile.getUserInfo().getAvatar(), ImageLoader.getImageListener(profile_pic, R.drawable.s1_bg_profile_pic, R.drawable.s1_bg_profile_pic));
+//                                                        profile_pic.setImageBitmap(rotatedBitmap);
+//                                                        iv_profile_bg.setImageBitmap(rotatedBitmap);
+//                                                        iv_profile_bg.setImageUrl(responseUserProfile.getUserInfo().getAvatar(), mImageLoader);
                                                     }
                                                 }
 

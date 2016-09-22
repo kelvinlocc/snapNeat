@@ -40,6 +40,7 @@
         android:layout_alignEnd="@+id/gv_search_results"
         android:layout_marginEnd="112dp"
         android:layout_marginTop="14dp"
-        android:id="@+id/textView3" />
+        android:id="@+id/textView3"
+        android:visibility="gone" />
 
 </RelativeLayout>
